@@ -46,7 +46,7 @@ const BMICalculator = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] gradient-bg flex items-center justify-center p-4">
+    <div className="min-h-screen gradient-bg flex items-center justify-center p-4">
       <Card className="w-full max-w-md p-6 space-y-6">
         <div className="space-y-2 text-center">
           <h1 className="text-2xl font-bold tracking-tight">BMI Calculator</h1>
