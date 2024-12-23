@@ -12,21 +12,21 @@ const BMIScale = ({ bmi }: BMIScaleProps) => {
 
   return (
     <div className="mt-6 space-y-2">
-      <div className="h-2 bg-gray-200 rounded-full relative">
+      <div className="h-3 bg-gray-100 rounded-full relative">
         <div
-          className="absolute w-3 h-3 bg-primary rounded-full -top-0.5 transition-all duration-500"
+          className="absolute w-4 h-4 bg-primary rounded-full -top-0.5 transition-all duration-500 shadow-lg"
           style={{ left: `${getIndicatorPosition()}%` }}
         />
-        <div className="absolute h-full w-1/4 bg-blue-300 rounded-l-full" />
-        <div className="absolute h-full w-1/4 bg-green-300 left-1/4" />
-        <div className="absolute h-full w-1/4 bg-yellow-300 left-2/4" />
-        <div className="absolute h-full w-1/4 bg-red-300 right-0 rounded-r-full" />
+        <div className="absolute h-full w-1/4 bg-blue-300 rounded-l-full opacity-80" />
+        <div className="absolute h-full w-1/4 bg-green-300 left-1/4 opacity-80" />
+        <div className="absolute h-full w-1/4 bg-yellow-300 left-2/4 opacity-80" />
+        <div className="absolute h-full w-1/4 bg-red-300 right-0 rounded-r-full opacity-80" />
       </div>
       <div className="flex justify-between text-xs text-gray-500">
-        <span>Underweight</span>
+        <span>Insuffisant</span>
         <span>Normal</span>
-        <span>Overweight</span>
-        <span>Obese</span>
+        <span>Surpoids</span>
+        <span>Obésité</span>
       </div>
     </div>
   );
