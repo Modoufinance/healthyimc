@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { Scale, Activity } from "lucide-react";
+import { Scale, Activity, Heart, Brain, Apple } from "lucide-react";
 import BMIScale from "./BMIScale";
 import BMIResult from "./BMIResult";
 
@@ -60,7 +60,7 @@ const BMICalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-400 to-blue-600 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-blue-400 to-blue-600 flex flex-col items-center justify-start p-4 gap-6">
       <Card className="w-full max-w-md p-6 space-y-6 backdrop-blur-sm bg-white/95 shadow-xl animate-fade-in">
         <div className="space-y-2 text-center">
           <div className="flex justify-center items-center gap-2">
@@ -117,6 +117,56 @@ const BMICalculator = () => {
           </div>
         )}
       </Card>
+
+      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 animate-slide-up">
+        <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white/95 backdrop-blur-sm">
+          <div className="flex flex-col items-center space-y-3">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <Heart className="w-6 h-6 text-primary" />
+            </div>
+            <h3 className="font-semibold">Conseils Santé</h3>
+            <p className="text-sm text-center text-muted-foreground">
+              Découvrez des conseils personnalisés pour votre bien-être
+            </p>
+          </div>
+        </Card>
+
+        <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white/95 backdrop-blur-sm">
+          <div className="flex flex-col items-center space-y-3">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <Activity className="w-6 h-6 text-primary" />
+            </div>
+            <h3 className="font-semibold">Suivi d'Activité</h3>
+            <p className="text-sm text-center text-muted-foreground">
+              Suivez vos progrès et votre activité physique
+            </p>
+          </div>
+        </Card>
+
+        <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white/95 backdrop-blur-sm">
+          <div className="flex flex-col items-center space-y-3">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <Apple className="w-6 h-6 text-primary" />
+            </div>
+            <h3 className="font-semibold">Nutrition</h3>
+            <p className="text-sm text-center text-muted-foreground">
+              Plans alimentaires et conseils nutritionnels
+            </p>
+          </div>
+        </Card>
+
+        <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white/95 backdrop-blur-sm">
+          <div className="flex flex-col items-center space-y-3">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <Brain className="w-6 h-6 text-primary" />
+            </div>
+            <h3 className="font-semibold">Bien-être Mental</h3>
+            <p className="text-sm text-center text-muted-foreground">
+              Ressources pour votre santé mentale
+            </p>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };

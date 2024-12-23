@@ -7,9 +7,9 @@ interface BMIResultProps {
 
 const BMIResult = ({ bmiData }: BMIResultProps) => {
   const getBadgeVariant = () => {
-    if (bmiData.bmi < 18.5) return "warning";
-    if (bmiData.bmi >= 18.5 && bmiData.bmi < 24.9) return "success";
-    if (bmiData.bmi >= 25 && bmiData.bmi < 29.9) return "warning";
+    if (bmiData.bmi < 18.5) return "secondary";
+    if (bmiData.bmi >= 18.5 && bmiData.bmi < 24.9) return "default";
+    if (bmiData.bmi >= 25 && bmiData.bmi < 29.9) return "secondary";
     return "destructive";
   };
 
