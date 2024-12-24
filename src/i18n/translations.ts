@@ -1,3 +1,17 @@
+export type Categories = {
+  underweight: string;
+  normal: string;
+  overweight: string;
+  obese: string;
+};
+
+export type Advice = {
+  underweight: string;
+  normal: string;
+  overweight: string;
+  obese: string;
+};
+
 export const translations = {
   en: {
     title: "BMI Calculator",
