@@ -41,17 +41,17 @@ const BMICalculator = () => {
     let advice = "";
 
     if (bmi < 18.5) {
-      category = t("categories.underweight");
-      advice = t("advice.underweight");
+      category = t("categories").underweight;
+      advice = t("advice").underweight;
     } else if (bmi >= 18.5 && bmi < 24.9) {
-      category = t("categories.normal");
-      advice = t("advice.normal");
+      category = t("categories").normal;
+      advice = t("advice").normal;
     } else if (bmi >= 25 && bmi < 29.9) {
-      category = t("categories.overweight");
-      advice = t("advice.overweight");
+      category = t("categories").overweight;
+      advice = t("advice").overweight;
     } else {
-      category = t("categories.obese");
-      advice = t("advice.obese");
+      category = t("categories").obese;
+      advice = t("advice").obese;
     }
 
     setBmiData({ bmi, category, advice });
