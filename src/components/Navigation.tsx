@@ -1,13 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import { Home, Calculator, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
+import LanguageSelector from "./LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navigation = () => {
   const location = useLocation();
+  const { t } = useLanguage();
 
   const links = [
     { to: "/", label: "Home", icon: <Home className="w-4 h-4" /> },
-    { to: "/calculator", label: "BMI Calculator", icon: <Calculator className="w-4 h-4" /> },
+    { to: "/calculator", label: t("title"), icon: <Calculator className="w-4 h-4" /> },
     { to: "/about", label: "About", icon: <Info className="w-4 h-4" /> },
   ];
 
@@ -19,8 +22,8 @@ const Navigation = () => {
             <Link to="/" className="text-primary font-bold text-xl">
               Health Tracker
             </Link>
-            <div className="sm:hidden">
-              {/* Mobile menu button would go here if needed */}
+            <div className="flex items-center gap-2">
+              <LanguageSelector />
             </div>
           </div>
           <div className="flex flex-row justify-center sm:justify-end pb-2 sm:pb-0">

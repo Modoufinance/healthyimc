@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { Scale, Activity, Heart, Brain, Apple } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import BMIScale from "./BMIScale";
 import BMIResult from "./BMIResult";
 
@@ -19,6 +20,7 @@ const BMICalculator = () => {
   const [height, setHeight] = useState("");
   const [bmiData, setBmiData] = useState<BMIData | null>(null);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const calculateBMI = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,8 +29,8 @@ const BMICalculator = () => {
 
     if (!weightNum || !heightNum || heightNum <= 0) {
       toast({
-        title: "Erreur de saisie",
-        description: "Veuillez entrer des valeurs valides.",
+        title: "Error",
+        description: "Please enter valid values.",
         variant: "destructive",
       });
       return;
@@ -39,23 +41,23 @@ const BMICalculator = () => {
     let advice = "";
 
     if (bmi < 18.5) {
-      category = "Insuffisance pondérale";
-      advice = "Pensez à consulter un professionnel de santé pour des conseils alimentaires.";
+      category = t("categories.underweight");
+      advice = t("advice.underweight");
     } else if (bmi >= 18.5 && bmi < 24.9) {
-      category = "Poids normal";
-      advice = "Continuez à maintenir un mode de vie sain !";
+      category = t("categories.normal");
+      advice = t("advice.normal");
     } else if (bmi >= 25 && bmi < 29.9) {
-      category = "Surpoids";
-      advice = "Un professionnel de santé peut vous aider à établir un programme adapté.";
+      category = t("categories.overweight");
+      advice = t("advice.overweight");
     } else {
-      category = "Obésité";
-      advice = "Il est important de consulter un professionnel de santé pour des conseils personnalisés.";
+      category = t("categories.obese");
+      advice = t("advice.obese");
     }
 
     setBmiData({ bmi, category, advice });
     toast({
-      title: "Calcul effectué",
-      description: "Votre IMC a été calculé avec succès.",
+      title: t("calculate"),
+      description: "Success",
     });
   };
 
@@ -66,22 +68,22 @@ const BMICalculator = () => {
           <div className="space-y-2 text-center">
             <div className="flex justify-center items-center gap-2">
               <Scale className="w-6 h-6 text-primary" />
-              <h1 className="text-xl md:text-2xl font-bold tracking-tight">Calculateur d'IMC</h1>
+              <h1 className="text-xl md:text-2xl font-bold tracking-tight">{t("title")}</h1>
             </div>
             <p className="text-sm text-muted-foreground">
-              Calculez votre Indice de Masse Corporelle
+              {t("subtitle")}
             </p>
           </div>
 
           <form onSubmit={calculateBMI} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="weight">Poids (kg)</Label>
+              <Label htmlFor="weight">{t("weight")}</Label>
               <div className="relative">
                 <Input
                   id="weight"
                   type="number"
                   inputMode="decimal"
-                  placeholder="ex: 70"
+                  placeholder={t("weightPlaceholder")}
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
                   className="pl-10"
@@ -92,13 +94,13 @@ const BMICalculator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="height">Taille (cm)</Label>
+              <Label htmlFor="height">{t("height")}</Label>
               <div className="relative">
                 <Input
                   id="height"
                   type="number"
                   inputMode="decimal"
-                  placeholder="ex: 175"
+                  placeholder={t("heightPlaceholder")}
                   value={height}
                   onChange={(e) => setHeight(e.target.value)}
                   className="pl-10"
@@ -109,7 +111,7 @@ const BMICalculator = () => {
             </div>
 
             <Button type="submit" className="w-full">
-              Calculer l'IMC
+              {t("calculate")}
             </Button>
           </form>
 
@@ -127,9 +129,9 @@ const BMICalculator = () => {
               <div className="p-3 bg-primary/10 rounded-full">
                 <Heart className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-semibold">Conseils Santé</h3>
+              <h3 className="font-semibold">{t("healthAdvice")}</h3>
               <p className="text-sm text-center text-muted-foreground">
-                Découvrez des conseils personnalisés pour votre bien-être
+                {t("healthAdvice")}
               </p>
             </div>
           </Card>
@@ -139,9 +141,9 @@ const BMICalculator = () => {
               <div className="p-3 bg-primary/10 rounded-full">
                 <Activity className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-semibold">Suivi d'Activité</h3>
+              <h3 className="font-semibold">{t("activityTracking")}</h3>
               <p className="text-sm text-center text-muted-foreground">
-                Suivez vos progrès et votre activité physique
+                {t("activityTracking")}
               </p>
             </div>
           </Card>
@@ -151,9 +153,9 @@ const BMICalculator = () => {
               <div className="p-3 bg-primary/10 rounded-full">
                 <Apple className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-semibold">Nutrition</h3>
+              <h3 className="font-semibold">{t("nutrition")}</h3>
               <p className="text-sm text-center text-muted-foreground">
-                Plans alimentaires et conseils nutritionnels
+                {t("nutrition")}
               </p>
             </div>
           </Card>
@@ -163,9 +165,9 @@ const BMICalculator = () => {
               <div className="p-3 bg-primary/10 rounded-full">
                 <Brain className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-semibold">Bien-être Mental</h3>
+              <h3 className="font-semibold">{t("mentalWellness")}</h3>
               <p className="text-sm text-center text-muted-foreground">
-                Ressources pour votre santé mentale
+                {t("mentalWellness")}
               </p>
             </div>
           </Card>
