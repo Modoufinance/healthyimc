@@ -29,7 +29,7 @@ export type TranslationType = {
   advice: Advice;
 };
 
-export const translations: Record<Language, TranslationType> = {
+export const translations: Record<string, TranslationType> = {
   en: {
     title: "BMI Calculator",
     subtitle: "Calculate your Body Mass Index",
@@ -136,5 +136,5 @@ export const translations: Record<Language, TranslationType> = {
   }
 };
 
-export type Language = keyof typeof translations;
+export type Language = "en" | "fr" | "ar" | "hi";
 export type TranslationKey = keyof TranslationType;

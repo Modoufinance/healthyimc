@@ -18,18 +18,16 @@ interface BMIChartProps {
 const BMIChart = ({ bmi }: BMIChartProps) => {
   const { t } = useLanguage();
 
-  // Données de démonstration pour le graphique
   const data = [
     { date: "2024-01", bmi: 18 },
     { date: "2024-02", bmi: bmi },
   ];
 
-  // Zones IMC
   const zones = [
-    { yMin: 0, yMax: 18.5, color: "#93C5FD" },    // Insuffisance pondérale
-    { yMin: 18.5, yMax: 24.9, color: "#86EFAC" }, // Normal
-    { yMin: 24.9, yMax: 29.9, color: "#FCD34D" }, // Surpoids
-    { yMin: 29.9, yMax: 40, color: "#FCA5A5" },   // Obésité
+    { yMin: 0, yMax: 18.5, color: "#93C5FD" },
+    { yMin: 18.5, yMax: 24.9, color: "#86EFAC" },
+    { yMin: 24.9, yMax: 29.9, color: "#FCD34D" },
+    { yMin: 29.9, yMax: 40, color: "#FCA5A5" },
   ];
 
   return (
@@ -43,7 +41,6 @@ const BMIChart = ({ bmi }: BMIChartProps) => {
             <YAxis domain={[15, 40]} />
             <Tooltip />
             
-            {/* Zones IMC */}
             {zones.map((zone, index) => (
               <ReferenceLine
                 key={index}
@@ -54,7 +51,6 @@ const BMIChart = ({ bmi }: BMIChartProps) => {
               />
             ))}
             
-            {/* Ligne IMC */}
             <Line
               type="monotone"
               dataKey="bmi"
