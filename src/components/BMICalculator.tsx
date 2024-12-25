@@ -8,6 +8,7 @@ import { Scale, Activity, Heart, Brain, Apple } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import BMIScale from "./BMIScale";
 import BMIResult from "./BMIResult";
+import BMIChart from "./BMIChart";
 
 export interface BMIData {
   bmi: number;
@@ -114,14 +115,15 @@ const BMICalculator = () => {
               {t("calculate")}
             </Button>
           </form>
-
-          {bmiData && (
-            <div className="animate-slide-up">
-              <BMIResult bmiData={bmiData} />
-              <BMIScale bmi={bmiData.bmi} />
-            </div>
-          )}
         </Card>
+
+        {bmiData && (
+          <div className="animate-slide-up">
+            <BMIResult bmiData={bmiData} />
+            <BMIScale bmi={bmiData.bmi} />
+            <BMIChart bmi={bmiData.bmi} />
+          </div>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto px-4 animate-slide-up">
           <Card className="p-4 md:p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white/95 backdrop-blur-sm">

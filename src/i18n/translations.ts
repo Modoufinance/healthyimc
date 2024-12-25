@@ -36,7 +36,8 @@ export const translations = {
       normal: "Keep maintaining a healthy lifestyle!",
       overweight: "A healthcare professional can help you establish a suitable program.",
       obese: "It's important to consult a healthcare professional for personalized advice."
-    }
+    },
+    bmiHistory: "BMI History",
   },
   fr: {
     title: "Calculatrice IMC",
@@ -61,7 +62,8 @@ export const translations = {
       normal: "Continuez à maintenir un mode de vie sain !",
       overweight: "Un professionnel de santé peut vous aider à établir un programme adapté.",
       obese: "Il est important de consulter un professionnel de santé pour des conseils personnalisés."
-    }
+    },
+    bmiHistory: "Historique IMC",
   },
   ar: {
     title: "حاسبة مؤشر كتلة الجسم",
@@ -86,7 +88,8 @@ export const translations = {
       normal: "حافظ على نمط حياتك الصحي!",
       overweight: "يمكن لأخصائي صحي مساعدتك في وضع برنامج مناسب.",
       obese: "من المهم استشارة أخصائي صحي للحصول على نصائح شخصية."
-    }
+    },
+    bmiHistory: "سجل مؤشر كتلة الجسم",
   },
   hi: {
     title: "बीएमआई कैलकुलेटर",
@@ -111,7 +114,8 @@ export const translations = {
       normal: "स्वस्थ जीवनशैली बनाए रखें!",
       overweight: "एक स्वास्थ्य पेशेवर आपको उपयुक्त कार्यक्रम बनाने में मदद कर सकता है।",
       obese: "व्यक्तिगत सलाह के लिए स्वास्थ्य पेशेवर से परामर्श करना महत्वपूर्ण है।"
-    }
+    },
+    bmiHistory: "बीएमआई इतिहास",
   }
 };
 
