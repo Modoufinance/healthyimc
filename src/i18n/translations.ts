@@ -12,7 +12,24 @@ export type Advice = {
   obese: string;
 };
 
-export const translations = {
+export type TranslationType = {
+  title: string;
+  subtitle: string;
+  weight: string;
+  height: string;
+  calculate: string;
+  weightPlaceholder: string;
+  heightPlaceholder: string;
+  healthAdvice: string;
+  activityTracking: string;
+  nutrition: string;
+  mentalWellness: string;
+  bmiHistory: string;
+  categories: Categories;
+  advice: Advice;
+};
+
+export const translations: Record<Language, TranslationType> = {
   en: {
     title: "BMI Calculator",
     subtitle: "Calculate your Body Mass Index",
@@ -25,6 +42,7 @@ export const translations = {
     activityTracking: "Activity Tracking",
     nutrition: "Nutrition",
     mentalWellness: "Mental Wellness",
+    bmiHistory: "BMI History",
     categories: {
       underweight: "Underweight",
       normal: "Normal weight",
@@ -36,8 +54,7 @@ export const translations = {
       normal: "Keep maintaining a healthy lifestyle!",
       overweight: "A healthcare professional can help you establish a suitable program.",
       obese: "It's important to consult a healthcare professional for personalized advice."
-    },
-    bmiHistory: "BMI History",
+    }
   },
   fr: {
     title: "Calculatrice IMC",
@@ -51,6 +68,7 @@ export const translations = {
     activityTracking: "Suivi d'Activité",
     nutrition: "Nutrition",
     mentalWellness: "Bien-être Mental",
+    bmiHistory: "Historique IMC",
     categories: {
       underweight: "Insuffisance pondérale",
       normal: "Poids normal",
@@ -62,8 +80,7 @@ export const translations = {
       normal: "Continuez à maintenir un mode de vie sain !",
       overweight: "Un professionnel de santé peut vous aider à établir un programme adapté.",
       obese: "Il est important de consulter un professionnel de santé pour des conseils personnalisés."
-    },
-    bmiHistory: "Historique IMC",
+    }
   },
   ar: {
     title: "حاسبة مؤشر كتلة الجسم",
@@ -77,6 +94,7 @@ export const translations = {
     activityTracking: "تتبع النشاط",
     nutrition: "التغذية",
     mentalWellness: "الصحة النفسية",
+    bmiHistory: "سجل مؤشر كتلة الجسم",
     categories: {
       underweight: "نقص الوزن",
       normal: "وزن طبيعي",
@@ -88,8 +106,7 @@ export const translations = {
       normal: "حافظ على نمط حياتك الصحي!",
       overweight: "يمكن لأخصائي صحي مساعدتك في وضع برنامج مناسب.",
       obese: "من المهم استشارة أخصائي صحي للحصول على نصائح شخصية."
-    },
-    bmiHistory: "سجل مؤشر كتلة الجسم",
+    }
   },
   hi: {
     title: "बीएमआई कैलकुलेटर",
@@ -103,6 +120,7 @@ export const translations = {
     activityTracking: "गतिविधि ट्रैकिंग",
     nutrition: "पोषण",
     mentalWellness: "मानसिक स्वास्थ्य",
+    bmiHistory: "बीएमआई इतिहास",
     categories: {
       underweight: "कम वजन",
       normal: "सामान्य वजन",
@@ -114,10 +132,9 @@ export const translations = {
       normal: "स्वस्थ जीवनशैली बनाए रखें!",
       overweight: "एक स्वास्थ्य पेशेवर आपको उपयुक्त कार्यक्रम बनाने में मदद कर सकता है।",
       obese: "व्यक्तिगत सलाह के लिए स्वास्थ्य पेशेवर से परामर्श करना महत्वपूर्ण है।"
-    },
-    bmiHistory: "बीएमआई इतिहास",
+    }
   }
 };
 
 export type Language = keyof typeof translations;
-export type TranslationKey = keyof typeof translations.en;
+export type TranslationKey = keyof TranslationType;
