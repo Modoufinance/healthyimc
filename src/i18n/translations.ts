@@ -138,3 +138,6 @@ export const translations: Record<string, TranslationType> = {
 
 export type Language = "en" | "fr" | "ar" | "hi";
 export type TranslationKey = keyof TranslationType;
+
+// Add type for accessing nested properties
+export type NestedTranslationKey = TranslationKey | `${TranslationKey}.${string}`;

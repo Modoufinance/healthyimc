@@ -1,10 +1,10 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-import { translations, Language, TranslationKey } from "../i18n/translations";
+import { translations, Language, TranslationType } from "../i18n/translations";
 
 type LanguageContextType = {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: TranslationKey) => string;
+  t: (key: keyof TranslationType) => any;
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -12,8 +12,8 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>("en");
 
-  const t = (key: TranslationKey) => {
-    return translations[language][key] as string;
+  const t = (key: keyof TranslationType) => {
+    return translations[language][key];
   };
 
   return (
