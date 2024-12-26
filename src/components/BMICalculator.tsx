@@ -30,8 +30,8 @@ const BMICalculator = () => {
 
     if (!weightNum || !heightNum || heightNum <= 0) {
       toast({
-        title: "Error",
-        description: "Please enter valid values.",
+        title: "Erreur",
+        description: "Veuillez entrer des valeurs valides.",
         variant: "destructive",
       });
       return;
@@ -42,77 +42,66 @@ const BMICalculator = () => {
     let advice = "";
 
     if (bmi < 18.5) {
-      category = t("categories").underweight;
-      advice = t("advice").underweight;
+      category = "Insuffisance pondérale";
+      advice = "Vous êtes en dessous du poids recommandé. Pensez à consulter un professionnel de santé pour des conseils alimentaires.";
     } else if (bmi >= 18.5 && bmi < 24.9) {
-      category = t("categories").normal;
-      advice = t("advice").normal;
+      category = "Poids normal";
+      advice = "Votre poids est dans la plage normale. Continuez à maintenir un mode de vie sain !";
     } else if (bmi >= 25 && bmi < 29.9) {
-      category = t("categories").overweight;
-      advice = t("advice").overweight;
+      category = "Surpoids";
+      advice = "Vous êtes en surpoids. Un professionnel de santé peut vous aider à établir un programme adapté.";
     } else {
-      category = t("categories").obese;
-      advice = t("advice").obese;
+      category = "Obésité";
+      advice = "Vous êtes en obésité. Il est important de consulter un professionnel de santé pour des conseils personnalisés.";
     }
 
     setBmiData({ bmi, category, advice });
     toast({
-      title: t("calculate"),
-      description: "Success",
+      title: "Calcul effectué",
+      description: "Votre IMC a été calculé avec succès",
     });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-400 to-blue-600 px-4 py-6 md:py-8 lg:py-12">
+    <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] px-4 py-6 md:py-8 lg:py-12">
       <div className="max-w-7xl mx-auto space-y-6">
-        <Card className="w-full max-w-md mx-auto p-4 md:p-6 space-y-6 backdrop-blur-sm bg-white/95 shadow-xl animate-fade-in">
+        <Card className="w-full max-w-md mx-auto p-4 md:p-6 space-y-6 bg-white/95 backdrop-blur-sm shadow-xl">
           <div className="space-y-2 text-center">
-            <div className="flex justify-center items-center gap-2">
-              <Scale className="w-6 h-6 text-primary" />
-              <h1 className="text-xl md:text-2xl font-bold tracking-tight">{t("title")}</h1>
-            </div>
+            <h1 className="text-xl md:text-2xl font-bold tracking-tight text-[#4facfe]">
+              Calculatrice IMC
+            </h1>
             <p className="text-sm text-muted-foreground">
-              {t("subtitle")}
+              Calculez votre Indice de Masse Corporelle
             </p>
           </div>
 
           <form onSubmit={calculateBMI} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="weight">{t("weight")}</Label>
-              <div className="relative">
-                <Input
-                  id="weight"
-                  type="number"
-                  inputMode="decimal"
-                  placeholder={t("weightPlaceholder")}
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
-                  className="pl-10"
-                  required
-                />
-                <Activity className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-              </div>
+              <Label htmlFor="weight">Poids (en kg)</Label>
+              <Input
+                id="weight"
+                type="number"
+                placeholder="Ex: 70"
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                required
+              />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="height">{t("height")}</Label>
-              <div className="relative">
-                <Input
-                  id="height"
-                  type="number"
-                  inputMode="decimal"
-                  placeholder={t("heightPlaceholder")}
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                  className="pl-10"
-                  required
-                />
-                <Scale className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-              </div>
+              <Label htmlFor="height">Taille (en cm)</Label>
+              <Input
+                id="height"
+                type="number"
+                placeholder="Ex: 175"
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}
+                required
+              />
             </div>
 
-            <Button type="submit" className="w-full">
-              {t("calculate")}
+            <Button type="submit" className="w-full bg-[#4facfe] hover:bg-[#00f2fe]">
+              Calculer l'IMC
             </Button>
           </form>
         </Card>
