@@ -63,11 +63,11 @@ const BMICalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] px-4 py-6 md:py-8 lg:py-12">
+    <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
-        <Card className="w-full max-w-md mx-auto p-4 md:p-6 space-y-6 bg-white/95 backdrop-blur-sm shadow-xl">
+        <Card className="w-full max-w-md mx-auto p-4 sm:p-6 space-y-6 bg-white/95 backdrop-blur-sm shadow-xl">
           <div className="space-y-2 text-center">
-            <h1 className="text-xl md:text-2xl font-bold tracking-tight text-[#4facfe]">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#4facfe]">
               Calculatrice IMC
             </h1>
             <p className="text-sm text-muted-foreground">
@@ -85,6 +85,7 @@ const BMICalculator = () => {
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
                 required
+                className="text-base sm:text-sm"
               />
             </div>
 
@@ -97,6 +98,7 @@ const BMICalculator = () => {
                 value={height}
                 onChange={(e) => setHeight(e.target.value)}
                 required
+                className="text-base sm:text-sm"
               />
             </div>
 
@@ -107,61 +109,51 @@ const BMICalculator = () => {
         </Card>
 
         {bmiData && (
-          <div className="animate-slide-up">
+          <div className="animate-slide-up space-y-6">
             <BMIResult bmiData={bmiData} />
             <BMIScale bmi={bmiData.bmi} />
             <BMIChart bmi={bmiData.bmi} />
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto px-4 animate-slide-up">
-          <Card className="p-4 md:p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white/95 backdrop-blur-sm">
-            <div className="flex flex-col items-center space-y-3">
-              <div className="p-3 bg-primary/10 rounded-full">
-                <Heart className="w-6 h-6 text-primary" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto animate-slide-up">
+          {[
+            {
+              icon: <Heart className="w-6 h-6 text-primary" />,
+              title: t("healthAdvice"),
+              description: t("healthAdvice"),
+            },
+            {
+              icon: <Activity className="w-6 h-6 text-primary" />,
+              title: t("activityTracking"),
+              description: t("activityTracking"),
+            },
+            {
+              icon: <Apple className="w-6 h-6 text-primary" />,
+              title: t("nutrition"),
+              description: t("nutrition"),
+            },
+            {
+              icon: <Brain className="w-6 h-6 text-primary" />,
+              title: t("mentalWellness"),
+              description: t("mentalWellness"),
+            },
+          ].map((item, index) => (
+            <Card
+              key={index}
+              className="p-4 sm:p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white/95 backdrop-blur-sm"
+            >
+              <div className="flex flex-col items-center space-y-3">
+                <div className="p-3 bg-primary/10 rounded-full">
+                  {item.icon}
+                </div>
+                <h3 className="font-semibold text-center">{item.title}</h3>
+                <p className="text-sm text-center text-muted-foreground">
+                  {item.description}
+                </p>
               </div>
-              <h3 className="font-semibold">{t("healthAdvice")}</h3>
-              <p className="text-sm text-center text-muted-foreground">
-                {t("healthAdvice")}
-              </p>
-            </div>
-          </Card>
-
-          <Card className="p-4 md:p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white/95 backdrop-blur-sm">
-            <div className="flex flex-col items-center space-y-3">
-              <div className="p-3 bg-primary/10 rounded-full">
-                <Activity className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-semibold">{t("activityTracking")}</h3>
-              <p className="text-sm text-center text-muted-foreground">
-                {t("activityTracking")}
-              </p>
-            </div>
-          </Card>
-
-          <Card className="p-4 md:p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white/95 backdrop-blur-sm">
-            <div className="flex flex-col items-center space-y-3">
-              <div className="p-3 bg-primary/10 rounded-full">
-                <Apple className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-semibold">{t("nutrition")}</h3>
-              <p className="text-sm text-center text-muted-foreground">
-                {t("nutrition")}
-              </p>
-            </div>
-          </Card>
-
-          <Card className="p-4 md:p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white/95 backdrop-blur-sm">
-            <div className="flex flex-col items-center space-y-3">
-              <div className="p-3 bg-primary/10 rounded-full">
-                <Brain className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-semibold">{t("mentalWellness")}</h3>
-              <p className="text-sm text-center text-muted-foreground">
-                {t("mentalWellness")}
-              </p>
-            </div>
-          </Card>
+            </Card>
+          ))}
         </div>
       </div>
     </div>
