@@ -7,6 +7,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import Privacy from "./pages/Privacy";
 import BMICalculator from "./components/BMICalculator";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
                 <Route path="/" element={<Home />} />
                 <Route path="/calculator" element={<BMICalculator />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/privacy" element={<Privacy />} />
               </Routes>
             </main>
           </div>
