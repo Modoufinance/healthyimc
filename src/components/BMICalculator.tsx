@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { Scale, Activity, Heart, Brain, Apple } from "lucide-react";
+import { Scale, Activity, Heart, Brain, Apple, Send } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import BMIScale from "./BMIScale";
 import BMIResult from "./BMIResult";
@@ -20,6 +20,10 @@ const BMICalculator = () => {
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [bmiData, setBmiData] = useState<BMIData | null>(null);
+  const [message, setMessage] = useState("");
+  const [chatMessages, setChatMessages] = useState([
+    { sender: "Assistant", text: "Bonjour ! Comment puis-je vous aider aujourd'hui ?" }
+  ]);
   const { toast } = useToast();
   const { t } = useLanguage();
 
@@ -60,6 +64,17 @@ const BMICalculator = () => {
       title: "Calcul effectué",
       description: "Votre IMC a été calculé avec succès",
     });
+  };
+
+  const sendMessage = () => {
+    if (!message.trim()) return;
+
+    setChatMessages([
+      ...chatMessages,
+      { sender: "Vous", text: message },
+      { sender: "Assistant", text: "Merci pour votre message ! Nous développons encore mes capacités." }
+    ]);
+    setMessage("");
   };
 
   return (
@@ -106,11 +121,45 @@ const BMICalculator = () => {
               Calculer l'IMC
             </Button>
           </form>
+
+          {bmiData && (
+            <div className="animate-slide-up">
+              <BMIResult bmiData={bmiData} />
+            </div>
+          )}
+
+          <div className="mt-4 text-sm">
+            <a href="/health-allies" className="text-[#4facfe] hover:underline">
+              Découvrez nos partenaires santé
+            </a>
+          </div>
+
+          {/* Chatbot Section */}
+          <Card className="mt-6 p-4 bg-gray-50">
+            <h2 className="font-bold text-[#4facfe] mb-3">Assistant Santé IA</h2>
+            <div className="h-[150px] overflow-y-auto border border-gray-200 rounded-md p-3 bg-white mb-3">
+              {chatMessages.map((msg, index) => (
+                <p key={index} className="mb-2">
+                  <span className="font-semibold">{msg.sender} :</span> {msg.text}
+                </p>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <Input
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Écrivez votre message..."
+                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+              />
+              <Button onClick={sendMessage} className="bg-[#4facfe] hover:bg-[#00f2fe]">
+                <Send className="h-4 w-4" />
+              </Button>
+            </div>
+          </Card>
         </Card>
 
         {bmiData && (
           <div className="animate-slide-up space-y-6">
-            <BMIResult bmiData={bmiData} />
             <BMIScale bmi={bmiData.bmi} />
             <BMIChart bmi={bmiData.bmi} />
           </div>
