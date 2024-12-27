@@ -1,7 +1,5 @@
 import type { Language, TranslationType } from './types';
 
-export type { Language, TranslationType };
-
 export const translations: Record<Language, TranslationType> = {
   en: {
     title: "BMI Calculator",
