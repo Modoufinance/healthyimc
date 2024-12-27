@@ -1,6 +1,6 @@
-import { Language, TranslationType } from './types';
+import type { Language, TranslationType } from './types';
 
-export { Language, TranslationType };
+export type { Language, TranslationType };
 
 export const translations: Record<Language, TranslationType> = {
   en: {
