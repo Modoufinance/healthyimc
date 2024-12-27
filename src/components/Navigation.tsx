@@ -10,7 +10,7 @@ const Navigation = () => {
 
   const links = [
     { to: "/", label: "Home", icon: <Home className="w-4 h-4" /> },
-    { to: "/calculator", label: t("title"), icon: <Calculator className="w-4 h-4" /> },
+    { to: "/calculator", label: t.title, icon: <Calculator className="w-4 h-4" /> },
     { to: "/about", label: "À propos", icon: <Info className="w-4 h-4" /> },
     { to: "/privacy", label: "Confidentialité", icon: <Shield className="w-4 h-4" /> },
   ];

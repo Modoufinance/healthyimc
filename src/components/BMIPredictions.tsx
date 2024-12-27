@@ -27,7 +27,7 @@ const BMIPredictions = ({ predictions, currentBMI }: BMIPredictionsProps) => {
 
   return (
     <Card className="p-4">
-      <h3 className="text-lg font-semibold mb-4">{t("bmiPredictions")}</h3>
+      <h3 className="text-lg font-semibold mb-4">{t.bmiPredictions}</h3>
       <div className="w-full h-[200px]">
         <ResponsiveContainer>
           <LineChart data={data}>

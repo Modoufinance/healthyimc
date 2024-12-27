@@ -32,7 +32,7 @@ const BMIChart = ({ bmi }: BMIChartProps) => {
 
   return (
     <Card className="p-4 mt-6">
-      <h3 className="text-lg font-semibold mb-4">{t("bmiHistory")}</h3>
+      <h3 className="text-lg font-semibold mb-4">{t.bmiHistory}</h3>
       <div className="w-full h-[300px]">
         <ResponsiveContainer>
           <LineChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
@@ -65,10 +65,10 @@ const BMIChart = ({ bmi }: BMIChartProps) => {
       
       <div className="flex justify-center gap-4 mt-4">
         {[
-          { label: t("categories").underweight, color: "#93C5FD" },
-          { label: t("categories").normal, color: "#86EFAC" },
-          { label: t("categories").overweight, color: "#FCD34D" },
-          { label: t("categories").obese, color: "#FCA5A5" },
+          { label: t.categories.underweight, color: "#93C5FD" },
+          { label: t.categories.normal, color: "#86EFAC" },
+          { label: t.categories.overweight, color: "#FCD34D" },
+          { label: t.categories.obese, color: "#FCA5A5" },
         ].map((zone, index) => (
           <div key={index} className="flex items-center gap-2">
             <div

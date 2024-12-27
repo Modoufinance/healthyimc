@@ -38,16 +38,16 @@ const BMICalculator = () => {
     let advice = "";
 
     if (bmi < 18.5) {
-      category = t("categories").underweight;
+      category = t.categories.underweight;
       advice = "Vous êtes en dessous du poids recommandé. Pensez à consulter un professionnel de santé pour des conseils alimentaires.";
     } else if (bmi >= 18.5 && bmi < 24.9) {
-      category = t("categories").normal;
+      category = t.categories.normal;
       advice = "Votre poids est dans la plage normale. Continuez à maintenir un mode de vie sain !";
     } else if (bmi >= 25 && bmi < 29.9) {
-      category = t("categories").overweight;
+      category = t.categories.overweight;
       advice = "Vous êtes en surpoids. Un professionnel de santé peut vous aider à établir un programme adapté.";
     } else {
-      category = t("categories").obese;
+      category = t.categories.obese;
       advice = "Vous êtes en obésité. Il est important de consulter un professionnel de santé pour des conseils personnalisés.";
     }
 
@@ -96,7 +96,7 @@ const BMICalculator = () => {
           <Card className="p-4 sm:p-6">
             <div className="space-y-2 text-center">
               <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#4facfe]">
-                {t("title")}
+                {t.title}
               </h1>
               <p className="text-sm text-muted-foreground">
                 Calculez votre Indice de Masse Corporelle
