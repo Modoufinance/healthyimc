@@ -19,6 +19,16 @@ export const translations: Record<Language, TranslationType> = {
     bmiPredictions: "BMI Predictions",
     personalizedAdvice: "Personalized Advice",
     updateProfile: "Update Profile",
+    units: {
+      weight: {
+        unit: 'lb',
+        factor: 2.20462
+      },
+      height: {
+        unit: 'in',
+        factor: 0.393701
+      }
+    }
   },
   fr: {
     title: "Calculateur IMC",
@@ -36,6 +46,16 @@ export const translations: Record<Language, TranslationType> = {
     bmiPredictions: "Prédictions IMC",
     personalizedAdvice: "Conseils Personnalisés",
     updateProfile: "Mettre à jour le profil",
+    units: {
+      weight: {
+        unit: 'kg',
+        factor: 1
+      },
+      height: {
+        unit: 'cm',
+        factor: 1
+      }
+    }
   },
   ar: {
     title: "حاسبة مؤشر كتلة الجسم",
@@ -53,6 +73,16 @@ export const translations: Record<Language, TranslationType> = {
     bmiPredictions: "توقعات مؤشر كتلة الجسم",
     personalizedAdvice: "نصائح شخصية",
     updateProfile: "تحديث الملف الشخصي",
+    units: {
+      weight: {
+        unit: 'kg',
+        factor: 1
+      },
+      height: {
+        unit: 'cm',
+        factor: 1
+      }
+    }
   },
   hi: {
     title: "बीएमआई कैलकुलेटर",
@@ -70,5 +100,15 @@ export const translations: Record<Language, TranslationType> = {
     bmiPredictions: "बीएमआई भविष्यवाणी",
     personalizedAdvice: "व्यक्तिगत सलाह",
     updateProfile: "प्रोफ़ाइल अपडेट करें",
-  },
+    units: {
+      weight: {
+        unit: 'kg',
+        factor: 1
+      },
+      height: {
+        unit: 'cm',
+        factor: 1
+      }
+    }
+  }
 };

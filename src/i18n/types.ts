@@ -1,10 +1,21 @@
-export type Language = "en" | "fr" | "ar" | "hi";
+export type Language = 'en' | 'fr' | 'ar' | 'hi';
 
 export interface CategoryTranslations {
   underweight: string;
   normal: string;
   overweight: string;
   obese: string;
+}
+
+export interface LocaleUnits {
+  weight: {
+    unit: 'kg' | 'lb';
+    factor: number;
+  };
+  height: {
+    unit: 'cm' | 'in';
+    factor: number;
+  };
 }
 
 export interface TranslationType {
@@ -18,4 +29,5 @@ export interface TranslationType {
   bmiPredictions: string;
   personalizedAdvice: string;
   updateProfile: string;
+  units: LocaleUnits;
 }
