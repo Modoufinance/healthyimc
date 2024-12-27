@@ -10,7 +10,7 @@ interface DeviceConnectProps {
 
 const DeviceConnect = ({ onDataReceived }: DeviceConnectProps) => {
   const [isConnecting, setIsConnecting] = useState(false);
-  const [connectedDevice, setConnectedDevice] = useState<BluetoothDevice | null>(null);
+  const [connectedDevice, setConnectedDevice] = useState<any | null>(null);
 
   const handleConnect = async () => {
     setIsConnecting(true);

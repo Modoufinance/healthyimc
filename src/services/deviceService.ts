@@ -5,13 +5,25 @@ interface DeviceData {
   heartRate?: number;
 }
 
-export const connectToDevice = async (): Promise<BluetoothDevice | null> => {
+declare global {
+  interface Navigator {
+    bluetooth: {
+      requestDevice(options: {
+        filters: Array<{
+          services?: string[];
+          namePrefix?: string;
+        }>;
+        optionalServices?: string[];
+      }): Promise<any>;
+    };
+  }
+}
+
+export const connectToDevice = async (): Promise<any> => {
   try {
     const device = await navigator.bluetooth.requestDevice({
       filters: [
-        { services: ['health_scale'] },
-        { services: ['heart_rate'] },
-        { namePrefix: 'MI' }, // Pour les appareils Xiaomi
+        { namePrefix: 'MI' },
         { namePrefix: 'FITBIT' }
       ],
       optionalServices: ['weight_scale', 'height_measurement', 'step_counter']
@@ -25,7 +37,7 @@ export const connectToDevice = async (): Promise<BluetoothDevice | null> => {
   }
 };
 
-export const readDeviceData = async (device: BluetoothDevice): Promise<DeviceData> => {
+export const readDeviceData = async (device: any): Promise<DeviceData> => {
   const data: DeviceData = {};
   
   try {

@@ -8,6 +8,7 @@ export interface CategoryTranslations {
 }
 
 export interface TranslationType {
+  title: string;
   bmiHistory: string;
   categories: CategoryTranslations;
   healthAdvice: string;

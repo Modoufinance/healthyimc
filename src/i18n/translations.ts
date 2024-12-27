@@ -1,9 +1,10 @@
 import { Language, TranslationType } from './types';
 
-export type { Language, TranslationType };
+export { Language, TranslationType };
 
 export const translations: Record<Language, TranslationType> = {
   en: {
+    title: "BMI Calculator",
     bmiHistory: "BMI History",
     categories: {
       underweight: "Underweight",
@@ -20,6 +21,7 @@ export const translations: Record<Language, TranslationType> = {
     updateProfile: "Update Profile",
   },
   fr: {
+    title: "Calculateur IMC",
     bmiHistory: "Historique IMC",
     categories: {
       underweight: "Insuffisance pondérale",
@@ -36,6 +38,7 @@ export const translations: Record<Language, TranslationType> = {
     updateProfile: "Mettre à jour le profil",
   },
   ar: {
+    title: "حاسبة مؤشر كتلة الجسم",
     bmiHistory: "سجل مؤشر كتلة الجسم",
     categories: {
       underweight: "نقص الوزن",
@@ -52,6 +55,7 @@ export const translations: Record<Language, TranslationType> = {
     updateProfile: "تحديث الملف الشخصي",
   },
   hi: {
+    title: "बीएमआई कैलकुलेटर",
     bmiHistory: "बीएमआई इतिहास",
     categories: {
       underweight: "कम वजन",
