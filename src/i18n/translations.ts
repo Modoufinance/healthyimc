@@ -1,8 +1,6 @@
-import { Language } from "./types";
+import { Language, TranslationType } from './types';
 
-export type TranslationType = {
-  [key: string]: string;
-};
+export type { Language, TranslationType };
 
 export const translations: Record<Language, TranslationType> = {
   en: {
@@ -36,5 +34,37 @@ export const translations: Record<Language, TranslationType> = {
     bmiPredictions: "Prédictions IMC",
     personalizedAdvice: "Conseils Personnalisés",
     updateProfile: "Mettre à jour le profil",
+  },
+  ar: {
+    bmiHistory: "سجل مؤشر كتلة الجسم",
+    categories: {
+      underweight: "نقص الوزن",
+      normal: "وزن طبيعي",
+      overweight: "زيادة الوزن",
+      obese: "السمنة",
+    },
+    healthAdvice: "نصائح صحية",
+    activityTracking: "تتبع النشاط",
+    nutrition: "التغذية",
+    mentalWellness: "الصحة النفسية",
+    bmiPredictions: "توقعات مؤشر كتلة الجسم",
+    personalizedAdvice: "نصائح شخصية",
+    updateProfile: "تحديث الملف الشخصي",
+  },
+  hi: {
+    bmiHistory: "बीएमआई इतिहास",
+    categories: {
+      underweight: "कम वजन",
+      normal: "सामान्य वजन",
+      overweight: "अधिक वजन",
+      obese: "मोटापा",
+    },
+    healthAdvice: "स्वास्थ्य सलाह",
+    activityTracking: "गतिविधि ट्रैकिंग",
+    nutrition: "पोषण",
+    mentalWellness: "मानसिक स्वास्थ्य",
+    bmiPredictions: "बीएमआई भविष्यवाणी",
+    personalizedAdvice: "व्यक्तिगत सलाह",
+    updateProfile: "प्रोफ़ाइल अपडेट करें",
   },
 };
