@@ -9,6 +9,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import BMIScale from "./BMIScale";
 import BMIResult from "./BMIResult";
 import BMIChart from "./BMIChart";
+import BMIPredictions from "./BMIPredictions";
+import UserDataForm from "./UserDataForm";
+import { getPersonalizedAdvice, predictBMITrend } from "@/services/aiService";
 
 export interface BMIData {
   bmi: number;
@@ -24,6 +27,14 @@ const BMICalculator = () => {
   const [chatMessages, setChatMessages] = useState([
     { sender: "Assistant", text: "Bonjour ! Comment puis-je vous aider aujourd'hui ?" }
   ]);
+  const [predictions, setPredictions] = useState(null);
+  const [userData, setUserData] = useState({
+    age: null,
+    gender: "",
+    activityLevel: "",
+    targetBMI: null
+  });
+  
   const { toast } = useToast();
   const { t } = useLanguage();
 
@@ -59,10 +70,37 @@ const BMICalculator = () => {
       advice = "Vous êtes en obésité. Il est important de consulter un professionnel de santé pour des conseils personnalisés.";
     }
 
-    setBmiData({ bmi, category, advice });
+    const bmiDataObj = { bmi, category, advice };
+    
+    // Get personalized advice if user data is available
+    if (userData.age && userData.gender && userData.activityLevel) {
+      const personalizedAdvice = getPersonalizedAdvice(bmiDataObj, {
+        ...userData,
+        weight: weightNum,
+        height: heightNum
+      });
+      bmiDataObj.advice = personalizedAdvice;
+    }
+
+    setBmiData(bmiDataObj);
+
+    // Generate predictions if target BMI is set
+    if (userData.targetBMI) {
+      const newPredictions = predictBMITrend(bmi, userData.targetBMI, 12);
+      setPredictions(newPredictions);
+    }
+
     toast({
       title: "Calcul effectué",
       description: "Votre IMC a été calculé avec succès",
+    });
+  };
+
+  const handleUserDataSubmit = (data: any) => {
+    setUserData(data);
+    toast({
+      title: "Profil mis à jour",
+      description: "Vos informations ont été enregistrées avec succès",
     });
   };
 
@@ -80,130 +118,88 @@ const BMICalculator = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
-        <Card className="w-full max-w-md mx-auto p-4 sm:p-6 space-y-6 bg-white/95 backdrop-blur-sm shadow-xl">
-          <div className="space-y-2 text-center">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#4facfe]">
-              Calculatrice IMC
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Calculez votre Indice de Masse Corporelle
-            </p>
-          </div>
-
-          <form onSubmit={calculateBMI} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="weight">Poids (en kg)</Label>
-              <Input
-                id="weight"
-                type="number"
-                placeholder="Ex: 70"
-                value={weight}
-                onChange={(e) => setWeight(e.target.value)}
-                required
-                className="text-base sm:text-sm"
-              />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card className="p-4 sm:p-6">
+            <div className="space-y-2 text-center">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#4facfe]">
+                Calculatrice IMC
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Calculez votre Indice de Masse Corporelle
+              </p>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="height">Taille (en cm)</Label>
-              <Input
-                id="height"
-                type="number"
-                placeholder="Ex: 175"
-                value={height}
-                onChange={(e) => setHeight(e.target.value)}
-                required
-                className="text-base sm:text-sm"
-              />
-            </div>
+            <form onSubmit={calculateBMI} className="space-y-4 mt-4">
+              <div className="space-y-2">
+                <Label htmlFor="weight">Poids (en kg)</Label>
+                <Input
+                  id="weight"
+                  type="number"
+                  placeholder="Ex: 70"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                  required
+                />
+              </div>
 
-            <Button type="submit" className="w-full bg-[#4facfe] hover:bg-[#00f2fe]">
-              Calculer l'IMC
-            </Button>
-          </form>
+              <div className="space-y-2">
+                <Label htmlFor="height">Taille (en cm)</Label>
+                <Input
+                  id="height"
+                  type="number"
+                  placeholder="Ex: 175"
+                  value={height}
+                  onChange={(e) => setHeight(e.target.value)}
+                  required
+                />
+              </div>
 
-          {bmiData && (
-            <div className="animate-slide-up">
-              <BMIResult bmiData={bmiData} />
-            </div>
-          )}
-
-          <div className="mt-4 text-sm">
-            <a href="/health-allies" className="text-[#4facfe] hover:underline">
-              Découvrez nos partenaires santé
-            </a>
-          </div>
-
-          {/* Chatbot Section */}
-          <Card className="mt-6 p-4 bg-gray-50">
-            <h2 className="font-bold text-[#4facfe] mb-3">Assistant Santé IA</h2>
-            <div className="h-[150px] overflow-y-auto border border-gray-200 rounded-md p-3 bg-white mb-3">
-              {chatMessages.map((msg, index) => (
-                <p key={index} className="mb-2">
-                  <span className="font-semibold">{msg.sender} :</span> {msg.text}
-                </p>
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <Input
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Écrivez votre message..."
-                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-              />
-              <Button onClick={sendMessage} className="bg-[#4facfe] hover:bg-[#00f2fe]">
-                <Send className="h-4 w-4" />
+              <Button type="submit" className="w-full bg-[#4facfe] hover:bg-[#00f2fe]">
+                Calculer l'IMC
               </Button>
-            </div>
+            </form>
+
+            {bmiData && (
+              <div className="animate-slide-up mt-4">
+                <BMIResult bmiData={bmiData} />
+              </div>
+            )}
           </Card>
-        </Card>
+
+          <UserDataForm onSubmit={handleUserDataSubmit} />
+        </div>
 
         {bmiData && (
           <div className="animate-slide-up space-y-6">
             <BMIScale bmi={bmiData.bmi} />
-            <BMIChart bmi={bmiData.bmi} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <BMIChart bmi={bmiData.bmi} />
+              {predictions && <BMIPredictions predictions={predictions} currentBMI={bmiData.bmi} />}
+            </div>
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto animate-slide-up">
-          {[
-            {
-              icon: <Heart className="w-6 h-6 text-primary" />,
-              title: t("healthAdvice"),
-              description: t("healthAdvice"),
-            },
-            {
-              icon: <Activity className="w-6 h-6 text-primary" />,
-              title: t("activityTracking"),
-              description: t("activityTracking"),
-            },
-            {
-              icon: <Apple className="w-6 h-6 text-primary" />,
-              title: t("nutrition"),
-              description: t("nutrition"),
-            },
-            {
-              icon: <Brain className="w-6 h-6 text-primary" />,
-              title: t("mentalWellness"),
-              description: t("mentalWellness"),
-            },
-          ].map((item, index) => (
-            <Card
-              key={index}
-              className="p-4 sm:p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white/95 backdrop-blur-sm"
-            >
-              <div className="flex flex-col items-center space-y-3">
-                <div className="p-3 bg-primary/10 rounded-full">
-                  {item.icon}
-                </div>
-                <h3 className="font-semibold text-center">{item.title}</h3>
-                <p className="text-sm text-center text-muted-foreground">
-                  {item.description}
-                </p>
-              </div>
-            </Card>
-          ))}
-        </div>
+        <Card className="p-4">
+          <h2 className="font-bold text-[#4facfe] mb-3">Assistant Santé IA</h2>
+          <div className="h-[150px] overflow-y-auto border border-gray-200 rounded-md p-3 bg-white mb-3">
+            {chatMessages.map((msg, index) => (
+              <p key={index} className="mb-2">
+                <span className="font-semibold">{msg.sender} :</span> {msg.text}
+              </p>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <Input
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Écrivez votre message..."
+              onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+            />
+            <Button onClick={sendMessage} className="bg-[#4facfe] hover:bg-[#00f2fe]">
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+        </Card>
       </div>
     </div>
   );
