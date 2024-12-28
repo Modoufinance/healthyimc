@@ -21,7 +21,18 @@ export const translations: Record<Language, TranslationType> = {
     invalidInputs: "Please enter valid values",
     yourBmiIs: "Your BMI is",
     category: "Category",
-    advice: "Advice"
+    advice: "Advice",
+    units: {
+      weight: {
+        unit: "kg",
+        factor: 1
+      },
+      height: {
+        unit: "cm",
+        factor: 1
+      }
+    },
+    bmiPredictions: "BMI Predictions"
   },
   fr: {
     title: "Calculateur IMC",
@@ -43,7 +54,18 @@ export const translations: Record<Language, TranslationType> = {
     invalidInputs: "Veuillez entrer des valeurs valides",
     yourBmiIs: "Votre IMC est de",
     category: "Catégorie",
-    advice: "Conseil"
+    advice: "Conseil",
+    units: {
+      weight: {
+        unit: "kg",
+        factor: 1
+      },
+      height: {
+        unit: "cm",
+        factor: 1
+      }
+    },
+    bmiPredictions: "Prédictions IMC"
   },
   ar: {
     title: "حاسبة مؤشر كتلة الجسم",
@@ -65,7 +87,18 @@ export const translations: Record<Language, TranslationType> = {
     invalidInputs: "يرجى إدخال قيم صحيحة",
     yourBmiIs: "مؤشر كتلة جسمك هو",
     category: "الفئة",
-    advice: "نصيحة"
+    advice: "نصيحة",
+    units: {
+      weight: {
+        unit: "كجم",
+        factor: 1
+      },
+      height: {
+        unit: "سم",
+        factor: 1
+      }
+    },
+    bmiPredictions: "توقعات مؤشر كتلة الجسم"
   },
   hi: {
     title: "बीएमआई कैलकुलेटर",
@@ -87,6 +120,17 @@ export const translations: Record<Language, TranslationType> = {
     invalidInputs: "कृपया मान्य मान दर्ज करें",
     yourBmiIs: "आपका बीएमआई है",
     category: "श्रेणी",
-    advice: "सलाह"
+    advice: "सलाह",
+    units: {
+      weight: {
+        unit: "किग्रा",
+        factor: 1
+      },
+      height: {
+        unit: "सेमी",
+        factor: 1
+      }
+    },
+    bmiPredictions: "बीएमआई पूर्वानुमान"
   }
 };

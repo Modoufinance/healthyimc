@@ -7,6 +7,17 @@ export interface CategoryTranslations {
   obese: string;
 }
 
+export interface UnitTranslations {
+  weight: {
+    unit: string;
+    factor: number;
+  };
+  height: {
+    unit: string;
+    factor: number;
+  };
+}
+
 export interface TranslationType {
   title: string;
   subtitle: string;
@@ -23,4 +34,6 @@ export interface TranslationType {
   yourBmiIs: string;
   category: string;
   advice: string;
+  units: UnitTranslations;
+  bmiPredictions: string;
 }
