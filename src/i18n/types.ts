@@ -1,6 +1,4 @@
-export type Language = 'en' | 'fr' | 'ar' | 'hi';
-
-export interface CategoryTranslations {
+export interface Categories {
   underweight: string;
   normal: string;
   overweight: string;
@@ -21,14 +19,9 @@ export interface UnitTranslations {
 export interface TranslationType {
   title: string;
   subtitle: string;
-  bmiHistory: string;
-  categories: CategoryTranslations;
-  healthAdvice: string;
-  activityTracking: string;
-  nutrition: string;
-  mentalWellness: string;
+  categories: Categories;
+  units: UnitTranslations;
   bmiPredictions: string;
   personalizedAdvice: string;
   updateProfile: string;
-  units: UnitTranslations;
 }
