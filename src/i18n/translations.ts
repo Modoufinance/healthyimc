@@ -1,9 +1,10 @@
 import { TranslationType } from "./types";
 
-const translations: Record<string, TranslationType> = {
+export const translations: Record<string, TranslationType> = {
   fr: {
     title: "Calculatrice IMC",
     subtitle: "Calculez votre Indice de Masse Corporelle",
+    bmiHistory: "Historique IMC",
     categories: {
       underweight: "Insuffisance pondérale",
       normal: "Poids normal",
@@ -27,6 +28,7 @@ const translations: Record<string, TranslationType> = {
   en: {
     title: "BMI Calculator",
     subtitle: "Calculate your Body Mass Index",
+    bmiHistory: "BMI History",
     categories: {
       underweight: "Underweight",
       normal: "Normal weight",
@@ -48,5 +50,3 @@ const translations: Record<string, TranslationType> = {
     updateProfile: "Update Profile"
   }
 };
-
-export default translations;

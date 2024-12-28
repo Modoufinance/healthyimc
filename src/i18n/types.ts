@@ -1,3 +1,5 @@
+export type Language = 'en' | 'fr';
+
 export interface Categories {
   underweight: string;
   normal: string;
@@ -19,6 +21,7 @@ export interface UnitTranslations {
 export interface TranslationType {
   title: string;
   subtitle: string;
+  bmiHistory: string;
   categories: Categories;
   units: UnitTranslations;
   bmiPredictions: string;
