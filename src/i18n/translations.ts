@@ -3,6 +3,7 @@ import type { Language, TranslationType } from './types';
 export const translations: Record<Language, TranslationType> = {
   en: {
     title: "BMI Calculator",
+    subtitle: "Calculate your Body Mass Index",
     bmiHistory: "BMI History",
     categories: {
       underweight: "Underweight",
@@ -30,6 +31,7 @@ export const translations: Record<Language, TranslationType> = {
   },
   fr: {
     title: "Calculateur IMC",
+    subtitle: "Calculez votre Indice de Masse Corporelle",
     bmiHistory: "Historique IMC",
     categories: {
       underweight: "Insuffisance pondérale",
@@ -57,6 +59,7 @@ export const translations: Record<Language, TranslationType> = {
   },
   ar: {
     title: "حاسبة مؤشر كتلة الجسم",
+    subtitle: "احسب مؤشر كتلة الجسم الخاص بك",
     bmiHistory: "سجل مؤشر كتلة الجسم",
     categories: {
       underweight: "نقص الوزن",
@@ -84,6 +87,7 @@ export const translations: Record<Language, TranslationType> = {
   },
   hi: {
     title: "बीएमआई कैलकुलेटर",
+    subtitle: "अपना बॉडी मास इंडेक्स की गणना करें",
     bmiHistory: "बीएमआई इतिहास",
     categories: {
       underweight: "कम वजन",

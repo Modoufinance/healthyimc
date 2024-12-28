@@ -20,6 +20,7 @@ export interface LocaleUnits {
 
 export interface TranslationType {
   title: string;
+  subtitle: string;
   bmiHistory: string;
   categories: CategoryTranslations;
   healthAdvice: string;
