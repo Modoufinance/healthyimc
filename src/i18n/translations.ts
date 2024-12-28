@@ -1,116 +1,92 @@
-import type { Language, TranslationType } from './types';
+import { Language, TranslationType } from "./types";
 
 export const translations: Record<Language, TranslationType> = {
   en: {
     title: "BMI Calculator",
     subtitle: "Calculate your Body Mass Index",
+    mainMenu: "Main Menu",
+    aiAssistant: "AI Health Assistant",
+    healthTips: "Health Tips",
     bmiHistory: "BMI History",
     categories: {
       underweight: "Underweight",
-      normal: "Normal weight",
+      normal: "Normal Weight",
       overweight: "Overweight",
-      obese: "Obese",
+      obese: "Obese"
     },
     healthAdvice: "Health Advice",
-    activityTracking: "Activity Tracking",
-    nutrition: "Nutrition",
-    mentalWellness: "Mental Wellness",
-    bmiPredictions: "BMI Predictions",
-    personalizedAdvice: "Personalized Advice",
-    updateProfile: "Update Profile",
-    units: {
-      weight: {
-        unit: 'lb',
-        factor: 2.20462
-      },
-      height: {
-        unit: 'in',
-        factor: 0.393701
-      }
-    }
+    weightLabel: "Weight (kg)",
+    heightLabel: "Height (cm)",
+    calculateButton: "Calculate BMI",
+    invalidInputs: "Please enter valid values",
+    yourBmiIs: "Your BMI is",
+    category: "Category",
+    advice: "Advice"
   },
   fr: {
     title: "Calculateur IMC",
     subtitle: "Calculez votre Indice de Masse Corporelle",
+    mainMenu: "Menu Principal",
+    aiAssistant: "Assistant IA Santé",
+    healthTips: "Conseils Santé",
     bmiHistory: "Historique IMC",
     categories: {
       underweight: "Insuffisance pondérale",
       normal: "Poids normal",
       overweight: "Surpoids",
-      obese: "Obésité",
+      obese: "Obésité"
     },
     healthAdvice: "Conseils de santé",
-    activityTracking: "Suivi d'activité",
-    nutrition: "Nutrition",
-    mentalWellness: "Bien-être mental",
-    bmiPredictions: "Prédictions IMC",
-    personalizedAdvice: "Conseils Personnalisés",
-    updateProfile: "Mettre à jour le profil",
-    units: {
-      weight: {
-        unit: 'kg',
-        factor: 1
-      },
-      height: {
-        unit: 'cm',
-        factor: 1
-      }
-    }
+    weightLabel: "Poids (kg)",
+    heightLabel: "Taille (cm)",
+    calculateButton: "Calculer l'IMC",
+    invalidInputs: "Veuillez entrer des valeurs valides",
+    yourBmiIs: "Votre IMC est de",
+    category: "Catégorie",
+    advice: "Conseil"
   },
   ar: {
     title: "حاسبة مؤشر كتلة الجسم",
-    subtitle: "احسب مؤشر كتلة الجسم الخاص بك",
-    bmiHistory: "سجل مؤشر كتلة الجسم",
+    subtitle: "احسب مؤشر كتلة جسمك",
+    mainMenu: "القائمة الرئيسية",
+    aiAssistant: "مساعد الذكاء الاصطناعي الصحي",
+    healthTips: "نصائح صحية",
+    bmiHistory: "تاريخ مؤشر كتلة الجسم",
     categories: {
       underweight: "نقص الوزن",
       normal: "وزن طبيعي",
       overweight: "زيادة الوزن",
-      obese: "السمنة",
+      obese: "سمنة"
     },
     healthAdvice: "نصائح صحية",
-    activityTracking: "تتبع النشاط",
-    nutrition: "التغذية",
-    mentalWellness: "الصحة النفسية",
-    bmiPredictions: "توقعات مؤشر كتلة الجسم",
-    personalizedAdvice: "نصائح شخصية",
-    updateProfile: "تحديث الملف الشخصي",
-    units: {
-      weight: {
-        unit: 'kg',
-        factor: 1
-      },
-      height: {
-        unit: 'cm',
-        factor: 1
-      }
-    }
+    weightLabel: "الوزن (كجم)",
+    heightLabel: "الطول (سم)",
+    calculateButton: "احسب مؤشر كتلة الجسم",
+    invalidInputs: "يرجى إدخال قيم صحيحة",
+    yourBmiIs: "مؤشر كتلة جسمك هو",
+    category: "الفئة",
+    advice: "نصيحة"
   },
   hi: {
     title: "बीएमआई कैलकुलेटर",
-    subtitle: "अपना बॉडी मास इंडेक्स की गणना करें",
+    subtitle: "अपने शरीर के मास इंडेक्स की गणना करें",
+    mainMenu: "मुख्य मेनू",
+    aiAssistant: "एआई स्वास्थ्य सहायक",
+    healthTips: "स्वास्थ्य टिप्स",
     bmiHistory: "बीएमआई इतिहास",
     categories: {
       underweight: "कम वजन",
       normal: "सामान्य वजन",
       overweight: "अधिक वजन",
-      obese: "मोटापा",
+      obese: "मोटापा"
     },
     healthAdvice: "स्वास्थ्य सलाह",
-    activityTracking: "गतिविधि ट्रैकिंग",
-    nutrition: "पोषण",
-    mentalWellness: "मानसिक स्वास्थ्य",
-    bmiPredictions: "बीएमआई भविष्यवाणी",
-    personalizedAdvice: "व्यक्तिगत सलाह",
-    updateProfile: "प्रोफ़ाइल अपडेट करें",
-    units: {
-      weight: {
-        unit: 'kg',
-        factor: 1
-      },
-      height: {
-        unit: 'cm',
-        factor: 1
-      }
-    }
+    weightLabel: "वजन (किलोग्राम)",
+    heightLabel: "ऊंचाई (सेमी)",
+    calculateButton: "बीएमआई की गणना करें",
+    invalidInputs: "कृपया मान्य मान दर्ज करें",
+    yourBmiIs: "आपका बीएमआई है",
+    category: "श्रेणी",
+    advice: "सलाह"
   }
 };
