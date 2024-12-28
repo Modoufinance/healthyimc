@@ -1,4 +1,4 @@
-export type Language = 'en' | 'fr';
+export type Language = 'en' | 'fr' | 'ar' | 'hi';
 
 export interface Categories {
   underweight: string;

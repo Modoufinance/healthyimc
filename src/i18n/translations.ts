@@ -48,5 +48,53 @@ export const translations: Record<string, TranslationType> = {
     bmiPredictions: "BMI Predictions",
     personalizedAdvice: "Personalized Advice",
     updateProfile: "Update Profile"
+  },
+  ar: {
+    title: "حاسبة مؤشر كتلة الجسم",
+    subtitle: "احسب مؤشر كتلة جسمك",
+    bmiHistory: "سجل مؤشر كتلة الجسم",
+    categories: {
+      underweight: "نقص الوزن",
+      normal: "وزن طبيعي",
+      overweight: "زيادة الوزن",
+      obese: "السمنة"
+    },
+    units: {
+      weight: {
+        unit: "kg",
+        factor: 1
+      },
+      height: {
+        unit: "cm",
+        factor: 1
+      }
+    },
+    bmiPredictions: "توقعات مؤشر كتلة الجسم",
+    personalizedAdvice: "نصائح شخصية",
+    updateProfile: "تحديث الملف الشخصي"
+  },
+  hi: {
+    title: "बीएमआई कैलकुलेटर",
+    subtitle: "अपना बॉडी मास इंडेक्स की गणना करें",
+    bmiHistory: "बीएमआई इतिहास",
+    categories: {
+      underweight: "कम वजन",
+      normal: "सामान्य वजन",
+      overweight: "अधिक वजन",
+      obese: "मोटापा"
+    },
+    units: {
+      weight: {
+        unit: "kg",
+        factor: 1
+      },
+      height: {
+        unit: "cm",
+        factor: 1
+      }
+    },
+    bmiPredictions: "बीएमआई पूर्वानुमान",
+    personalizedAdvice: "व्यक्तिगत सलाह",
+    updateProfile: "प्रोफ़ाइल अपडेट करें"
   }
 };
