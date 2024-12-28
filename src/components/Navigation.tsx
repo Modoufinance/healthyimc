@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Calculator, Info, Shield } from "lucide-react";
+import { Home, Calculator, Info, Shield, History, Bookmark, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -11,6 +11,9 @@ const Navigation = () => {
   const links = [
     { to: "/", label: "Home", icon: <Home className="w-4 h-4" /> },
     { to: "/calculator", label: t.title, icon: <Calculator className="w-4 h-4" /> },
+    { to: "/chat-history", label: "Historique", icon: <History className="w-4 h-4" /> },
+    { to: "/saved-chats", label: "Sauvegardés", icon: <Bookmark className="w-4 h-4" /> },
+    { to: "/help", label: "Aide", icon: <HelpCircle className="w-4 h-4" /> },
     { to: "/about", label: "À propos", icon: <Info className="w-4 h-4" /> },
     { to: "/privacy", label: "Confidentialité", icon: <Shield className="w-4 h-4" /> },
   ];
@@ -28,7 +31,7 @@ const Navigation = () => {
               <LanguageSelector />
             </div>
           </div>
-          <div className="flex flex-row justify-center sm:justify-end pb-2 sm:pb-0">
+          <div className="flex flex-row justify-center sm:justify-end pb-2 sm:pb-0 overflow-x-auto">
             {links.map((link) => (
               <Link
                 key={link.to}

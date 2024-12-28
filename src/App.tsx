@@ -10,6 +10,9 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import BMICalculator from "./components/BMICalculator";
+import ChatHistory from "./pages/ChatHistory";
+import SavedChats from "./pages/SavedChats";
+import HelpCenter from "./pages/HelpCenter";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +28,9 @@ const AppContent = () => {
           <Route path="/calculator" element={<BMICalculator />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/chat-history" element={<ChatHistory />} />
+          <Route path="/saved-chats" element={<SavedChats />} />
+          <Route path="/help" element={<HelpCenter />} />
         </Routes>
       </main>
     </div>
