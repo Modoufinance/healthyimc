@@ -7,7 +7,7 @@ export interface CategoryTranslations {
   obese: string;
 }
 
-export interface LocaleUnits {
+export interface UnitTranslations {
   weight: {
     unit: 'kg' | 'lb';
     factor: number;
@@ -30,5 +30,5 @@ export interface TranslationType {
   bmiPredictions: string;
   personalizedAdvice: string;
   updateProfile: string;
-  units: LocaleUnits;
+  units: UnitTranslations;
 }
