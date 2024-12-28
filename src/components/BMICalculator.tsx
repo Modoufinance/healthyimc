@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Scale } from "lucide-react";
 import BMIForm from "./BMIForm";
 import BMIResult from "./BMIResult";
 import BMIScale from "./BMIScale";
@@ -93,13 +94,16 @@ const BMICalculator = () => {
     <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="p-4 sm:p-6">
-            <div className="space-y-2 text-center">
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#4facfe]">
-                {t.title}
-              </h1>
+          <Card className="p-6 shadow-lg rounded-lg">
+            <div className="space-y-4 text-center">
+              <div className="flex items-center justify-center gap-2">
+                <Scale className="h-8 w-8 text-[#4facfe]" />
+                <h1 className="text-2xl font-bold tracking-tight text-[#4facfe]">
+                  {t.title}
+                </h1>
+              </div>
               <p className="text-sm text-muted-foreground">
-                Calculez votre Indice de Masse Corporelle
+                {t.subtitle}
               </p>
             </div>
 
@@ -107,7 +111,7 @@ const BMICalculator = () => {
             <BMIForm onCalculate={handleBMICalculation} />
 
             {bmiData && (
-              <div className="animate-slide-up mt-4">
+              <div className="animate-slide-up mt-6">
                 <BMIResult bmiData={bmiData} />
               </div>
             )}
