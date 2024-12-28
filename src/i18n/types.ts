@@ -1,4 +1,4 @@
-export type Language = "en" | "fr" | "ar" | "hi";
+export type Language = 'en' | 'fr' | 'ar' | 'hi';
 
 export interface CategoryTranslations {
   underweight: string;
@@ -7,20 +7,28 @@ export interface CategoryTranslations {
   obese: string;
 }
 
+export interface LocaleUnits {
+  weight: {
+    unit: 'kg' | 'lb';
+    factor: number;
+  };
+  height: {
+    unit: 'cm' | 'in';
+    factor: number;
+  };
+}
+
 export interface TranslationType {
   title: string;
   subtitle: string;
-  mainMenu: string;
-  aiAssistant: string;
-  healthTips: string;
   bmiHistory: string;
   categories: CategoryTranslations;
   healthAdvice: string;
-  weightLabel: string;
-  heightLabel: string;
-  calculateButton: string;
-  invalidInputs: string;
-  yourBmiIs: string;
-  category: string;
-  advice: string;
+  activityTracking: string;
+  nutrition: string;
+  mentalWellness: string;
+  bmiPredictions: string;
+  personalizedAdvice: string;
+  updateProfile: string;
+  units: LocaleUnits;
 }
