@@ -31,7 +31,7 @@ const BMICalculator = () => {
   const { toast } = useToast();
   const { t } = useLanguage();
 
-  const handleBMICalculation = (weight: number, height: number) => {
+  const handleBMICalculation = (weight: number, height: number, age: number) => {
     const heightInMeters = height / 100;
     const bmi = Number((weight / (heightInMeters * heightInMeters)).toFixed(2));
     
@@ -54,9 +54,10 @@ const BMICalculator = () => {
 
     const bmiDataObj = { bmi, category, advice };
     
-    if (userData.age && userData.gender && userData.activityLevel) {
+    if (userData.gender && userData.activityLevel) {
       const personalizedAdvice = getPersonalizedAdvice(bmiDataObj, {
         ...userData,
+        age,
         weight,
         height
       });
@@ -86,7 +87,7 @@ const BMICalculator = () => {
 
   const handleDeviceData = (weight?: number, height?: number) => {
     if (weight && height) {
-      handleBMICalculation(weight, height);
+      handleBMICalculation(weight, height, userData.age);
     }
   };
 
