@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Weight, Ruler, Calculator } from "lucide-react";
 
 interface BMIFormProps {
   onCalculate: (weight: number, height: number) => void;
@@ -29,7 +30,6 @@ const BMIForm = ({ onCalculate }: BMIFormProps) => {
       return;
     }
 
-    // Convert to metric units if needed
     const weightInKg = t.units.weight.unit === 'lb' ? weightNum / t.units.weight.factor : weightNum;
     const heightInCm = t.units.height.unit === 'in' ? heightNum / t.units.height.factor : heightNum;
 
@@ -39,7 +39,10 @@ const BMIForm = ({ onCalculate }: BMIFormProps) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 mt-4">
       <div className="space-y-2">
-        <Label htmlFor="weight">Poids ({t.units.weight.unit})</Label>
+        <Label htmlFor="weight" className="flex items-center gap-2">
+          <Weight className="h-4 w-4" />
+          Poids ({t.units.weight.unit})
+        </Label>
         <Input
           id="weight"
           type="number"
@@ -51,7 +54,10 @@ const BMIForm = ({ onCalculate }: BMIFormProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="height">Taille ({t.units.height.unit})</Label>
+        <Label htmlFor="height" className="flex items-center gap-2">
+          <Ruler className="h-4 w-4" />
+          Taille ({t.units.height.unit})
+        </Label>
         <Input
           id="height"
           type="number"
@@ -63,6 +69,7 @@ const BMIForm = ({ onCalculate }: BMIFormProps) => {
       </div>
 
       <Button type="submit" className="w-full bg-[#4facfe] hover:bg-[#00f2fe]">
+        <Calculator className="mr-2 h-4 w-4" />
         Calculer l'IMC
       </Button>
     </form>
