@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import BMICalculator from "./components/BMICalculator";
 import AIHealthAssistant from "./pages/AIHealthAssistant";
+import WellnessCompanion from "./pages/WellnessCompanion";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const AppContent = () => {
           <Route path="/" element={<Home />} />
           <Route path="/calculator" element={<BMICalculator />} />
           <Route path="/ai-health" element={<AIHealthAssistant />} />
+          <Route path="/wellness" element={<WellnessCompanion />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />
         </Routes>
