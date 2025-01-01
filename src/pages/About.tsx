@@ -34,16 +34,16 @@ const About = () => {
             <h2 className="text-3xl font-bold text-gray-900">Contact</h2>
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-primary" />
-                <span className="text-gray-600">contact@healthtracker.com</span>
-              </div>
-              <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-primary" />
-                <span className="text-gray-600">01 23 45 67 89</span>
+                <span className="text-gray-600">+221 78 448 82 59</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-primary" />
-                <span className="text-gray-600">75008 Paris, France</span>
+                <span className="text-gray-600">TOUBA, SENEGAL</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Mail className="h-5 w-5 text-primary" />
+                <span className="text-gray-600">contact@healthtracker.com</span>
               </div>
 
               <form className="space-y-4 mt-6">
