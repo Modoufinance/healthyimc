@@ -1,109 +1,127 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
-import { Bot, Send, User } from "lucide-react";
 
-interface Message {
-  role: "assistant" | "user";
-  content: string;
+interface FormData {
+  age: string;
+  activity: string;
+  goals: string;
 }
 
 const AIHealthAssistant = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "Bonjour! Je suis votre assistant santé IA. Comment puis-je vous aider aujourd'hui?"
-    }
-  ]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    age: "",
+    activity: "",
+    goals: "",
+  });
+  const [recommendation, setRecommendation] = useState<string>("");
   const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
 
-    const userMessage = { role: "user" as const, content: input.trim() };
-    setMessages(prev => [...prev, userMessage]);
-    setInput("");
-    setIsLoading(true);
-
-    try {
-      // Simulate AI response - In a real app, this would call your AI service
-      setTimeout(() => {
-        const aiResponse = {
-          role: "assistant" as const,
-          content: "Je comprends votre préoccupation. Bien que je puisse fournir des informations générales sur la santé, il est important de consulter un professionnel de santé pour des conseils médicaux spécifiques."
-        };
-        setMessages(prev => [...prev, aiResponse]);
-        setIsLoading(false);
-      }, 1000);
-    } catch (error) {
+    if (!formData.age || !formData.activity || !formData.goals) {
       toast({
         title: "Erreur",
-        description: "Impossible de recevoir une réponse de l'assistant.",
-        variant: "destructive"
+        description: "Veuillez remplir tous les champs",
+        variant: "destructive",
       });
-      setIsLoading(false);
+      return;
     }
+
+    let result = "Basé sur vos informations :";
+
+    if (formData.activity === "low") {
+      result += " Engagez-vous dans des activités physiques légères comme la marche ou le yoga pour augmenter votre niveau d'énergie.";
+    } else if (formData.activity === "moderate") {
+      result += " Maintenez votre niveau d'activité actuel et envisagez d'ajouter de la musculation à votre routine.";
+    } else {
+      result += " Excellent travail ! Maintenez vos niveaux d'activité élevés, mais assurez-vous d'avoir des périodes de récupération adéquates.";
+    }
+
+    result += ` Pour atteindre votre objectif "${formData.goals}", une alimentation équilibrée et une routine constante sont essentielles.`;
+
+    setRecommendation(result);
   };
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
-      <Card className="h-[80vh] flex flex-col">
+      <Card className="bg-gradient-to-b from-gray-800 to-gray-900 text-white">
         <CardHeader>
-          <CardTitle>Assistant Santé IA</CardTitle>
-          <CardDescription>
-            Posez vos questions sur la santé et le bien-être. Notez que cet assistant ne remplace pas l'avis d'un professionnel de santé.
+          <CardTitle className="text-3xl font-bold text-blue-400">Assistant Bien-être IA</CardTitle>
+          <CardDescription className="text-gray-300">
+            Découvrez une façon plus intelligente de gérer votre santé avec des outils et des analyses alimentés par l'IA.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-1 overflow-hidden">
-          <ScrollArea className="h-full pr-4">
-            <div className="space-y-4">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex items-start gap-3 ${
-                    message.role === "assistant" ? "flex-row" : "flex-row-reverse"
-                  }`}
-                >
-                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    {message.role === "assistant" ? (
-                      <Bot className="h-4 w-4" />
-                    ) : (
-                      <User className="h-4 w-4" />
-                    )}
-                  </div>
-                  <div
-                    className={`rounded-lg px-4 py-2 max-w-[80%] ${
-                      message.role === "assistant"
-                        ? "bg-secondary"
-                        : "bg-primary text-primary-foreground"
-                    }`}
-                  >
-                    {message.content}
-                  </div>
-                </div>
-              ))}
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="age" className="text-gray-200">Âge</Label>
+              <Input
+                id="age"
+                type="number"
+                placeholder="Entrez votre âge"
+                className="bg-gray-900 border-gray-700 text-white"
+                value={formData.age}
+                onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+              />
             </div>
-          </ScrollArea>
-        </CardContent>
-        <CardFooter>
-          <form onSubmit={handleSubmit} className="flex w-full gap-2">
-            <Input
-              placeholder="Tapez votre message ici..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              disabled={isLoading}
-            />
-            <Button type="submit" disabled={isLoading}>
-              <Send className="h-4 w-4" />
+
+            <div className="space-y-2">
+              <Label htmlFor="activity" className="text-gray-200">Niveau d'activité</Label>
+              <Select
+                value={formData.activity}
+                onValueChange={(value) => setFormData({ ...formData, activity: value })}
+              >
+                <SelectTrigger className="bg-gray-900 border-gray-700 text-white">
+                  <SelectValue placeholder="Sélectionnez votre niveau" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="low">Faible</SelectItem>
+                  <SelectItem value="moderate">Modéré</SelectItem>
+                  <SelectItem value="high">Élevé</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="goals" className="text-gray-200">Objectifs de santé</Label>
+              <Input
+                id="goals"
+                placeholder="ex: Perdre du poids, Gagner en muscle"
+                className="bg-gray-900 border-gray-700 text-white"
+                value={formData.goals}
+                onChange={(e) => setFormData({ ...formData, goals: e.target.value })}
+              />
+            </div>
+
+            <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-600">
+              Analyser ma santé
             </Button>
           </form>
-        </CardFooter>
+
+          {recommendation && (
+            <div className="mt-6 p-4 rounded-lg bg-gray-800 text-teal-300">
+              {recommendation}
+            </div>
+          )}
+
+          <div className="mt-8">
+            <h2 className="text-xl font-bold text-blue-400 mb-4">Fonctionnalités avancées</h2>
+            <ul className="space-y-2 text-gray-300">
+              <li>• Analyse de santé et recommandations basées sur l'IA</li>
+              <li>• Suivi du bien-être en temps réel avec suggestions adaptatives</li>
+              <li>• Plans nutritionnels personnalisés selon vos besoins</li>
+              <li>• Intégration avec les appareils connectés</li>
+              <li>• Exercices de gestion du stress et séances de pleine conscience</li>
+            </ul>
+          </div>
+        </CardContent>
       </Card>
     </div>
   );
