@@ -46,29 +46,29 @@ const WellnessCompanion = () => {
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
-      <Card className="bg-gradient-to-br from-purple-600 to-indigo-700 text-white p-6">
-        <h1 className="text-3xl font-bold text-purple-200 mb-4">Wellness Companion AI</h1>
-        <p className="text-purple-100 mb-6">
+      <Card className="bg-primary text-primary-foreground p-6">
+        <h1 className="text-3xl font-bold mb-4">Wellness Companion AI</h1>
+        <p className="mb-6">
           Découvrez une façon plus intelligente de gérer votre santé avec des outils et des analyses alimentés par l'IA.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <Label htmlFor="age" className="text-purple-200">Âge</Label>
+            <Label htmlFor="age" className="text-primary-foreground">Âge</Label>
             <Input
               id="age"
               type="number"
               placeholder="Entrez votre âge"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="bg-purple-800/50 border-purple-500 text-white placeholder-purple-300"
+              className="bg-background/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50"
             />
           </div>
 
           <div>
-            <Label htmlFor="activity" className="text-purple-200">Niveau d'activité</Label>
+            <Label htmlFor="activity" className="text-primary-foreground">Niveau d'activité</Label>
             <Select value={activity} onValueChange={setActivity}>
-              <SelectTrigger className="bg-purple-800/50 border-purple-500 text-white">
+              <SelectTrigger className="bg-background/10 border-primary-foreground/20 text-primary-foreground">
                 <SelectValue placeholder="Sélectionnez" />
               </SelectTrigger>
               <SelectContent>
@@ -80,30 +80,30 @@ const WellnessCompanion = () => {
           </div>
 
           <div>
-            <Label htmlFor="goals" className="text-purple-200">Objectifs de santé</Label>
+            <Label htmlFor="goals" className="text-primary-foreground">Objectifs de santé</Label>
             <Input
               id="goals"
               placeholder="ex: Perdre du poids, Gagner en muscle"
               value={goals}
               onChange={(e) => setGoals(e.target.value)}
-              className="bg-purple-800/50 border-purple-500 text-white placeholder-purple-300"
+              className="bg-background/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50"
             />
           </div>
 
-          <Button type="submit" className="w-full bg-purple-500 hover:bg-purple-600 text-white">
+          <Button type="submit" variant="secondary" className="w-full">
             Analyser ma santé
           </Button>
         </form>
 
         {result && (
-          <div className="mt-6 p-4 rounded-lg bg-purple-800/40 text-purple-200">
+          <div className="mt-6 p-4 rounded-lg bg-background/10 text-primary-foreground">
             {result}
           </div>
         )}
 
         <div className="mt-8">
-          <h2 className="text-xl font-bold text-purple-200 mb-4">Fonctionnalités avancées</h2>
-          <ul className="space-y-2 text-purple-100">
+          <h2 className="text-xl font-bold mb-4">Fonctionnalités avancées</h2>
+          <ul className="space-y-2">
             <li>• Analyse de santé et recommandations basées sur l'IA</li>
             <li>• Suivi du bien-être en temps réel avec suggestions adaptatives</li>
             <li>• Plans nutritionnels personnalisés selon vos besoins</li>
