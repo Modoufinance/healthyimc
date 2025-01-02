@@ -55,6 +55,7 @@ export interface TranslationType {
   title: string;
   subtitle: string;
   bmiHistory: string;
+  bmiPredictions: string;  // Added this line
   categories: Categories;
   units: UnitTranslations;
   labels: Labels;

@@ -5,6 +5,7 @@ export const translations: Record<string, TranslationType> = {
     title: "Calculatrice IMC",
     subtitle: "Calculez votre Indice de Masse Corporelle",
     bmiHistory: "Historique IMC",
+    bmiPredictions: "Prédictions IMC",  // Added this line
     categories: {
       underweight: "Insuffisance pondérale",
       normal: "Poids normal",
@@ -54,6 +55,7 @@ export const translations: Record<string, TranslationType> = {
     title: "Toolu Kanam BMI",
     subtitle: "Naw sa BMI",
     bmiHistory: "Jaar-jaari BMI",
+    bmiPredictions: "Gis-gis BMI",  // Added this line
     categories: {
       underweight: "Jëmm bu sew",
       normal: "Jëmm bu néew",
@@ -103,6 +105,7 @@ export const translations: Record<string, TranslationType> = {
     title: "BMI Calculator",
     subtitle: "Calculate your Body Mass Index",
     bmiHistory: "BMI History",
+    bmiPredictions: "BMI Predictions",  // Added this line
     categories: {
       underweight: "Underweight",
       normal: "Normal weight",
