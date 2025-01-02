@@ -21,9 +21,83 @@ export const translations: Record<string, TranslationType> = {
         factor: 1
       }
     },
-    bmiPredictions: "Prédictions IMC",
-    personalizedAdvice: "Conseils personnalisés",
-    updateProfile: "Mettre à jour le profil"
+    labels: {
+      age: "Âge",
+      weight: "Poids",
+      height: "Taille",
+      activity: "Niveau d'activité",
+      goals: "Objectifs de santé"
+    },
+    placeholders: {
+      age: "Entrez votre âge",
+      weight: "Ex: 70",
+      height: "Ex: 175",
+      goals: "Ex: Perdre du poids, Gagner en muscle"
+    },
+    activities: {
+      low: "Faible",
+      moderate: "Modéré",
+      high: "Élevé"
+    },
+    buttons: {
+      calculate: "Calculer l'IMC",
+      analyze: "Analyser ma santé"
+    },
+    advice: {
+      underweight: "Vous êtes en dessous du poids recommandé. Pensez à consulter un professionnel de santé pour des conseils alimentaires.",
+      normal: "Votre poids est dans la plage normale. Continuez à maintenir un mode de vie sain !",
+      overweight: "Vous êtes en surpoids. Un professionnel de santé peut vous aider à établir un programme adapté.",
+      obese: "Vous êtes en obésité. Il est important de consulter un professionnel de santé pour des conseils personnalisés."
+    }
+  },
+  wo: {
+    title: "Toolu Kanam BMI",
+    subtitle: "Naw sa BMI",
+    bmiHistory: "Jaar-jaari BMI",
+    categories: {
+      underweight: "Jëmm bu sew",
+      normal: "Jëmm bu néew",
+      overweight: "Jëmm bu bare",
+      obese: "Naatangoo bu dëgër"
+    },
+    units: {
+      weight: {
+        unit: "kg",
+        factor: 1
+      },
+      height: {
+        unit: "cm",
+        factor: 1
+      }
+    },
+    labels: {
+      age: "At",
+      weight: "Jëmm",
+      height: "Yaatuwaay",
+      activity: "Doxalin",
+      goals: "Yéene yi"
+    },
+    placeholders: {
+      age: "Duggal sa at",
+      weight: "Ex: 70",
+      height: "Ex: 175",
+      goals: "Ex: Wàññi jëmm, Yokk doole"
+    },
+    activities: {
+      low: "Néew",
+      moderate: "Digg",
+      high: "Bare"
+    },
+    buttons: {
+      calculate: "Naw BMI",
+      analyze: "Saytu sama wér-gi-yaram"
+    },
+    advice: {
+      underweight: "Jëmm bu sew la. Wàcceek boppalante bi.",
+      normal: "Jëmm bu néew nga. Bokk ci jamm wi ñu ko topp !",
+      overweight: "Jëmm bu bare nga. Wàcceek boppalante bi ci mat na.",
+      obese: "Naatangoo bu dëgër la. Jëlal waxtaan ak boppalante."
+    }
   },
   en: {
     title: "BMI Calculator",
@@ -45,56 +119,33 @@ export const translations: Record<string, TranslationType> = {
         factor: 0.393701
       }
     },
-    bmiPredictions: "BMI Predictions",
-    personalizedAdvice: "Personalized Advice",
-    updateProfile: "Update Profile"
-  },
-  ar: {
-    title: "حاسبة مؤشر كتلة الجسم",
-    subtitle: "احسب مؤشر كتلة جسمك",
-    bmiHistory: "سجل مؤشر كتلة الجسم",
-    categories: {
-      underweight: "نقص الوزن",
-      normal: "وزن طبيعي",
-      overweight: "زيادة الوزن",
-      obese: "السمنة"
+    labels: {
+      age: "Age",
+      weight: "Weight",
+      height: "Height",
+      activity: "Activity Level",
+      goals: "Health Goals"
     },
-    units: {
-      weight: {
-        unit: "kg",
-        factor: 1
-      },
-      height: {
-        unit: "cm",
-        factor: 1
-      }
+    placeholders: {
+      age: "Enter your age",
+      weight: "Ex: 154",
+      height: "Ex: 69",
+      goals: "Ex: Lose weight, Gain muscle"
     },
-    bmiPredictions: "توقعات مؤشر كتلة الجسم",
-    personalizedAdvice: "نصائح شخصية",
-    updateProfile: "تحديث الملف الشخصي"
-  },
-  hi: {
-    title: "बीएमआई कैलकुलेटर",
-    subtitle: "अपना बॉडी मास इंडेक्स की गणना करें",
-    bmiHistory: "बीएमआई इतिहास",
-    categories: {
-      underweight: "कम वजन",
-      normal: "सामान्य वजन",
-      overweight: "अधिक वजन",
-      obese: "मोटापा"
+    activities: {
+      low: "Low",
+      moderate: "Moderate",
+      high: "High"
     },
-    units: {
-      weight: {
-        unit: "kg",
-        factor: 1
-      },
-      height: {
-        unit: "cm",
-        factor: 1
-      }
+    buttons: {
+      calculate: "Calculate BMI",
+      analyze: "Analyze my health"
     },
-    bmiPredictions: "बीएमआई पूर्वानुमान",
-    personalizedAdvice: "व्यक्तिगत सलाह",
-    updateProfile: "प्रोफ़ाइल अपडेट करें"
+    advice: {
+      underweight: "You are under the recommended weight. Consider consulting a healthcare professional for dietary advice.",
+      normal: "Your weight is within the normal range. Keep up a healthy lifestyle!",
+      overweight: "You are overweight. A healthcare professional can help you create a suitable program.",
+      obese: "You are in the obesity range. It is important to consult a healthcare professional for personalized advice."
+    }
   }
 };
