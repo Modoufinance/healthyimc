@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Bug } from "lucide-react";
 
 interface Message {
   user: "assistant" | "user";
@@ -36,7 +38,13 @@ const AIHealthAssistant = () => {
     <div className="min-h-screen bg-gradient-to-b from-blue-400 to-cyan-400 py-8 px-4">
       <div className="max-w-6xl mx-auto space-y-8">
         <header className="text-center text-white">
-          <h1 className="text-3xl font-bold">Assistant IA en Santé</h1>
+          <div className="flex items-center justify-center gap-2">
+            <h1 className="text-3xl font-bold">Assistant IA en Santé</h1>
+            <Badge variant="secondary" className="flex items-center gap-1">
+              <Bug className="w-3 h-3" />
+              bêta
+            </Badge>
+          </div>
         </header>
 
         <Card className="p-6 shadow-lg">
