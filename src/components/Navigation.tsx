@@ -49,6 +49,34 @@ const Navigation = () => {
             ))}
           </div>
         </div>
+        
+        {/* Store Badges */}
+        <div className="hidden sm:flex justify-center gap-4 py-4">
+          <a 
+            href="https://play.google.com/store" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="transition-transform hover:scale-105"
+          >
+            <img 
+              src="/google-play-badge.png" 
+              alt="Disponible sur Google Play" 
+              className="h-10"
+            />
+          </a>
+          <a 
+            href="https://apps.apple.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="transition-transform hover:scale-105"
+          >
+            <img 
+              src="/app-store-badge.png" 
+              alt="Télécharger sur l'App Store" 
+              className="h-10"
+            />
+          </a>
+        </div>
       </div>
     </nav>
   );
