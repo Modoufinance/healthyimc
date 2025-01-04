@@ -3,6 +3,7 @@ import { Home, Scale, Bot, Info, Shield, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Button } from "./ui/button";
 
 const Navigation = () => {
   const location = useLocation();
@@ -26,7 +27,45 @@ const Navigation = () => {
               <Shield className="h-6 w-6" />
               SantéIMC
             </Link>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-4">
+              <Button
+                variant="outline"
+                size="sm"
+                className="hidden sm:flex items-center gap-2"
+                asChild
+              >
+                <a
+                  href="https://play.google.com/store"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm"
+                >
+                  <img
+                    src="/google-play-badge.png"
+                    alt="Disponible sur Google Play"
+                    className="h-8"
+                  />
+                </a>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="hidden sm:flex items-center gap-2"
+                asChild
+              >
+                <a
+                  href="https://apps.apple.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm"
+                >
+                  <img
+                    src="/app-store-badge.png"
+                    alt="Télécharger sur l'App Store"
+                    className="h-8"
+                  />
+                </a>
+              </Button>
               <LanguageSelector />
             </div>
           </div>
