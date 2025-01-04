@@ -5,7 +5,12 @@ interface DeviceData {
   heartRate?: number;
 }
 
+// Étendre l'interface PermissionDescriptor pour inclure "bluetooth"
 declare global {
+  interface PermissionDescriptor {
+    name: 'bluetooth' | PermissionName;
+  }
+
   interface Navigator {
     bluetooth: {
       requestDevice(options: {
@@ -21,6 +26,13 @@ declare global {
 
 export const connectToDevice = async (): Promise<any> => {
   try {
+    // Vérifier les permissions Bluetooth
+    const btPermission = await navigator.permissions.query({ name: 'bluetooth' as PermissionName });
+    if (btPermission.state === "denied") {
+      console.error('Permission Bluetooth refusée');
+      throw new Error('Permission Bluetooth refusée');
+    }
+
     const device = await navigator.bluetooth.requestDevice({
       filters: [
         { namePrefix: 'MI' },
