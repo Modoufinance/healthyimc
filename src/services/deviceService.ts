@@ -16,11 +16,21 @@ declare global {
         optionalServices?: string[];
       }): Promise<any>;
     };
+    permissions: {
+      query(options: { name: string }): Promise<{ state: string }>;
+    };
   }
 }
 
 export const connectToDevice = async (): Promise<any> => {
   try {
+    // Vérifier les permissions Bluetooth
+    const btPermission = await navigator.permissions.query({ name: "bluetooth" });
+    if (btPermission.state === "denied") {
+      console.error('Permission Bluetooth refusée');
+      throw new Error('Permission Bluetooth refusée');
+    }
+
     const device = await navigator.bluetooth.requestDevice({
       filters: [
         { namePrefix: 'MI' },
