@@ -20,15 +20,12 @@ declare global {
       query(options: { name: string }): Promise<{ state: string }>;
     };
   }
-  interface PermissionDescriptor {
-    name: 'bluetooth' | PermissionName;
-  }
 }
 
 export const connectToDevice = async (): Promise<any> => {
   try {
     // Vérifier les permissions Bluetooth
-    const btPermission = await navigator.permissions.query({ name: "bluetooth" as PermissionName });
+    const btPermission = await navigator.permissions.query({ name: "bluetooth" });
     if (btPermission.state === "denied") {
       console.error('Permission Bluetooth refusée');
       throw new Error('Permission Bluetooth refusée');
