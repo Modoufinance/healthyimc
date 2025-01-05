@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Smartphone, Globe, Shield, Database, Beta } from "lucide-react";
+import { Smartphone, Globe, Shield, Database, Badge } from "lucide-react";
 
 const WellnessCompanion = () => {
   const [age, setAge] = useState("");
@@ -51,7 +51,7 @@ const WellnessCompanion = () => {
         <div className="flex items-center gap-3 mb-4">
           <h1 className="text-3xl font-bold">Wellness Companion AI</h1>
           <div className="flex items-center gap-1 bg-background/20 px-2 py-1 rounded-full text-sm">
-            <Beta className="w-4 h-4" />
+            <Badge className="w-4 h-4" />
             <span>Beta</span>
           </div>
         </div>
