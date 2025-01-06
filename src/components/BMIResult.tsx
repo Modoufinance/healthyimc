@@ -15,11 +15,11 @@ const BMIResult = ({ bmiData }: BMIResultProps) => {
 
   return (
     <div className="space-y-3 text-center p-4 bg-gray-50 rounded-lg">
-      <div className="text-3xl font-bold text-[#4facfe]">{bmiData.bmi}</div>
+      <div className="text-3xl font-bold text-primary">{bmiData.bmi}</div>
       <Badge variant={getBadgeVariant()} className="text-sm">
         {bmiData.category}
       </Badge>
-      <p className="text-sm text-gray-600 mt-2">{bmiData.advice}</p>
+      <p className="text-sm text-muted-foreground mt-2">{bmiData.advice}</p>
     </div>
   );
 };

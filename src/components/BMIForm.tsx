@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Weight, Ruler, Calculator } from "lucide-react";
+import { Weight, Ruler, Calculator, Calendar } from "lucide-react";
 
 interface BMIFormProps {
   onCalculate: (weight: number, height: number, age: number) => void;
@@ -39,9 +39,26 @@ const BMIForm = ({ onCalculate }: BMIFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 mt-6">
+    <form onSubmit={handleSubmit} className="space-y-4 mt-4">
       <div className="space-y-2">
-        <Label htmlFor="weight" className="flex items-center gap-2 text-gray-700">
+        <Label htmlFor="age" className="flex items-center gap-2">
+          <Calendar className="h-4 w-4" />
+          Âge
+        </Label>
+        <Input
+          id="age"
+          type="number"
+          placeholder="Ex: 30"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          required
+          min="1"
+          max="120"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="weight" className="flex items-center gap-2">
           <Weight className="h-4 w-4" />
           Poids ({t.units.weight.unit})
         </Label>
@@ -52,12 +69,11 @@ const BMIForm = ({ onCalculate }: BMIFormProps) => {
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
           required
-          className="w-full p-2 border border-gray-300 rounded-md focus:border-[#4facfe] focus:ring-1 focus:ring-[#4facfe]"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="height" className="flex items-center gap-2 text-gray-700">
+        <Label htmlFor="height" className="flex items-center gap-2">
           <Ruler className="h-4 w-4" />
           Taille ({t.units.height.unit})
         </Label>
@@ -68,14 +84,10 @@ const BMIForm = ({ onCalculate }: BMIFormProps) => {
           value={height}
           onChange={(e) => setHeight(e.target.value)}
           required
-          className="w-full p-2 border border-gray-300 rounded-md focus:border-[#4facfe] focus:ring-1 focus:ring-[#4facfe]"
         />
       </div>
 
-      <Button 
-        type="submit" 
-        className="w-full bg-[#4facfe] hover:bg-[#00f2fe] transition-colors"
-      >
+      <Button type="submit" className="w-full bg-[#4facfe] hover:bg-[#00f2fe]">
         <Calculator className="mr-2 h-4 w-4" />
         Calculer l'IMC
       </Button>
