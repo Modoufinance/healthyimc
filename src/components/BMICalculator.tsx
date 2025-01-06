@@ -95,7 +95,7 @@ const BMICalculator = () => {
     <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="p-6 shadow-lg rounded-lg">
+          <Card className="p-6 shadow-lg rounded-lg bg-white">
             <div className="space-y-4 text-center">
               <div className="flex items-center justify-center gap-2">
                 <Scale className="h-8 w-8 text-[#4facfe]" />
@@ -118,7 +118,31 @@ const BMICalculator = () => {
             )}
           </Card>
 
-          <UserDataForm onSubmit={handleUserDataSubmit} />
+          <Card className="p-6 shadow-lg rounded-lg bg-white">
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold text-[#4facfe]">Blog Santé</h2>
+              <div className="space-y-4">
+                <div className="border-b pb-4">
+                  <h3 className="font-medium mb-2">Comprendre l'IMC</h3>
+                  <p className="text-sm text-gray-600">
+                    L'Indice de Masse Corporelle est un indicateur simple pour évaluer si votre poids est adapté à votre taille. Il est largement utilisé par les professionnels de santé.
+                  </p>
+                </div>
+                <div className="border-b pb-4">
+                  <h3 className="font-medium mb-2">Pourquoi maintenir un IMC sain ?</h3>
+                  <p className="text-sm text-gray-600">
+                    Un IMC équilibré réduit les risques de maladies chroniques comme le diabète, l'hypertension et les maladies cardiaques.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-medium mb-2">Conseils pour améliorer votre IMC</h3>
+                  <p className="text-sm text-gray-600">
+                    Adoptez une alimentation équilibrée, pratiquez une activité physique régulière et consultez un professionnel de santé pour des conseils personnalisés.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
         </div>
 
         {bmiData && (
