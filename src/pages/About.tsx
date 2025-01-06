@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const About = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -30,31 +31,70 @@ const About = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateEmail = (email: string) => {
+    return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    // Vérification basique des champs
-    if (!formData.name || !formData.email || !formData.message) {
+    // Validation complète des champs
+    if (!formData.name.trim()) {
       toast({
         variant: "destructive",
         title: "Erreur",
-        description: "Veuillez remplir tous les champs du formulaire."
+        description: "Veuillez entrer votre nom."
       });
+      setIsSubmitting(false);
       return;
     }
 
-    // Simulation d'envoi réussi
-    toast({
-      title: "Message envoyé !",
-      description: "Nous vous répondrons dans les plus brefs délais."
-    });
+    if (!validateEmail(formData.email)) {
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Veuillez entrer une adresse email valide."
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
-    // Réinitialisation du formulaire
-    setFormData({
-      name: "",
-      email: "",
-      message: ""
-    });
+    if (formData.message.trim().length < 10) {
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Votre message doit contenir au moins 10 caractères."
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      // Simulation d'envoi avec délai pour UX
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast({
+        title: "Message envoyé !",
+        description: "Nous vous répondrons dans les plus brefs délais.",
+        className: "bg-green-500 text-white"
+      });
+
+      // Réinitialisation du formulaire
+      setFormData({
+        name: "",
+        email: "",
+        message: ""
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'envoi du message."
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -129,6 +169,8 @@ const About = () => {
                       value={formData.name}
                       onChange={handleChange}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 border"
+                      disabled={isSubmitting}
+                      required
                     />
                   </div>
                   <div>
@@ -142,6 +184,8 @@ const About = () => {
                       value={formData.email}
                       onChange={handleChange}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 border"
+                      disabled={isSubmitting}
+                      required
                     />
                   </div>
                   <div>
@@ -155,10 +199,16 @@ const About = () => {
                       onChange={handleChange}
                       rows={4}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 border"
+                      disabled={isSubmitting}
+                      required
                     />
                   </div>
-                  <Button type="submit" className="w-full">
-                    Envoyer
+                  <Button 
+                    type="submit" 
+                    className="w-full"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Envoi en cours..." : "Envoyer"}
                   </Button>
                 </form>
               </div>
