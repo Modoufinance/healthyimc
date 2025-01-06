@@ -1,8 +1,17 @@
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import SEO from "@/components/SEO";
+import { useState } from "react";
 
 const About = () => {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -19,6 +28,41 @@ const About = () => {
       "addressLocality": "TOUBA",
       "addressCountry": "SENEGAL"
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Vérification basique des champs
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Veuillez remplir tous les champs du formulaire."
+      });
+      return;
+    }
+
+    // Simulation d'envoi réussi
+    toast({
+      title: "Message envoyé !",
+      description: "Nous vous répondrons dans les plus brefs délais."
+    });
+
+    // Réinitialisation du formulaire
+    setFormData({
+      name: "",
+      email: "",
+      message: ""
+    });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   return (
@@ -38,7 +82,7 @@ const About = () => {
               <h1 className="text-3xl font-bold text-gray-900">À Propos de Nous</h1>
               <div className="prose prose-blue max-w-none">
                 <p className="text-gray-600">
-                  Health Tracker est une plateforme dédiée à la santé et au bien-être, 
+                  SantéIMC est une plateforme dédiée à la santé et au bien-être, 
                   créée par une équipe de professionnels de santé et d'experts en technologie.
                 </p>
                 
@@ -70,10 +114,10 @@ const About = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail className="h-5 w-5 text-primary" />
-                  <span className="text-gray-600">contact@healthtracker.com</span>
+                  <span className="text-gray-600">contact@santeimc.fr</span>
                 </div>
 
-                <form className="space-y-4 mt-6">
+                <form onSubmit={handleSubmit} className="space-y-4 mt-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                       Nom
@@ -81,7 +125,10 @@ const About = () => {
                     <input
                       type="text"
                       id="name"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 border"
                     />
                   </div>
                   <div>
@@ -91,7 +138,10 @@ const About = () => {
                     <input
                       type="email"
                       id="email"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 border"
                     />
                   </div>
                   <div>
@@ -100,8 +150,11 @@ const About = () => {
                     </label>
                     <textarea
                       id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
                       rows={4}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 border"
                     />
                   </div>
                   <Button type="submit" className="w-full">
