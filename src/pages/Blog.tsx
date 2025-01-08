@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { generateBlogPost } from "@/services/blogService";
 import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface BlogPost {
   title: string;
@@ -66,6 +67,19 @@ const Blog = () => {
           </CardHeader>
           <CardContent>
             <div className="flex flex-col gap-4 mb-6">
+              <Alert>
+                <AlertDescription>
+                  Pour générer des articles, vous devez obtenir une clé API sur{" "}
+                  <a 
+                    href="https://www.perplexity.ai/settings/api" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-primary underline"
+                  >
+                    le site de Perplexity
+                  </a>
+                </AlertDescription>
+              </Alert>
               <Input
                 type="password"
                 placeholder="Entrez votre clé API Perplexity"
