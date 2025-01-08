@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Scale, Bot, Info, Shield, Heart } from "lucide-react";
+import { Home, Scale, Bot, Info, Shield, Heart, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -9,10 +9,11 @@ const Navigation = () => {
   const { t } = useLanguage();
 
   const links = [
-    { to: "/", label: "Home", icon: <Home className="w-4 h-4" /> },
+    { to: "/", label: "Accueil", icon: <Home className="w-4 h-4" /> },
     { to: "/calculator", label: t.title, icon: <Scale className="w-4 h-4" /> },
+    { to: "/blog", label: "Blog", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/ai-health", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
-    { to: "/wellness", label: "Wellness Companion", icon: <Heart className="w-4 h-4" /> },
+    { to: "/wellness", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
     { to: "/about", label: "À propos", icon: <Info className="w-4 h-4" /> },
     { to: "/privacy", label: "Confidentialité", icon: <Shield className="w-4 h-4" /> },
   ];
