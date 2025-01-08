@@ -19,11 +19,11 @@ export const generateBlogPost = async (apiKey: string): Promise<BlogPost | null>
         messages: [
           {
             role: 'system',
-            content: "Tu es un expert en santé qui écrit des articles de blog en français sur la santé, le bien-être et l'IMC. Génère un article informatif et engageant avec un titre clair et un contenu structuré."
+            content: 'Tu es un expert en santé qui écrit des articles de blog en français sur la santé, le bien-être et l\'IMC. Génère un article informatif et engageant.'
           },
           {
             role: 'user',
-            content: "Génère un article de blog sur la santé et le bien-être, en mettant l'accent sur l'IMC et la santé globale."
+            content: 'Génère un article de blog sur la santé et le bien-être.'
           }
         ],
         temperature: 0.7,
@@ -31,21 +31,12 @@ export const generateBlogPost = async (apiKey: string): Promise<BlogPost | null>
       }),
     });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Erreur lors de la génération de l'article");
-    }
-
     const data = await response.json();
-    
-    if (!data.choices || !data.choices[0]?.message?.content) {
-      throw new Error("Format de réponse invalide");
-    }
-
     const content = data.choices[0].message.content;
-    const lines = content.split('\n');
-    const title = lines[0].replace(/^#\s*/, ''); // Enlève le # si présent
-    const articleContent = lines.slice(1).join('\n').trim();
+
+    // Extraire le titre des premiers mots du contenu
+    const title = content.split('.')[0];
+    const articleContent = content.split('.').slice(1).join('.');
 
     return {
       title,
@@ -56,7 +47,7 @@ export const generateBlogPost = async (apiKey: string): Promise<BlogPost | null>
     console.error('Erreur lors de la génération de l\'article:', error);
     toast({
       title: "Erreur",
-      description: error instanceof Error ? error.message : "Impossible de générer l'article pour le moment.",
+      description: "Impossible de générer l'article pour le moment.",
       variant: "destructive",
     });
     return null;
