@@ -68,7 +68,6 @@ const Blog = () => {
             <div className="flex flex-col gap-4 mb-6">
               <Input
                 type="password"
-                placeholder="Entrez votre clé API Perplexity"
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
                 className="max-w-md mx-auto"
