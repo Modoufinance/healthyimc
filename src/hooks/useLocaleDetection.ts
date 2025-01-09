@@ -11,9 +11,9 @@ export const useLocaleDetection = () => {
       if (browserLang === 'fr') {
         setLanguage('fr');
       } else {
-        const supportedLangs = ['en', 'fr', 'ar', 'hi', 'wo'];
+        const supportedLangs = ['en', 'fr', 'ar', 'hi'];
         const detectedLang = supportedLangs.includes(browserLang) ? browserLang : 'fr';
-        setLanguage(detectedLang as 'en' | 'fr' | 'ar' | 'hi' | 'wo');
+        setLanguage(detectedLang as 'en' | 'fr' | 'ar' | 'hi');
       }
     };
 
