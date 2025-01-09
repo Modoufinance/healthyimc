@@ -1,18 +1,9 @@
-import { Mail, Phone, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import SEO from "@/components/SEO";
-import { useState } from "react";
+import AboutHero from "@/components/about/AboutHero";
+import MissionSection from "@/components/about/MissionSection";
+import ContactForm from "@/components/about/ContactForm";
 
 const About = () => {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: ""
-  });
-
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -21,88 +12,9 @@ const About = () => {
     "url": "https://santeimc.fr/about",
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+221 78 448 82 59",
+      "telephone": "+33 1 23 45 67 89",
       "contactType": "customer service"
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "TOUBA",
-      "addressCountry": "SENEGAL"
     }
-  };
-
-  const validateEmail = (email: string) => {
-    return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Validation complète des champs
-    if (!formData.name.trim()) {
-      toast({
-        variant: "destructive",
-        title: "Erreur",
-        description: "Veuillez entrer votre nom."
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    if (!validateEmail(formData.email)) {
-      toast({
-        variant: "destructive",
-        title: "Erreur",
-        description: "Veuillez entrer une adresse email valide."
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    if (formData.message.trim().length < 10) {
-      toast({
-        variant: "destructive",
-        title: "Erreur",
-        description: "Votre message doit contenir au moins 10 caractères."
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    try {
-      // Simulation d'envoi avec délai pour UX
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Message envoyé !",
-        description: "Nous vous répondrons dans les plus brefs délais.",
-        className: "bg-green-500 text-white"
-      });
-
-      // Réinitialisation du formulaire
-      setFormData({
-        name: "",
-        email: "",
-        message: ""
-      });
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'envoi du message."
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
   };
 
   return (
@@ -114,107 +26,18 @@ const About = () => {
         canonicalUrl="https://santeimc.fr/about"
         structuredData={structuredData}
       />
-      <div className="min-h-[calc(100vh-4rem)] bg-gray-50 py-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* À Propos Section */}
-            <div className="bg-white rounded-lg shadow-lg p-8 space-y-6">
-              <h1 className="text-3xl font-bold text-gray-900">À Propos de Nous</h1>
-              <div className="prose prose-blue max-w-none">
-                <p className="text-gray-600">
-                  SantéIMC est une plateforme dédiée à la santé et au bien-être, 
-                  créée par une équipe de professionnels de santé et d'experts en technologie.
-                </p>
-                
-                <h2 className="text-xl font-semibold text-gray-900 mt-6">Notre Mission</h2>
-                <p className="text-gray-600">
-                  Notre objectif est de rendre les outils de suivi de santé accessibles à tous, 
-                  en commençant par notre calculateur d'IMC précis et facile à utiliser.
-                </p>
-
-                <h2 className="text-xl font-semibold text-gray-900 mt-6">Notre Équipe</h2>
-                <p className="text-gray-600">
-                  Notre équipe est composée de nutritionnistes, développeurs et designers 
-                  passionnés par la santé numérique et l'expérience utilisateur.
-                </p>
-              </div>
-            </div>
-
-            {/* Contact Section */}
-            <div className="bg-white rounded-lg shadow-lg p-8 space-y-6">
-              <h2 className="text-3xl font-bold text-gray-900">Contact</h2>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <Phone className="h-5 w-5 text-primary" />
-                  <span className="text-gray-600">+221 78 448 82 59</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <MapPin className="h-5 w-5 text-primary" />
-                  <span className="text-gray-600">TOUBA, SENEGAL</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Mail className="h-5 w-5 text-primary" />
-                  <span className="text-gray-600">contact@santeimc.fr</span>
-                </div>
-
-                <form onSubmit={handleSubmit} className="space-y-4 mt-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                      Nom
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 border"
-                      disabled={isSubmitting}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 border"
-                      disabled={isSubmitting}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={4}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 border"
-                      disabled={isSubmitting}
-                      required
-                    />
-                  </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "Envoi en cours..." : "Envoyer"}
-                  </Button>
-                </form>
-              </div>
-            </div>
+      
+      <div className="min-h-screen">
+        <AboutHero />
+        
+        <MissionSection />
+        
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">Contactez-nous</h2>
+            <ContactForm />
           </div>
-        </div>
+        </section>
       </div>
     </>
   );
