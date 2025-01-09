@@ -14,7 +14,6 @@ const LanguageSelector = () => {
   const languages = {
     fr: "Français",
     en: "English",
-    wo: "Wolof",
     ar: "العربية",
     hi: "हिंदी"
   };
@@ -30,7 +29,7 @@ const LanguageSelector = () => {
         {Object.entries(languages).map(([code, name]) => (
           <DropdownMenuItem
             key={code}
-            onClick={() => setLanguage(code as "en" | "fr" | "wo" | "ar" | "hi")}
+            onClick={() => setLanguage(code as "en" | "fr" | "ar" | "hi")}
             className={language === code ? "bg-accent" : ""}
           >
             {name}
