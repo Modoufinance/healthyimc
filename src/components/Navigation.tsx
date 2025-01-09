@@ -10,8 +10,8 @@ const Navigation = () => {
 
   const links = [
     { to: "/", label: "Accueil", icon: <Home className="w-4 h-4" /> },
-    { to: "/calculator", label: t.title, icon: <Scale className="w-4 h-4" /> },
-    { to: "/blog", label: "Blog", icon: <BookOpen className="w-4 h-4" /> },
+    { to: "/calculator", label: "Calculatrice IMC", icon: <Scale className="w-4 h-4" /> },
+    { to: "/blog", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/ai-health", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
     { to: "/wellness", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
     { to: "/about", label: "À propos", icon: <Info className="w-4 h-4" /> },
@@ -53,6 +53,6 @@ const Navigation = () => {
       </div>
     </nav>
   );
-};
+}
 
 export default Navigation;

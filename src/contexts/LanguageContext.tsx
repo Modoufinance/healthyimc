@@ -11,7 +11,7 @@ type LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("fr"); // Changé de "en" à "fr"
+  const [language, setLanguage] = useState<Language>("fr");
 
   const value = {
     language,

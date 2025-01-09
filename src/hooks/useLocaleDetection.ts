@@ -7,9 +7,14 @@ export const useLocaleDetection = () => {
   useEffect(() => {
     const detectLanguage = () => {
       const browserLang = navigator.language.split('-')[0];
-      const supportedLangs = ['en', 'fr', 'ar', 'hi'];
-      const detectedLang = supportedLangs.includes(browserLang) ? browserLang : 'en';
-      setLanguage(detectedLang as 'en' | 'fr' | 'ar' | 'hi');
+      // Priorise le français, sinon utilise la langue du navigateur si supportée
+      if (browserLang === 'fr') {
+        setLanguage('fr');
+      } else {
+        const supportedLangs = ['en', 'fr', 'ar', 'hi', 'wo'];
+        const detectedLang = supportedLangs.includes(browserLang) ? browserLang : 'fr';
+        setLanguage(detectedLang as 'en' | 'fr' | 'ar' | 'hi' | 'wo');
+      }
     };
 
     detectLanguage();
