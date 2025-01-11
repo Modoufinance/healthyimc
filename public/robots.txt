@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
+# Sitemap
 Sitemap: https://santeimc.fr/sitemap.xml
+
+# Optimisations pour les moteurs de recherche français
+Allow: /*?lang=fr
+Allow: /fr/*
