@@ -15,7 +15,7 @@ const AIHealthAssistant = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "Assistant IA en Santé | SantéIMC France",
+    "name": "Assistant IA en Santé | SantéIMC",
     "applicationCategory": "HealthApplication",
     "description": "Assistant virtuel intelligent pour des conseils personnalisés en santé et bien-être",
     "url": "https://santeimc.fr/ai-health"
