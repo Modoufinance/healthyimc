@@ -27,16 +27,25 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-4">
             <Link to="/" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t.nav?.home || 'Accueil'}
+              {t.nav?.home}
             </Link>
             <Link to="/calculator" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t.nav?.calculator || 'Calculateur'}
+              {t.nav?.calculator}
+            </Link>
+            <Link to="/wellness" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
+              Wellness AI
+            </Link>
+            <Link to="/ai-health" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
+              Assistant IA
+            </Link>
+            <Link to="/ai-blog" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
+              Blog IA
             </Link>
             <Link to="/blog" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t.nav?.blog || 'Blog'}
+              {t.nav?.blog}
             </Link>
             <Link to="/about" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t.nav?.about || 'À propos'}
+              {t.nav?.about}
             </Link>
             <LanguageSelector />
           </div>
@@ -64,28 +73,49 @@ const Navigation = () => {
               className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
-              {t.nav?.home || 'Accueil'}
+              {t.nav?.home}
             </Link>
             <Link
               to="/calculator"
               className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
-              {t.nav?.calculator || 'Calculateur'}
+              {t.nav?.calculator}
+            </Link>
+            <Link
+              to="/wellness"
+              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Wellness AI
+            </Link>
+            <Link
+              to="/ai-health"
+              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Assistant IA
+            </Link>
+            <Link
+              to="/ai-blog"
+              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Blog IA
             </Link>
             <Link
               to="/blog"
               className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
-              {t.nav?.blog || 'Blog'}
+              {t.nav?.blog}
             </Link>
             <Link
               to="/about"
               className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
-              {t.nav?.about || 'À propos'}
+              {t.nav?.about}
             </Link>
             <div className="px-3 py-2">
               <LanguageSelector />

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { Bug } from "lucide-react";
 import SEO from "@/components/SEO";
 
@@ -12,15 +11,6 @@ interface Message {
 }
 
 const AIHealthAssistant = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Assistant IA en Santé | HealthyIMC",
-    "applicationCategory": "HealthApplication",
-    "description": "Assistant virtuel intelligent pour des conseils personnalisés en santé et bien-être",
-    "url": "https://santeimc.fr/ai-health"
-  };
-
   const [messages, setMessages] = useState<Message[]>([
     {
       user: "assistant",
@@ -50,18 +40,16 @@ const AIHealthAssistant = () => {
         title="Assistant IA en Santé"
         description="Obtenez des conseils personnalisés en santé grâce à notre assistant virtuel intelligent. Une approche innovante pour votre bien-être."
         keywords="assistant ia santé, conseils santé ia, intelligence artificielle santé, santé personnalisée"
-        canonicalUrl="https://santeimc.fr/ai-health"
-        structuredData={structuredData}
       />
       <div className="min-h-screen bg-gradient-to-b from-blue-400 to-cyan-400 py-8 px-4">
         <div className="max-w-6xl mx-auto space-y-8">
           <header className="text-center text-white">
             <div className="flex items-center justify-center gap-2">
               <h1 className="text-3xl font-bold">Assistant IA en Santé</h1>
-              <Badge variant="secondary" className="flex items-center gap-1">
+              <div className="bg-white/20 px-2 py-1 rounded-full text-sm flex items-center gap-1">
                 <Bug className="w-3 h-3" />
                 bêta
-              </Badge>
+              </div>
             </div>
           </header>
 
