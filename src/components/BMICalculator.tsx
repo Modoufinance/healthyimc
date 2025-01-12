@@ -10,6 +10,7 @@ import BMIChart from "./BMIChart";
 import BMIPredictions from "./BMIPredictions";
 import UserDataForm from "./UserDataForm";
 import DeviceConnect from "./DeviceConnect";
+import SEO from "./SEO";
 import { getPersonalizedAdvice, predictBMITrend } from "@/services/aiService";
 
 export interface BMIData {
@@ -92,13 +93,31 @@ const BMICalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="p-6 shadow-lg rounded-lg">
+    <>
+      <SEO 
+        title="Calculateur IMC - Évaluez votre santé"
+        description="Calculez votre Indice de Masse Corporelle (IMC) gratuitement. Obtenez des conseils personnalisés et suivez votre progression pour une meilleure santé."
+        keywords="IMC, calculateur IMC, indice masse corporelle, santé, poids santé, calculateur santé"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "Calculateur IMC SantéIMC",
+          "applicationCategory": "HealthApplication",
+          "description": "Calculez votre Indice de Masse Corporelle (IMC) et obtenez des conseils personnalisés",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          }
+        }}
+      />
+      
+      <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8 animate-fade-in">
+        <div className="max-w-7xl mx-auto space-y-6">
+          <Card className="p-6 shadow-lg rounded-lg bg-white/90 backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
             <div className="space-y-4 text-center">
               <div className="flex items-center justify-center gap-2">
-                <Scale className="h-8 w-8 text-[#4facfe]" />
+                <Scale className="h-8 w-8 text-[#4facfe] animate-scale-in" />
                 <h1 className="text-2xl font-bold tracking-tight text-[#4facfe]">
                   {t.title}
                 </h1>
@@ -119,19 +138,19 @@ const BMICalculator = () => {
           </Card>
 
           <UserDataForm onSubmit={handleUserDataSubmit} />
-        </div>
 
-        {bmiData && (
-          <div className="animate-slide-up space-y-6">
-            <BMIScale bmi={bmiData.bmi} />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <BMIChart bmi={bmiData.bmi} />
-              {predictions && <BMIPredictions predictions={predictions} currentBMI={bmiData.bmi} />}
+          {bmiData && (
+            <div className="animate-slide-up space-y-6">
+              <BMIScale bmi={bmiData.bmi} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <BMIChart bmi={bmiData.bmi} />
+                {predictions && <BMIPredictions predictions={predictions} currentBMI={bmiData.bmi} />}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
