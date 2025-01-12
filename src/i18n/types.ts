@@ -51,11 +51,18 @@ export interface Advice {
   obese: string;
 }
 
+export interface Nav {
+  home: string;
+  calculator: string;
+  blog: string;
+  about: string;
+}
+
 export interface TranslationType {
   title: string;
   subtitle: string;
   bmiHistory: string;
-  bmiPredictions: string;  // Added this line
+  bmiPredictions: string;
   categories: Categories;
   units: UnitTranslations;
   labels: Labels;
@@ -63,4 +70,5 @@ export interface TranslationType {
   activities: Activities;
   buttons: Buttons;
   advice: Advice;
+  nav: Nav;
 }

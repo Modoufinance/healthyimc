@@ -27,16 +27,16 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-4">
             <Link to="/" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t("nav.home")}
+              {t.nav?.home || 'Accueil'}
             </Link>
             <Link to="/calculator" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t("nav.calculator")}
+              {t.nav?.calculator || 'Calculateur'}
             </Link>
             <Link to="/blog" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t("nav.blog")}
+              {t.nav?.blog || 'Blog'}
             </Link>
             <Link to="/about" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t("nav.about")}
+              {t.nav?.about || 'À propos'}
             </Link>
             <LanguageSelector />
           </div>
@@ -64,28 +64,28 @@ const Navigation = () => {
               className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
-              {t("nav.home")}
+              {t.nav?.home || 'Accueil'}
             </Link>
             <Link
               to="/calculator"
               className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
-              {t("nav.calculator")}
+              {t.nav?.calculator || 'Calculateur'}
             </Link>
             <Link
               to="/blog"
               className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
-              {t("nav.blog")}
+              {t.nav?.blog || 'Blog'}
             </Link>
             <Link
               to="/about"
               className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
-              {t("nav.about")}
+              {t.nav?.about || 'À propos'}
             </Link>
             <div className="px-3 py-2">
               <LanguageSelector />

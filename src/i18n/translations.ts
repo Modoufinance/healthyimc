@@ -5,7 +5,13 @@ export const translations: Record<string, TranslationType> = {
     title: "Calculatrice IMC",
     subtitle: "Calculez votre Indice de Masse Corporelle",
     bmiHistory: "Historique IMC",
-    bmiPredictions: "Prédictions IMC",  // Added this line
+    bmiPredictions: "Prédictions IMC",
+    nav: {
+      home: "Accueil",
+      calculator: "Calculateur",
+      blog: "Blog",
+      about: "À propos"
+    },
     categories: {
       underweight: "Insuffisance pondérale",
       normal: "Poids normal",
@@ -51,61 +57,17 @@ export const translations: Record<string, TranslationType> = {
       obese: "Vous êtes en obésité. Il est important de consulter un professionnel de santé pour des conseils personnalisés."
     }
   },
-  wo: {
-    title: "Toolu Kanam BMI",
-    subtitle: "Naw sa BMI",
-    bmiHistory: "Jaar-jaari BMI",
-    bmiPredictions: "Gis-gis BMI",  // Added this line
-    categories: {
-      underweight: "Jëmm bu sew",
-      normal: "Jëmm bu néew",
-      overweight: "Jëmm bu bare",
-      obese: "Naatangoo bu dëgër"
-    },
-    units: {
-      weight: {
-        unit: "kg",
-        factor: 1
-      },
-      height: {
-        unit: "cm",
-        factor: 1
-      }
-    },
-    labels: {
-      age: "At",
-      weight: "Jëmm",
-      height: "Yaatuwaay",
-      activity: "Doxalin",
-      goals: "Yéene yi"
-    },
-    placeholders: {
-      age: "Duggal sa at",
-      weight: "Ex: 70",
-      height: "Ex: 175",
-      goals: "Ex: Wàññi jëmm, Yokk doole"
-    },
-    activities: {
-      low: "Néew",
-      moderate: "Digg",
-      high: "Bare"
-    },
-    buttons: {
-      calculate: "Naw BMI",
-      analyze: "Saytu sama wér-gi-yaram"
-    },
-    advice: {
-      underweight: "Jëmm bu sew la. Wàcceek boppalante bi.",
-      normal: "Jëmm bu néew nga. Bokk ci jamm wi ñu ko topp !",
-      overweight: "Jëmm bu bare nga. Wàcceek boppalante bi ci mat na.",
-      obese: "Naatangoo bu dëgër la. Jëlal waxtaan ak boppalante."
-    }
-  },
   en: {
     title: "BMI Calculator",
     subtitle: "Calculate your Body Mass Index",
     bmiHistory: "BMI History",
-    bmiPredictions: "BMI Predictions",  // Added this line
+    bmiPredictions: "BMI Predictions",
+    nav: {
+      home: "Home",
+      calculator: "Calculator",
+      blog: "Blog",
+      about: "About"
+    },
     categories: {
       underweight: "Underweight",
       normal: "Normal weight",
@@ -149,6 +111,118 @@ export const translations: Record<string, TranslationType> = {
       normal: "Your weight is within the normal range. Keep up a healthy lifestyle!",
       overweight: "You are overweight. A healthcare professional can help you create a suitable program.",
       obese: "You are in the obesity range. It is important to consult a healthcare professional for personalized advice."
+    }
+  },
+  ar: {
+    title: "حاسبة مؤشر كتلة الجسم",
+    subtitle: "احسب مؤشر كتلة جسمك",
+    bmiHistory: "سجل مؤشر كتلة الجسم",
+    bmiPredictions: "توقعات مؤشر كتلة الجسم",
+    nav: {
+      home: "الرئيسية",
+      calculator: "الحاسبة",
+      blog: "المدونة",
+      about: "حول"
+    },
+    categories: {
+      underweight: "نقص الوزن",
+      normal: "وزن طبيعي",
+      overweight: "زيادة الوزن",
+      obese: "السمنة"
+    },
+    units: {
+      weight: {
+        unit: "kg",
+        factor: 1
+      },
+      height: {
+        unit: "cm",
+        factor: 1
+      }
+    },
+    labels: {
+      age: "العمر",
+      weight: "الوزن",
+      height: "الطول",
+      activity: "مستوى النشاط",
+      goals: "الأهداف الصحية"
+    },
+    placeholders: {
+      age: "أدخل عمرك",
+      weight: "مثال: 70",
+      height: "مثال: 175",
+      goals: "مثال: خسارة الوزن، اكتساب العضلات"
+    },
+    activities: {
+      low: "منخفض",
+      moderate: "متوسط",
+      high: "مرتفع"
+    },
+    buttons: {
+      calculate: "احسب مؤشر كتلة الجسم",
+      analyze: "تحليل صحتي"
+    },
+    advice: {
+      underweight: "وزنك أقل من الموصى به. فكر في استشارة أخصائي صحي للحصول على نصائح غذائية.",
+      normal: "وزنك ضمن النطاق الطبيعي. حافظ على نمط حياة صحي!",
+      overweight: "لديك زيادة في الوزن. يمكن لأخصائي صحي مساعدتك في وضع برنامج مناسب.",
+      obese: "أنت في نطاق السمنة. من المهم استشارة أخصائي صحي للحصول على نصائح شخصية."
+    }
+  },
+  hi: {
+    title: "बीएमआई कैलकुलेटर",
+    subtitle: "अपना बॉडी मास इंडेक्स कैलकुलेट करें",
+    bmiHistory: "बीएमआई इतिहास",
+    bmiPredictions: "बीएमआई पूर्वानुमान",
+    nav: {
+      home: "होम",
+      calculator: "कैलकुलेटर",
+      blog: "ब्लॉग",
+      about: "हमारे बारे में"
+    },
+    categories: {
+      underweight: "कम वजन",
+      normal: "सामान्य वजन",
+      overweight: "अधिक वजन",
+      obese: "मोटापा"
+    },
+    units: {
+      weight: {
+        unit: "kg",
+        factor: 1
+      },
+      height: {
+        unit: "cm",
+        factor: 1
+      }
+    },
+    labels: {
+      age: "उम्र",
+      weight: "वजन",
+      height: "ऊंचाई",
+      activity: "गतिविधि स्तर",
+      goals: "स्वास्थ्य लक्ष्य"
+    },
+    placeholders: {
+      age: "अपनी उम्र दर्ज करें",
+      weight: "उदा: 70",
+      height: "उदा: 175",
+      goals: "उदा: वजन कम करना, मांसपेशियां बढ़ाना"
+    },
+    activities: {
+      low: "कम",
+      moderate: "मध्यम",
+      high: "उच्च"
+    },
+    buttons: {
+      calculate: "बीएमआई की गणना करें",
+      analyze: "मेरे स्वास्थ्य का विश्लेषण करें"
+    },
+    advice: {
+      underweight: "आपका वजन अनुशंसित वजन से कम है। आहार संबंधी सलाह के लिए स्वास्थ्य पेशेवर से परामर्श करें।",
+      normal: "आपका वजन सामान्य सीमा में है। स्वस्थ जीवनशैली बनाए रखें!",
+      overweight: "आपका वजन अधिक है। एक स्वास्थ्य पेशेवर आपको उपयुक्त कार्यक्रम बनाने में मदद कर सकता है।",
+      obese: "आप मोटापे की श्रेणी में हैं। व्यक्तिगत सलाह के लिए स्वास्थ्य पेशेवर से परामर्श करना महत्वपूर्ण है।"
     }
   }
 };
