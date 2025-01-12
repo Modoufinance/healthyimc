@@ -1,82 +1,78 @@
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { ArrowRight, Activity, Brain, Calculator } from "lucide-react";
 import SEO from "@/components/SEO";
+import WellnessFeatures from "@/components/WellnessFeatures";
 
 const Home = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "SantéIMC - Calculatrice IMC en ligne",
-    "description": "Calculez gratuitement votre IMC et obtenez des recommandations personnalisées pour votre santé.",
-    "url": "https://santeimc.fr",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://santeimc.fr/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  };
+  const navigate = useNavigate();
 
   return (
     <>
-      <SEO
-        title="Calculatrice IMC en ligne gratuite"
-        description="Calculez gratuitement votre IMC et obtenez des recommandations personnalisées pour votre santé. Outil professionnel validé par le NHS."
-        keywords="imc, calculatrice imc, indice masse corporelle, calcul imc, poids santé, imc gratuit"
-        canonicalUrl="https://santeimc.fr"
-        structuredData={structuredData}
+      <SEO 
+        title="Accueil"
+        description="Calculez et suivez votre IMC avec notre application intelligente. Obtenez des conseils personnalisés pour votre santé."
+        keywords="IMC, calculateur IMC, santé, bien-être, suivi santé"
       />
-      <div className="min-h-[calc(100vh-4rem)] gradient-bg flex flex-col items-center justify-center p-4 md:p-8">
-        <article className="max-w-3xl mx-auto text-center space-y-6 animate-slide-up">
-          <header>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
-              Calculatrice IMC en ligne gratuite
+      
+      <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe]">
+        {/* Hero Section */}
+        <div className="container mx-auto px-4 py-12 sm:py-20">
+          <div className="text-center space-y-6 max-w-3xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white">
+              Votre Compagnon Santé Intelligent
             </h1>
-          </header>
-          
-          <div className="prose prose-lg text-white/90 max-w-2xl mx-auto space-y-6 px-4">
-            <section>
-              <h2 className="text-xl md:text-2xl text-white font-semibold">
-                Qu'est-ce que l'IMC et pourquoi est-il important ?
-              </h2>
-              <p className="text-base md:text-lg">
-                L'Indice de Masse Corporelle (IMC) est un indicateur de santé reconnu mondialement qui permet d'évaluer votre rapport poids/taille. 
-                Il est utilisé par les professionnels de santé pour déterminer si votre poids est dans une fourchette saine.
-              </p>
-            </section>
-            
-            <section>
-              <h2 className="text-xl md:text-2xl text-white font-semibold">
-                Comment utiliser notre calculateur IMC ?
-              </h2>
-              <p className="text-base md:text-lg">
-                Entrez simplement votre poids, votre taille et votre âge pour obtenir instantanément votre IMC et des recommandations 
-                personnalisées adaptées à votre profil. Notre outil prend en compte votre âge pour des conseils plus précis.
-              </p>
-            </section>
+            <p className="text-xl text-white/90">
+              Suivez votre IMC et recevez des conseils personnalisés pour atteindre vos objectifs de santé
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+              <Button
+                size="lg"
+                onClick={() => navigate("/calculator")}
+                className="bg-white text-[#4facfe] hover:bg-white/90"
+              >
+                Calculer mon IMC
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => navigate("/wellness")}
+                className="bg-transparent border-white text-white hover:bg-white/10"
+              >
+                Découvrir nos fonctionnalités
+              </Button>
+            </div>
           </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
-            <Button
-              asChild
-              size="lg"
-              className="bg-white text-primary hover:bg-white/90 w-full sm:w-auto"
-            >
-              <Link to="/calculator">
-                Calculer mon IMC maintenant
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="bg-transparent border-white text-white hover:bg-white/10 w-full sm:w-auto"
-            >
-              <Link to="/about">En savoir plus</Link>
-            </Button>
+        </div>
+
+        {/* Features Section */}
+        <div className="bg-white/10 backdrop-blur-lg py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center text-white mb-12">
+              Nos Services
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-6 text-white">
+                <Calculator className="w-12 h-12 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Calculateur IMC</h3>
+                <p>Calculez votre IMC et obtenez une analyse détaillée de votre situation</p>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-6 text-white">
+                <Brain className="w-12 h-12 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">IA Santé</h3>
+                <p>Recevez des conseils personnalisés basés sur l'intelligence artificielle</p>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-6 text-white">
+                <Activity className="w-12 h-12 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Suivi Progression</h3>
+                <p>Suivez votre progression et visualisez vos résultats dans le temps</p>
+              </div>
+            </div>
           </div>
-        </article>
+        </div>
+
+        <WellnessFeatures />
       </div>
     </>
   );
