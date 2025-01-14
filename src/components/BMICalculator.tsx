@@ -95,19 +95,27 @@ const BMICalculator = () => {
   return (
     <>
       <SEO 
-        title="Calculateur IMC - Évaluez votre santé"
-        description="Calculez votre Indice de Masse Corporelle (IMC) gratuitement. Obtenez des conseils personnalisés et suivez votre progression pour une meilleure santé."
-        keywords="IMC, calculateur IMC, indice masse corporelle, santé, poids santé, calculateur santé"
+        title="Calculatrice IMC Gratuite | Calcul IMC en Ligne | Indice de Masse Corporelle"
+        description="Calculez gratuitement votre IMC (Indice de Masse Corporelle) selon votre âge, poids et taille. Tableau IMC homme et femme avec conseils personnalisés pour une meilleure santé. Outil validé par les professionnels de santé."
+        keywords="imc, calcul imc, calculer son imc, imc calcul, calculatrice imc, imc femme, imc homme, calcul masse corporelle, indice masse corporelle, imc normal, calcul imc gratuit, imc santé, tableau imc femme, tableau imc homme, imc en bonne santé, calcul imc âge poids taille"
         structuredData={{
           "@context": "https://schema.org",
           "@type": "WebApplication",
           "name": "Calculateur IMC SantéIMC",
           "applicationCategory": "HealthApplication",
-          "description": "Calculez votre Indice de Masse Corporelle (IMC) et obtenez des conseils personnalisés",
+          "description": "Calculez votre Indice de Masse Corporelle (IMC) et obtenez des conseils personnalisés selon votre profil (homme/femme)",
+          "keywords": "imc, calcul imc, imc femme, imc homme, calculatrice imc",
           "offers": {
             "@type": "Offer",
             "price": "0",
             "priceCurrency": "EUR"
+          },
+          "audience": {
+            "@type": "Audience",
+            "geographicArea": {
+              "@type": "Country",
+              "name": "France"
+            }
           }
         }}
       />
