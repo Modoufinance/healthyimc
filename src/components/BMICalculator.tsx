@@ -10,7 +10,6 @@ import BMIChart from "./BMIChart";
 import BMIPredictions from "./BMIPredictions";
 import UserDataForm from "./UserDataForm";
 import DeviceConnect from "./DeviceConnect";
-import SEO from "./SEO";
 import { getPersonalizedAdvice, predictBMITrend } from "@/services/aiService";
 
 export interface BMIData {
@@ -93,39 +92,13 @@ const BMICalculator = () => {
   };
 
   return (
-    <>
-      <SEO 
-        title="Calculatrice IMC Gratuite | Calcul IMC en Ligne | Indice de Masse Corporelle"
-        description="Calculez gratuitement votre IMC (Indice de Masse Corporelle) selon votre âge, poids et taille. Tableau IMC homme et femme avec conseils personnalisés pour une meilleure santé. Outil validé par les professionnels de santé."
-        keywords="imc, calcul imc, calculer son imc, imc calcul, calculatrice imc, imc femme, imc homme, calcul masse corporelle, indice masse corporelle, imc normal, calcul imc gratuit, imc santé, tableau imc femme, tableau imc homme, imc en bonne santé, calcul imc âge poids taille"
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "WebApplication",
-          "name": "Calculateur IMC SantéIMC",
-          "applicationCategory": "HealthApplication",
-          "description": "Calculez votre Indice de Masse Corporelle (IMC) et obtenez des conseils personnalisés selon votre profil (homme/femme)",
-          "keywords": "imc, calcul imc, imc femme, imc homme, calculatrice imc",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "EUR"
-          },
-          "audience": {
-            "@type": "Audience",
-            "geographicArea": {
-              "@type": "Country",
-              "name": "France"
-            }
-          }
-        }}
-      />
-      
-      <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8 animate-fade-in">
-        <div className="max-w-7xl mx-auto space-y-6">
-          <Card className="p-6 shadow-lg rounded-lg bg-white/90 backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
+    <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card className="p-6 shadow-lg rounded-lg">
             <div className="space-y-4 text-center">
               <div className="flex items-center justify-center gap-2">
-                <Scale className="h-8 w-8 text-[#4facfe] animate-scale-in" />
+                <Scale className="h-8 w-8 text-[#4facfe]" />
                 <h1 className="text-2xl font-bold tracking-tight text-[#4facfe]">
                   {t.title}
                 </h1>
@@ -146,19 +119,19 @@ const BMICalculator = () => {
           </Card>
 
           <UserDataForm onSubmit={handleUserDataSubmit} />
-
-          {bmiData && (
-            <div className="animate-slide-up space-y-6">
-              <BMIScale bmi={bmiData.bmi} />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <BMIChart bmi={bmiData.bmi} />
-                {predictions && <BMIPredictions predictions={predictions} currentBMI={bmiData.bmi} />}
-              </div>
-            </div>
-          )}
         </div>
+
+        {bmiData && (
+          <div className="animate-slide-up space-y-6">
+            <BMIScale bmi={bmiData.bmi} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <BMIChart bmi={bmiData.bmi} />
+              {predictions && <BMIPredictions predictions={predictions} currentBMI={bmiData.bmi} />}
+            </div>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

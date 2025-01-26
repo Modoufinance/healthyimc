@@ -1,128 +1,99 @@
-import { Link } from "react-router-dom";
-import { useLanguage } from "@/contexts/LanguageContext";
-import LanguageSelector from "./LanguageSelector";
-import { Button } from "./ui/button";
-import { Menu } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Shield, Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import LanguageSelector from "./LanguageSelector";
+import PWAInstallPrompt from "./PWAInstallPrompt";
 
 const Navigation = () => {
-  const { t } = useLanguage();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center">
-              <img
-                src="/lovable-uploads/7f5c4590-2ec0-484b-a72c-432c59a614bd.png"
-                alt="HealthyIMC Logo"
-                className="h-10 w-10"
-              />
-              <span className="ml-2 text-xl font-bold text-gray-900">HealthyIMC</span>
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container px-4 md:px-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex justify-between items-center h-16 sm:h-auto">
+            <Link to="/" className="flex items-center gap-2 text-primary font-bold text-xl">
+              <Shield className="h-6 w-6" />
+              HealthyIMC
             </Link>
+            <div className="flex items-center gap-2">
+              <LanguageSelector />
+              <PWAInstallPrompt />
+              <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                <SheetTrigger asChild className="sm:hidden">
+                  <Button variant="ghost" size="icon">
+                    {isOpen ? (
+                      <X className="h-6 w-6" />
+                    ) : (
+                      <Menu className="h-6 w-6" />
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-64">
+                  <nav className="flex flex-col gap-4">
+                    <Link
+                      to="/calculator"
+                      className="text-lg font-medium hover:text-primary"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Calculateur
+                    </Link>
+                    <Link
+                      to="/ai-health"
+                      className="text-lg font-medium hover:text-primary"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Assistant IA
+                    </Link>
+                    <Link
+                      to="/wellness"
+                      className="text-lg font-medium hover:text-primary"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Bien-être
+                    </Link>
+                    <Link
+                      to="/about"
+                      className="text-lg font-medium hover:text-primary"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      À propos
+                    </Link>
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-4">
-            <Link to="/" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t.nav?.home}
-            </Link>
-            <Link to="/calculator" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t.nav?.calculator}
-            </Link>
-            <Link to="/wellness" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              Wellness AI
-            </Link>
-            <Link to="/ai-health" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              Assistant IA
-            </Link>
-            <Link to="/ai-blog" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              Blog IA
-            </Link>
-            <Link to="/blog" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t.nav?.blog}
-            </Link>
-            <Link to="/about" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md">
-              {t.nav?.about}
-            </Link>
-            <LanguageSelector />
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              <Menu className="h-6 w-6" />
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link
-              to="/"
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {t.nav?.home}
-            </Link>
+          <div className="hidden sm:flex items-center space-x-6">
             <Link
               to="/calculator"
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
+              className="text-sm font-medium hover:text-primary"
             >
-              {t.nav?.calculator}
-            </Link>
-            <Link
-              to="/wellness"
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Wellness AI
+              Calculateur
             </Link>
             <Link
               to="/ai-health"
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
+              className="text-sm font-medium hover:text-primary"
             >
               Assistant IA
             </Link>
             <Link
-              to="/ai-blog"
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
+              to="/wellness"
+              className="text-sm font-medium hover:text-primary"
             >
-              Blog IA
-            </Link>
-            <Link
-              to="/blog"
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {t.nav?.blog}
+              Bien-être
             </Link>
             <Link
               to="/about"
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
+              className="text-sm font-medium hover:text-primary"
             >
-              {t.nav?.about}
+              À propos
             </Link>
-            <div className="px-3 py-2">
-              <LanguageSelector />
-            </div>
           </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 };
