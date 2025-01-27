@@ -1,18 +1,27 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Shield, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Link, useLocation } from "react-router-dom";
+import { Home, Scale, Bot, Info, Shield, Heart, BookOpen } from "lucide-react";
+import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
-import PWAInstallPrompt from "./PWAInstallPrompt";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const { t } = useLanguage();
+
+  const links = [
+    { to: "/", label: "Accueil", icon: <Home className="w-4 h-4" /> },
+    { to: "/calculator", label: "Calculatrice IMC", icon: <Scale className="w-4 h-4" /> },
+    { to: "/blog", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
+    { to: "/ai-health", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
+    { to: "/wellness", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
+    { to: "/about", label: "À propos", icon: <Info className="w-4 h-4" /> },
+    { to: "/privacy", label: "Confidentialité", icon: <Shield className="w-4 h-4" /> },
+  ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+    <nav className="bg-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:h-16">
           <div className="flex justify-between items-center h-16 sm:h-auto">
             <Link to="/" className="flex items-center gap-2 text-primary font-bold text-xl">
               <Shield className="h-6 w-6" />
@@ -20,82 +29,30 @@ const Navigation = () => {
             </Link>
             <div className="flex items-center gap-2">
               <LanguageSelector />
-              <PWAInstallPrompt />
-              <Sheet open={isOpen} onOpenChange={setIsOpen}>
-                <SheetTrigger asChild className="sm:hidden">
-                  <Button variant="ghost" size="icon">
-                    {isOpen ? (
-                      <X className="h-6 w-6" />
-                    ) : (
-                      <Menu className="h-6 w-6" />
-                    )}
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="right" className="w-64">
-                  <nav className="flex flex-col gap-4">
-                    <Link
-                      to="/calculator"
-                      className="text-lg font-medium hover:text-primary"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Calculateur
-                    </Link>
-                    <Link
-                      to="/ai-health"
-                      className="text-lg font-medium hover:text-primary"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Assistant IA
-                    </Link>
-                    <Link
-                      to="/wellness"
-                      className="text-lg font-medium hover:text-primary"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Bien-être
-                    </Link>
-                    <Link
-                      to="/about"
-                      className="text-lg font-medium hover:text-primary"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      À propos
-                    </Link>
-                  </nav>
-                </SheetContent>
-              </Sheet>
             </div>
           </div>
-          <div className="hidden sm:flex items-center space-x-6">
-            <Link
-              to="/calculator"
-              className="text-sm font-medium hover:text-primary"
-            >
-              Calculateur
-            </Link>
-            <Link
-              to="/ai-health"
-              className="text-sm font-medium hover:text-primary"
-            >
-              Assistant IA
-            </Link>
-            <Link
-              to="/wellness"
-              className="text-sm font-medium hover:text-primary"
-            >
-              Bien-être
-            </Link>
-            <Link
-              to="/about"
-              className="text-sm font-medium hover:text-primary"
-            >
-              À propos
-            </Link>
+          <div className="flex flex-row justify-center sm:justify-end pb-2 sm:pb-0">
+            {links.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={cn(
+                  "inline-flex items-center px-3 sm:px-4 py-2 text-sm font-medium transition-colors",
+                  "hover:text-primary hover:bg-gray-50",
+                  location.pathname === link.to
+                    ? "text-primary border-b-2 border-primary"
+                    : "text-gray-500"
+                )}
+              >
+                {link.icon}
+                <span className="ml-2 hidden sm:inline">{link.label}</span>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
     </nav>
   );
-};
+}
 
 export default Navigation;
