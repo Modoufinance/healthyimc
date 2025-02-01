@@ -14,6 +14,7 @@ import BMICalculator from "./components/BMICalculator";
 import AIHealthAssistant from "./pages/AIHealthAssistant";
 import WellnessCompanion from "./pages/WellnessCompanion";
 import AIBlog from "./pages/AIBlog";
+import NotFound from "./components/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -33,14 +34,7 @@ const AppContent = () => {
           <Route path="/ai-blog" element={<AIBlog />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />
-          <Route path="*" element={
-            <div className="flex flex-col items-center justify-center min-h-screen p-4">
-              <h1 className="text-2xl font-bold mb-4">Page non trouvée</h1>
-              <p className="text-gray-600 text-center mb-4">
-                La page que vous recherchez n'existe pas ou a été déplacée.
-              </p>
-            </div>
-          } />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
     </div>
