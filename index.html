@@ -11,14 +11,18 @@
     </script>
 
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Calculatrice IMC Gratuite | Calcul IMC en Ligne | HealthyIMC</title>
     <meta name="description" content="Calculez gratuitement votre IMC (Indice de Masse Corporelle) avec notre calculateur en ligne français. Obtenez votre indice de masse corporelle personnalisé et des conseils santé adaptés. Outil validé par les professionnels de santé." />
     <meta name="keywords" content="imc, calcul imc, calculer son imc, imc calcul, calculatrice imc, imc femme, imc homme, calcul masse corporelle, indice masse corporelle, imc normal, calcul imc gratuit, imc santé, imc france" />
-    <meta name="author" content="SantéIMC" />
-    <meta name="robots" content="index, follow" />
-    <meta name="geo.region" content="FR" />
-    <meta name="geo.placename" content="France" />
+    <meta name="author" content="HealthyIMC" />
+    <meta name="theme-color" content="#4facfe" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="HealthyIMC" />
+    
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
     
     <!-- Alternate language versions -->
     <link rel="alternate" hreflang="fr" href="https://santeimc.fr/" />
@@ -87,6 +91,20 @@
           "name": "HealthyIMC",
           "url": "https://santeimc.fr"
         }
+      }
+    </script>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('ServiceWorker registration successful');
+            })
+            .catch((err) => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
       }
     </script>
   </head>
