@@ -36,10 +36,10 @@ const AppContent = () => {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/calculator" element={<BMICalculator />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/ai-health" element={<AIHealthAssistant />} />
-          <Route path="/wellness" element={<WellnessCompanion />} />
-          <Route path="/ai-blog" element={<AIBlog />} />
+          <Route path="/blog/*" element={<Blog />} />
+          <Route path="/ai-health/*" element={<AIHealthAssistant />} />
+          <Route path="/wellness/*" element={<WellnessCompanion />} />
+          <Route path="/ai-blog/*" element={<AIBlog />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/404" element={<NotFound />} />
