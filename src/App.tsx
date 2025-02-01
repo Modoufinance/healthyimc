@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { useLocaleDetection } from "./hooks/useLocaleDetection";
 import Navigation from "./components/Navigation";
@@ -16,7 +16,15 @@ import WellnessCompanion from "./pages/WellnessCompanion";
 import AIBlog from "./pages/AIBlog";
 import NotFound from "./components/NotFound";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+      staleTime: 30000,
+    },
+  },
+});
 
 const AppContent = () => {
   useLocaleDetection();
@@ -34,7 +42,8 @@ const AppContent = () => {
           <Route path="/ai-blog" element={<AIBlog />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/404" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
       </main>
     </div>
