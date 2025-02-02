@@ -25,7 +25,7 @@ const Navigation = () => {
           <div className="flex justify-between items-center h-16 sm:h-auto">
             <Link to="/" className="flex items-center gap-2">
               <img 
-                src="/lovable-uploads/704d5d93-18b5-4db5-b246-9422987e3cf9.png" 
+                src="/lovable-uploads/5db5bbb5-92ee-48c8-b8d3-150d9d289649.png" 
                 alt="HealthyIMC Logo" 
                 className="h-12 w-auto"
               />
