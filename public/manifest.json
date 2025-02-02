@@ -1,10 +1,10 @@
 {
-  "name": "HealthyIMC - Calculateur d'IMC",
+  "name": "HealthyIMC - Calculatrice IMC en ligne",
   "short_name": "HealthyIMC",
   "description": "Calculez votre IMC et obtenez des conseils santé personnalisés",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#4facfe",
+  "background_color": "#ffffff",
   "theme_color": "#4facfe",
   "orientation": "portrait-primary",
   "icons": [
