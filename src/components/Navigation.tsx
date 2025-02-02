@@ -23,9 +23,12 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:h-16">
           <div className="flex justify-between items-center h-16 sm:h-auto">
-            <Link to="/" className="flex items-center gap-2 text-primary font-bold text-xl">
-              <Shield className="h-6 w-6" />
-              HealthyIMC
+            <Link to="/" className="flex items-center gap-2">
+              <img 
+                src="/lovable-uploads/704d5d93-18b5-4db5-b246-9422987e3cf9.png" 
+                alt="HealthyIMC Logo" 
+                className="h-12 w-auto"
+              />
             </Link>
             <div className="flex items-center gap-2">
               <LanguageSelector />
