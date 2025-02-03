@@ -3,6 +3,7 @@ import { Home, Scale, Bot, Info, Shield, Heart, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
+import PWAInstallButton from "./PWAInstallButton";
 
 const Navigation = () => {
   const location = useLocation();
@@ -25,12 +26,13 @@ const Navigation = () => {
           <div className="flex justify-between items-center h-16 sm:h-auto">
             <Link to="/" className="flex items-center gap-2 animate-slide-in">
               <img 
-                src="/lovable-uploads/5db5bbb5-92ee-48c8-b8d3-150d9d289649.png" 
+                src="/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png" 
                 alt="HealthyIMC Logo" 
                 className="h-12 w-auto transition-transform duration-300 hover:scale-105"
               />
             </Link>
             <div className="flex items-center gap-2">
+              <PWAInstallButton />
               <LanguageSelector />
             </div>
           </div>
