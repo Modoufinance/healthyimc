@@ -7,3 +7,16 @@ Sitemap: https://santeimc.fr/sitemap.xml
 # Optimisations pour les moteurs de recherche français
 Allow: /*?lang=fr
 Allow: /fr/*
+
+# Interdire l'accès aux pages d'administration
+Disallow: /admin/*
+Disallow: /dashboard/*
+
+# Interdire l'indexation des pages de test
+Disallow: /test/*
+Disallow: /dev/*
+
+# Interdire l'indexation des fichiers non pertinents
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
