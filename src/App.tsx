@@ -2,11 +2,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { useLocaleDetection } from "./hooks/useLocaleDetection";
 import Navigation from "./components/Navigation";
-import Home from "./pages/Home";
 import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import Blog from "./pages/Blog";
@@ -25,8 +24,8 @@ const AppContent = () => {
       <Navigation />
       <main className="flex-1">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/calculator" element={<BMICalculator />} />
+          <Route path="/" element={<BMICalculator />} />
+          <Route path="/calculator" element={<Navigate to="/" replace />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/ai-health" element={<AIHealthAssistant />} />
           <Route path="/wellness" element={<WellnessCompanion />} />

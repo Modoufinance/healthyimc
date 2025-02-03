@@ -11,14 +11,13 @@ const Navigation = () => {
   const links = [
     { 
       to: "/", 
-      label: "Accueil", 
+      label: "Calculatrice IMC", 
       icon: <img 
         src="/lovable-uploads/4165eeff-6bfe-4e43-95b6-59e8e317f02f.png" 
         alt="Balance Icon" 
         className="w-5 h-5" 
       /> 
     },
-    { to: "/calculator", label: "Calculatrice IMC", icon: <Scale className="w-4 h-4" /> },
     { to: "/blog", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/ai-health", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
     { to: "/wellness", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
