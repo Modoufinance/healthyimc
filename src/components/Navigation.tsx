@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Scale, Bot, Info, Shield, Heart, BookOpen } from "lucide-react";
+import { Home, Scale, Bot, Info, Shield, Heart, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -9,15 +9,8 @@ const Navigation = () => {
   const { t } = useLanguage();
 
   const links = [
-    { 
-      to: "/", 
-      label: "Calculatrice IMC", 
-      icon: <img 
-        src="/lovable-uploads/4165eeff-6bfe-4e43-95b6-59e8e317f02f.png" 
-        alt="Balance Icon" 
-        className="w-5 h-5" 
-      /> 
-    },
+    { to: "/", label: "Accueil", icon: <Home className="w-4 h-4" /> },
+    { to: "/calculator", label: "Calculatrice IMC", icon: <Scale className="w-4 h-4" /> },
     { to: "/blog", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/ai-health", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
     { to: "/wellness", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
@@ -32,7 +25,7 @@ const Navigation = () => {
           <div className="flex justify-between items-center h-16 sm:h-auto">
             <Link to="/" className="flex items-center gap-2 animate-slide-in">
               <img 
-                src="/lovable-uploads/4165eeff-6bfe-4e43-95b6-59e8e317f02f.png" 
+                src="/lovable-uploads/5db5bbb5-92ee-48c8-b8d3-150d9d289649.png" 
                 alt="HealthyIMC Logo" 
                 className="h-12 w-auto transition-transform duration-300 hover:scale-105"
               />
