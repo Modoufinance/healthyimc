@@ -6,7 +6,7 @@
   <url>
     <loc>https://santeimc.fr/</loc>
     <lastmod>2024-03-14</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/" />
@@ -15,6 +15,7 @@
     <image:image>
       <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
       <image:title>Calculatrice IMC</image:title>
+      <image:caption>Calculez votre IMC gratuitement</image:caption>
     </image:image>
   </url>
   <url>
@@ -25,6 +26,7 @@
     <image:image>
       <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
       <image:title>Calculateur IMC en ligne</image:title>
+      <image:caption>Outil gratuit de calcul d'IMC</image:caption>
     </image:image>
   </url>
   <url>
@@ -32,12 +34,22 @@
     <lastmod>2024-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
+      <image:title>Assistant Santé IA</image:title>
+      <image:caption>Conseils santé personnalisés par IA</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://santeimc.fr/wellness</loc>
     <lastmod>2024-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
+      <image:title>Bien-être et Santé</image:title>
+      <image:caption>Conseils pour votre bien-être</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://santeimc.fr/about</loc>

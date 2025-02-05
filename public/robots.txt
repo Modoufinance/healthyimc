@@ -7,6 +7,10 @@ Sitemap: https://santeimc.fr/sitemap.xml
 # Optimisations pour les moteurs de recherche français
 Allow: /*?lang=fr
 Allow: /fr/*
+Allow: /calculator
+Allow: /ai-health
+Allow: /wellness
+Allow: /about
 
 # Interdire l'accès aux pages d'administration
 Disallow: /admin/*
@@ -20,3 +24,16 @@ Disallow: /dev/*
 Disallow: /*.json$
 Disallow: /*.js$
 Disallow: /*.css$
+
+# Optimisations pour les crawlers spécifiques
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Googlebot-Image
+Allow: /lovable-uploads/
+Allow: /images/
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
