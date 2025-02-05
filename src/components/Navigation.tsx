@@ -26,7 +26,7 @@ const Navigation = () => {
           <div className="flex justify-between items-center h-16 sm:h-auto">
             <Link to="/" className="flex items-center gap-2 animate-slide-in">
               <img 
-                src="/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png" 
+                src="/lovable-uploads/fa3d23e1-be06-4b8f-812a-691e5c14a6ee.png" 
                 alt="HealthyIMC Logo" 
                 className="h-12 w-auto transition-transform duration-300 hover:scale-105"
               />
