@@ -7,9 +7,9 @@ const About = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "SantéIMC",
+    "name": "HealthyIMC",
     "description": "Plateforme dédiée à la santé et au bien-être, créée par des professionnels de santé",
-    "url": "https://santeimc.fr/about",
+    "url": "https://healthyimc.com/about",
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+33 1 23 45 67 89",

@@ -1,7 +1,7 @@
 {
-  "name": "HealthyIMC - Calculatrice IMC en ligne",
+  "name": "HealthyIMC - Online BMI Calculator",
   "short_name": "HealthyIMC",
-  "description": "Calculez votre IMC et obtenez des conseils santé personnalisés",
+  "description": "Calculate your BMI and get personalized health advice",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

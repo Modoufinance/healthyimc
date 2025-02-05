@@ -2,10 +2,10 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://santeimc.fr/sitemap.xml
+Sitemap: https://healthyimc.com/sitemap.xml
 
-# Optimisations pour les moteurs de recherche français
-Allow: /*?lang=fr
+# Optimizations for all search engines
+Allow: /*?lang=*
 Allow: /fr/*
 Allow: /calculator
 Allow: /ai-health

@@ -4,7 +4,7 @@
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://santeimc.fr/</loc>
+    <loc>https://healthyimc.com/</loc>
     <lastmod>2024-03-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -14,8 +14,8 @@
     <xhtml:link rel="alternate" hreflang="hi" href="https://santeimc.fr/hi/" />
     <image:image>
       <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Calculatrice IMC</image:title>
-      <image:caption>Calculez votre IMC gratuitement</image:caption>
+      <image:title>BMI Calculator</image:title>
+      <image:caption>Calculate your BMI for free</image:caption>
     </image:image>
   </url>
   <url>
