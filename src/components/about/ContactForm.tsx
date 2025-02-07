@@ -54,8 +54,8 @@ const ContactForm = () => {
           <MapPin className="h-5 w-5 text-primary" />
           <div>
             <p className="font-medium">Notre adresse:</p>
-            <p className="text-gray-600">123 Rue de la Santé</p>
-            <p className="text-gray-600">75000 Paris, France</p>
+            <p className="text-gray-600">Touba</p>
+            <p className="text-gray-600">Sénégal</p>
           </div>
         </div>
 
@@ -63,7 +63,7 @@ const ContactForm = () => {
           <Phone className="h-5 w-5 text-primary" />
           <div>
             <p className="font-medium">Téléphone:</p>
-            <p className="text-gray-600">+33 1 23 45 67 89</p>
+            <p className="text-gray-600">+221 78 448 82 59</p>
           </div>
         </div>
 
@@ -71,7 +71,7 @@ const ContactForm = () => {
           <Mail className="h-5 w-5 text-primary" />
           <div>
             <p className="font-medium">Email:</p>
-            <p className="text-gray-600">contact@healthyimc.com</p>
+            <p className="text-gray-600">Modoufinance@gmail.com</p>
           </div>
         </div>
       </div>
