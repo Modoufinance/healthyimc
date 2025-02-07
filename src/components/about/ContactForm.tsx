@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Phone, MapPin, Mail } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -20,7 +21,12 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const { error } = await supabase
+        .from('contacts')
+        .insert([formData]);
+
+      if (error) throw error;
+
       toast({
         title: "Message envoyé !",
         description: "Nous vous répondrons dans les plus brefs délais.",
@@ -28,6 +34,7 @@ const ContactForm = () => {
       });
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
+      console.error('Error submitting contact form:', error);
       toast({
         variant: "destructive",
         title: "Erreur",
@@ -131,3 +138,4 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
+
