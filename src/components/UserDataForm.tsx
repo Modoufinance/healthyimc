@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -55,8 +56,7 @@ const UserDataForm = ({ onSubmit }: UserDataFormProps) => {
             className="w-full p-2 border rounded"
           >
             <option value="">Sélectionnez</option>
-            <option value="male">Homme</option>
-            <option value="female">Femme</option>
+            <option value="both">Homme/Femme</option>
             <option value="other">Autre</option>
           </select>
         </div>
