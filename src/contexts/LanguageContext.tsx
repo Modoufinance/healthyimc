@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import * as React from "react";
 import { translations } from "../i18n/translations";
 import type { Language, TranslationType } from "../i18n/types";
 
@@ -9,16 +9,19 @@ type LanguageContextType = {
   t: TranslationType;
 };
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = React.createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("fr");
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [language, setLanguage] = React.useState<Language>("fr");
 
-  const value = {
-    language,
-    setLanguage,
-    t: translations[language]
-  };
+  const value = React.useMemo(
+    () => ({
+      language,
+      setLanguage,
+      t: translations[language]
+    }),
+    [language]
+  );
 
   return (
     <LanguageContext.Provider value={value}>
@@ -28,7 +31,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 }
 
 export function useLanguage() {
-  const context = useContext(LanguageContext);
+  const context = React.useContext(LanguageContext);
   if (context === undefined) {
     throw new Error("useLanguage must be used within a LanguageProvider");
   }
