@@ -1,10 +1,11 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://healthyimc.com/</loc>
+    <loc>https://santeimc.fr/</loc>
     <lastmod>2024-03-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -14,12 +15,12 @@
     <xhtml:link rel="alternate" hreflang="hi" href="https://santeimc.fr/hi/" />
     <image:image>
       <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>BMI Calculator</image:title>
-      <image:caption>Calculate your BMI for free</image:caption>
+      <image:title>Calculateur IMC</image:title>
+      <image:caption>Calculez votre IMC gratuitement</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://santeimc.fr/calculator</loc>
+    <loc>https://santeimc.fr/calculateur-imc</loc>
     <lastmod>2024-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -30,7 +31,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://santeimc.fr/ai-health</loc>
+    <loc>https://santeimc.fr/assistant-sante-ia</loc>
     <lastmod>2024-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -41,7 +42,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://santeimc.fr/wellness</loc>
+    <loc>https://santeimc.fr/bien-etre</loc>
     <lastmod>2024-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -52,13 +53,13 @@
     </image:image>
   </url>
   <url>
-    <loc>https://santeimc.fr/about</loc>
+    <loc>https://santeimc.fr/a-propos</loc>
     <lastmod>2024-03-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://santeimc.fr/privacy</loc>
+    <loc>https://santeimc.fr/confidentialite</loc>
     <lastmod>2024-03-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

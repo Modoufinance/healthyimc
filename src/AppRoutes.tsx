@@ -20,13 +20,13 @@ const AppRoutes = () => {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/calculator" element={<BMICalculator />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/ai-health" element={<AIHealthAssistant />} />
-          <Route path="/wellness" element={<WellnessCompanion />} />
-          <Route path="/ai-blog" element={<AIBlog />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/calculateur-imc" element={<BMICalculator />} />
+          <Route path="/blog-sante" element={<Blog />} />
+          <Route path="/assistant-sante-ia" element={<AIHealthAssistant />} />
+          <Route path="/bien-etre" element={<WellnessCompanion />} />
+          <Route path="/blog-ia" element={<AIBlog />} />
+          <Route path="/a-propos" element={<About />} />
+          <Route path="/confidentialite" element={<Privacy />} />
         </Routes>
       </main>
     </div>
@@ -34,3 +34,4 @@ const AppRoutes = () => {
 };
 
 export default AppRoutes;
+

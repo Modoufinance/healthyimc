@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { Home, Scale, Bot, Info, Shield, Heart, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -11,12 +12,12 @@ const Navigation = () => {
 
   const links = [
     { to: "/", label: "Accueil", icon: <Home className="w-4 h-4" /> },
-    { to: "/calculator", label: "Calculatrice IMC", icon: <Scale className="w-4 h-4" /> },
-    { to: "/blog", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
-    { to: "/ai-health", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
-    { to: "/wellness", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
-    { to: "/about", label: "À propos", icon: <Info className="w-4 h-4" /> },
-    { to: "/privacy", label: "Confidentialité", icon: <Shield className="w-4 h-4" /> },
+    { to: "/calculateur-imc", label: "Calculatrice IMC", icon: <Scale className="w-4 h-4" /> },
+    { to: "/blog-sante", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
+    { to: "/assistant-sante-ia", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
+    { to: "/bien-etre", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
+    { to: "/a-propos", label: "À propos", icon: <Info className="w-4 h-4" /> },
+    { to: "/confidentialite", label: "Confidentialité", icon: <Shield className="w-4 h-4" /> },
   ];
 
   return (
