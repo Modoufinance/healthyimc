@@ -1,16 +1,17 @@
+
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://healthyimc.com/sitemap.xml
+Sitemap: https://santeimc.fr/sitemap.xml
 
 # Optimizations for all search engines
 Allow: /*?lang=*
 Allow: /fr/*
-Allow: /calculator
-Allow: /ai-health
-Allow: /wellness
-Allow: /about
+Allow: /calculateur-imc
+Allow: /assistant-sante-ia
+Allow: /bien-etre
+Allow: /a-propos
 
 # Interdire l'accès aux pages d'administration
 Disallow: /admin/*
