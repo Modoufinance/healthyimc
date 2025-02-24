@@ -1,5 +1,5 @@
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useLocaleDetection } from "./hooks/useLocaleDetection";
 import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
@@ -19,6 +19,7 @@ const AppRoutes = () => {
       <Navigation />
       <main className="flex-1">
         <Routes>
+          <Route index element={<Home />} />
           <Route path="/" element={<Home />} />
           <Route path="/calculateur-imc" element={<BMICalculator />} />
           <Route path="/blog-sante" element={<Blog />} />
@@ -27,6 +28,8 @@ const AppRoutes = () => {
           <Route path="/blog-ia" element={<AIBlog />} />
           <Route path="/a-propos" element={<About />} />
           <Route path="/confidentialite" element={<Privacy />} />
+          {/* Redirection pour les routes non trouvées */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </div>
