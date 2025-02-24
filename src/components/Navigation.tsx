@@ -26,11 +26,8 @@ const Navigation = () => {
         <div className="flex flex-col sm:flex-row sm:justify-between sm:h-16">
           <div className="flex justify-between items-center h-16 sm:h-auto">
             <Link to="/" className="flex items-center gap-2">
-              <img 
-                src="/lovable-uploads/fa3d23e1-be06-4b8f-812a-691e5c14a6ee.png" 
-                alt="HealthyIMC Logo" 
-                className="h-12 w-auto"
-              />
+              <span className="text-2xl font-bold text-blue-600">Healthy</span>
+              <span className="text-2xl font-bold text-gray-700">IMC</span>
             </Link>
             <div className="flex items-center gap-2">
               <PWAInstallButton />
