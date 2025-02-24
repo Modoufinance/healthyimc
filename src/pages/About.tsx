@@ -1,3 +1,4 @@
+
 import SEO from "@/components/SEO";
 import AboutHero from "@/components/about/AboutHero";
 import MissionSection from "@/components/about/MissionSection";
@@ -9,12 +10,7 @@ const About = () => {
     "@type": "Organization",
     "name": "HealthyIMC",
     "description": "Plateforme dédiée à la santé et au bien-être, créée par des professionnels de santé",
-    "url": "https://healthyimc.com/about",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+33 1 23 45 67 89",
-      "contactType": "customer service"
-    }
+    "url": "https://healthyimc.com/about"
   };
 
   return (
