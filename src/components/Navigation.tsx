@@ -16,20 +16,20 @@ const Navigation = () => {
     { to: "/blog-sante", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/assistant-sante-ia", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
     { to: "/bien-etre", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
+    { to: "/blog-ia", label: "Blog IA", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/a-propos", label: "À propos", icon: <Info className="w-4 h-4" /> },
-    { to: "/confidentialite", label: "Confidentialité", icon: <Shield className="w-4 h-4" /> },
   ];
 
   return (
-    <nav className="bg-white shadow-modern sticky top-0 z-50">
-      <div className="container-custom">
+    <nav className="bg-white shadow-md sticky top-0 z-50">
+      <div className="container mx-auto px-4">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:h-16">
           <div className="flex justify-between items-center h-16 sm:h-auto">
-            <Link to="/" className="flex items-center gap-2 animate-slide-in">
+            <Link to="/" className="flex items-center gap-2">
               <img 
                 src="/lovable-uploads/fa3d23e1-be06-4b8f-812a-691e5c14a6ee.png" 
                 alt="HealthyIMC Logo" 
-                className="h-12 w-auto transition-transform duration-300 hover:scale-105"
+                className="h-12 w-auto"
               />
             </Link>
             <div className="flex items-center gap-2">
@@ -43,12 +43,17 @@ const Navigation = () => {
                 key={link.to}
                 to={link.to}
                 className={cn(
-                  "nav-link inline-flex items-center gap-2 whitespace-nowrap",
-                  location.pathname === link.to && "active"
+                  "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                  "hover:bg-gray-100",
+                  location.pathname === link.to
+                    ? "text-blue-600 bg-blue-50"
+                    : "text-gray-600"
                 )}
               >
-                {link.icon}
-                <span className="hidden sm:inline">{link.label}</span>
+                <span className="flex items-center gap-2">
+                  {link.icon}
+                  <span className="hidden sm:inline">{link.label}</span>
+                </span>
               </Link>
             ))}
           </div>
@@ -56,6 +61,6 @@ const Navigation = () => {
       </div>
     </nav>
   );
-}
+};
 
 export default Navigation;
