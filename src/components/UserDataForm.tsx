@@ -1,9 +1,8 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -14,22 +13,33 @@ interface UserDataFormProps {
     activityLevel: string;
     targetBMI: number;
   }) => void;
+  age?: number;
+  gender?: string;
+  activityLevel?: string;
+  targetBMI?: number;
 }
 
-const UserDataForm = ({ onSubmit }: UserDataFormProps) => {
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [activityLevel, setActivityLevel] = useState("");
-  const [targetBMI, setTargetBMI] = useState("");
+const UserDataForm = ({ onSubmit, age: initialAge, gender: initialGender, activityLevel: initialActivityLevel, targetBMI: initialTargetBMI }: UserDataFormProps) => {
+  const [age, setAge] = useState(initialAge?.toString() || "");
+  const [gender, setGender] = useState(initialGender || "");
+  const [activityLevel, setActivityLevel] = useState(initialActivityLevel || "");
+  const [targetBMI, setTargetBMI] = useState(initialTargetBMI?.toString() || "");
   const { t } = useLanguage();
+
+  useEffect(() => {
+    setAge(initialAge?.toString() || "");
+    setGender(initialGender || "");
+    setActivityLevel(initialActivityLevel || "");
+    setTargetBMI(initialTargetBMI?.toString() || "");
+  }, [initialAge, initialGender, initialActivityLevel, initialTargetBMI]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit({
-      age: parseInt(age),
+      age: parseInt(age) || 0,
       gender,
       activityLevel,
-      targetBMI: parseFloat(targetBMI),
+      targetBMI: parseFloat(targetBMI) || 0,
     });
   };
 

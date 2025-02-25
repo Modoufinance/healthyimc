@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
@@ -17,6 +16,7 @@ export interface BMIData {
   bmi: number;
   category: string;
   advice: string;
+  date?: string;
 }
 
 const BMICalculator = () => {
@@ -216,7 +216,13 @@ const BMICalculator = () => {
             )}
           </Card>
 
-          <UserDataForm onSubmit={handleUserDataSubmit} initialData={userData} />
+          <UserDataForm 
+            onSubmit={handleUserDataSubmit} 
+            age={userData.age}
+            gender={userData.gender}
+            activityLevel={userData.activityLevel}
+            targetBMI={userData.targetBMI}
+          />
         </div>
 
         {bmiData && (
