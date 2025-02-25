@@ -11,6 +11,7 @@ import BMIPredictions from "./BMIPredictions";
 import UserDataForm from "./UserDataForm";
 import DeviceConnect from "./DeviceConnect";
 import { getPersonalizedAdvice, predictBMITrend } from "@/services/aiService";
+import BMIEducation from "./BMIEducation";
 
 export interface BMIData {
   bmi: number;
@@ -256,6 +257,9 @@ const BMICalculator = () => {
             </div>
           </Card>
         )}
+
+        {/* Section éducative */}
+        <BMIEducation />
       </div>
     </div>
   );

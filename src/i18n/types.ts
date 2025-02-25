@@ -1,3 +1,4 @@
+
 export type Language = 'en' | 'fr' | 'ar' | 'hi';
 
 export interface Categories {
@@ -51,11 +52,32 @@ export interface Advice {
   obese: string;
 }
 
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface EducationSection {
+  title: string;
+  content: string;
+}
+
+export interface FAQ {
+  title: string;
+  items: FAQItem[];
+}
+
+export interface Education {
+  title: string;
+  sections: EducationSection[];
+}
+
 export interface TranslationType {
   title: string;
   subtitle: string;
   bmiHistory: string;
-  bmiPredictions: string;  // Added this line
+  bmiPredictions: string;
+  disclaimer: string;
   categories: Categories;
   units: UnitTranslations;
   labels: Labels;
@@ -63,4 +85,6 @@ export interface TranslationType {
   activities: Activities;
   buttons: Buttons;
   advice: Advice;
+  faq: FAQ;
+  education: Education;
 }
