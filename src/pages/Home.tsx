@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { ArrowRight, Activity, Heart, Brain, Award, Users, Calculator, Shield, CheckCircle } from "lucide-react";
+import { ArrowRight, Activity, Heart, Brain, Award, Users, Calculator, Shield, CheckCircle, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import SEO from "@/components/SEO";
