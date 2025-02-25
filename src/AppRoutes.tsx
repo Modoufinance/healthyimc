@@ -15,7 +15,7 @@ const AppRoutes = () => {
   useLocaleDetection();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
       <Navigation />
       <main className="flex-1">
         <Routes>
@@ -28,11 +28,10 @@ const AppRoutes = () => {
           <Route path="/blog-ia" element={<AIBlog />} />
           <Route path="/a-propos" element={<About />} />
           <Route path="/confidentialite" element={<Privacy />} />
-          {/* Redirection pour les routes non trouvées */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-    </div>
+    </>
   );
 };
 
