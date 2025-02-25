@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -8,14 +9,34 @@ import { Weight, Ruler, Calculator, Calendar } from "lucide-react";
 
 interface BMIFormProps {
   onCalculate: (weight: number, height: number, age: number) => void;
+  savedData?: {
+    age?: number;
+    weight?: number;
+    height?: number;
+  };
 }
 
-const BMIForm = ({ onCalculate }: BMIFormProps) => {
-  const [weight, setWeight] = useState("");
-  const [height, setHeight] = useState("");
-  const [age, setAge] = useState("");
+const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
+  const [weight, setWeight] = useState(savedData?.weight?.toString() || "");
+  const [height, setHeight] = useState(savedData?.height?.toString() || "");
+  const [age, setAge] = useState(savedData?.age?.toString() || "");
   const { toast } = useToast();
   const { t } = useLanguage();
+
+  // Calcul instantané lors de la saisie
+  useEffect(() => {
+    if (weight && height && age) {
+      const weightNum = parseFloat(weight);
+      const heightNum = parseFloat(height);
+      const ageNum = parseInt(age);
+
+      if (weightNum > 0 && heightNum > 0 && ageNum > 0) {
+        const weightInKg = t.units.weight.unit === 'lb' ? weightNum / t.units.weight.factor : weightNum;
+        const heightInCm = t.units.height.unit === 'in' ? heightNum / t.units.height.factor : heightNum;
+        onCalculate(weightInKg, heightInCm, ageNum);
+      }
+    }
+  }, [weight, height, age, t.units.weight.unit, t.units.height.unit, onCalculate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +57,21 @@ const BMIForm = ({ onCalculate }: BMIFormProps) => {
     const heightInCm = t.units.height.unit === 'in' ? heightNum / t.units.height.factor : heightNum;
 
     onCalculate(weightInKg, heightInCm, ageNum);
+    
+    // Sauvegarder les valeurs dans le localStorage
+    localStorage.setItem('lastBmiFormValues', JSON.stringify({ weight, height, age }));
   };
+
+  // Charger les dernières valeurs au montage du composant
+  useEffect(() => {
+    const savedValues = localStorage.getItem('lastBmiFormValues');
+    if (savedValues && !weight && !height && !age) {
+      const { weight: w, height: h, age: a } = JSON.parse(savedValues);
+      setWeight(w);
+      setHeight(h);
+      setAge(a);
+    }
+  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 mt-4">

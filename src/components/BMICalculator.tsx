@@ -1,8 +1,9 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Scale } from "lucide-react";
+import { Scale, Download, Mail, Bookmark, History } from "lucide-react";
 import BMIForm from "./BMIForm";
 import BMIResult from "./BMIResult";
 import BMIScale from "./BMIScale";
@@ -21,15 +22,35 @@ export interface BMIData {
 const BMICalculator = () => {
   const [bmiData, setBmiData] = useState<BMIData | null>(null);
   const [predictions, setPredictions] = useState(null);
-  const [userData, setUserData] = useState({
-    age: null,
-    gender: "",
-    activityLevel: "",
-    targetBMI: null
+  const [savedResults, setSavedResults] = useState<BMIData[]>([]);
+  const [userData, setUserData] = useState(() => {
+    // Récupération des données utilisateur du localStorage
+    const savedData = localStorage.getItem('userBmiData');
+    return savedData ? JSON.parse(savedData) : {
+      age: null,
+      gender: "",
+      activityLevel: "",
+      targetBMI: null
+    };
   });
   
   const { toast } = useToast();
   const { t } = useLanguage();
+
+  useEffect(() => {
+    // Sauvegarder les données utilisateur dans localStorage
+    if (userData.age || userData.gender || userData.activityLevel) {
+      localStorage.setItem('userBmiData', JSON.stringify(userData));
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    // Charger les résultats sauvegardés du localStorage
+    const saved = localStorage.getItem('savedBmiResults');
+    if (saved) {
+      setSavedResults(JSON.parse(saved));
+    }
+  }, []);
 
   const handleBMICalculation = (weight: number, height: number, age: number) => {
     const heightInMeters = height / 100;
@@ -71,6 +92,11 @@ const BMICalculator = () => {
       setPredictions(newPredictions);
     }
 
+    // Sauvegarder le résultat dans l'historique
+    const newSavedResults = [...savedResults, { ...bmiDataObj, date: new Date().toISOString() }];
+    setSavedResults(newSavedResults);
+    localStorage.setItem('savedBmiResults', JSON.stringify(newSavedResults));
+
     toast({
       title: "Calcul effectué",
       description: "Votre IMC a été calculé avec succès",
@@ -79,6 +105,7 @@ const BMICalculator = () => {
 
   const handleUserDataSubmit = (data: any) => {
     setUserData(data);
+    localStorage.setItem('userBmiData', JSON.stringify(data));
     toast({
       title: "Profil mis à jour",
       description: "Vos informations ont été enregistrées avec succès",
@@ -89,6 +116,45 @@ const BMICalculator = () => {
     if (weight && height) {
       handleBMICalculation(weight, height, userData.age);
     }
+  };
+
+  const exportToPDF = async () => {
+    if (!bmiData) return;
+    
+    const pdfContent = `
+      IMC: ${bmiData.bmi}
+      Catégorie: ${bmiData.category}
+      Conseils: ${bmiData.advice}
+      Date: ${new Date().toLocaleDateString()}
+    `;
+
+    const blob = new Blob([pdfContent], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `IMC-Rapport-${new Date().toLocaleDateString()}.pdf`;
+    a.click();
+    
+    toast({
+      title: "Export réussi",
+      description: "Votre rapport a été téléchargé au format PDF",
+    });
+  };
+
+  const sendByEmail = () => {
+    if (!bmiData) return;
+    
+    const mailtoLink = `mailto:?subject=Mon rapport IMC&body=Voici mes résultats IMC:%0D%0A
+    IMC: ${bmiData.bmi}%0D%0A
+    Catégorie: ${bmiData.category}%0D%0A
+    Conseils: ${bmiData.advice}`;
+    
+    window.location.href = mailtoLink;
+    
+    toast({
+      title: "Email préparé",
+      description: "Votre client mail va s'ouvrir avec le rapport",
+    });
   };
 
   return (
@@ -109,16 +175,48 @@ const BMICalculator = () => {
             </div>
 
             <DeviceConnect onDataReceived={handleDeviceData} />
-            <BMIForm onCalculate={handleBMICalculation} />
+            <BMIForm onCalculate={handleBMICalculation} savedData={userData} />
 
             {bmiData && (
-              <div className="animate-slide-up mt-6">
+              <div className="animate-slide-up mt-6 space-y-4">
                 <BMIResult bmiData={bmiData} />
+                
+                <div className="flex flex-wrap gap-2 justify-center">
+                  <button
+                    onClick={exportToPDF}
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
+                  >
+                    <Download className="h-4 w-4" />
+                    Exporter en PDF
+                  </button>
+                  
+                  <button
+                    onClick={sendByEmail}
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
+                  >
+                    <Mail className="h-4 w-4" />
+                    Envoyer par email
+                  </button>
+                  
+                  <button
+                    onClick={() => {
+                      localStorage.setItem('bookmarkedResult', JSON.stringify(bmiData));
+                      toast({
+                        title: "Résultat sauvegardé",
+                        description: "Vous pourrez retrouver ce résultat plus tard",
+                      });
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
+                  >
+                    <Bookmark className="h-4 w-4" />
+                    Sauvegarder
+                  </button>
+                </div>
               </div>
             )}
           </Card>
 
-          <UserDataForm onSubmit={handleUserDataSubmit} />
+          <UserDataForm onSubmit={handleUserDataSubmit} initialData={userData} />
         </div>
 
         {bmiData && (
@@ -129,6 +227,28 @@ const BMICalculator = () => {
               {predictions && <BMIPredictions predictions={predictions} currentBMI={bmiData.bmi} />}
             </div>
           </div>
+        )}
+
+        {savedResults.length > 0 && (
+          <Card className="p-6 shadow-lg rounded-lg">
+            <div className="flex items-center gap-2 mb-4">
+              <History className="h-6 w-6 text-[#4facfe]" />
+              <h2 className="text-xl font-semibold">Historique des calculs</h2>
+            </div>
+            <div className="space-y-2">
+              {savedResults.slice(-5).map((result, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div>
+                    <span className="font-medium">IMC: {result.bmi}</span>
+                    <span className="text-sm text-gray-600 ml-4">{result.category}</span>
+                  </div>
+                  <span className="text-sm text-gray-500">
+                    {new Date(result.date).toLocaleDateString()}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Card>
         )}
       </div>
     </div>
