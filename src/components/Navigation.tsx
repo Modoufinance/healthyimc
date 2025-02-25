@@ -1,6 +1,5 @@
-
 import { Link, useLocation } from "react-router-dom";
-import { Home, Scale, Bot, Info, Shield, Heart, BookOpen } from "lucide-react";
+import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
