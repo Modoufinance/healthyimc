@@ -65,12 +65,25 @@ const Home = () => {
 
           {/* Hero Section avec Call-to-Action */}
           <section className="text-center space-y-8 animate-fade-in">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-tight max-w-4xl mx-auto drop-shadow-lg">
-              Calculez votre IMC gratuitement en moins d'une minute
-            </h1>
-            <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto drop-shadow">
-              Rejoignez plus de 50 000 personnes qui ont déjà calculé leur IMC
-            </p>
+            <div className="max-w-4xl mx-auto space-y-6">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-tight">
+                Atteignez vos objectifs de santé avec notre calculateur d'IMC intelligent
+              </h1>
+              <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+                Un suivi personnalisé, des conseils d'experts et des prédictions basées sur l'IA pour transformer votre parcours santé
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center items-center">
+                <div className="bg-white/10 backdrop-blur-sm rounded-full px-6 py-2">
+                  <span className="text-white font-semibold">✓ Calcul précis et instantané</span>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-full px-6 py-2">
+                  <span className="text-white font-semibold">✓ Recommandations personnalisées</span>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-full px-6 py-2">
+                  <span className="text-white font-semibold">✓ Suivi de progression</span>
+                </div>
+              </div>
+            </div>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Button
                 asChild
@@ -78,12 +91,12 @@ const Home = () => {
                 className="bg-white text-primary hover:bg-white/90 text-lg w-full sm:w-auto py-8 px-12 text-xl font-semibold shadow-lg hover:scale-105 transition-all duration-300"
               >
                 <Link to="/calculateur-imc">
-                  Calculer mon IMC maintenant
+                  Calculer mon IMC gratuitement
                   <ArrowRight className="ml-2 h-6 w-6" />
                 </Link>
               </Button>
               <p className="text-white text-lg font-medium bg-white/10 backdrop-blur-sm rounded-full px-6 py-2">
-                Calcul gratuit • Résultat immédiat
+                +50 000 utilisateurs satisfaits
               </p>
             </div>
           </section>
@@ -110,7 +123,7 @@ const Home = () => {
           {/* Badges de confiance */}
           <section className="text-center space-y-8">
             <h2 className="text-3xl font-bold text-white mb-8 drop-shadow-lg">
-              Approuvé par les professionnels de santé
+              La référence pour le suivi de votre santé
             </h2>
             <div className="flex flex-wrap justify-center gap-6">
               <div className="bg-white rounded-full px-8 py-3 flex items-center gap-3 transform hover:scale-105 transition-all duration-300 shadow-lg">
@@ -131,7 +144,7 @@ const Home = () => {
           {/* Histoires de réussite */}
           <section className="py-12">
             <h2 className="text-3xl font-bold text-white mb-12 text-center drop-shadow-lg">
-              Histoires de réussite
+              Ils ont atteint leurs objectifs avec nous
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {testimonials.map((testimonial, index) => (
@@ -168,10 +181,10 @@ const Home = () => {
           <section className="text-center space-y-8 py-12">
             <div className="max-w-2xl mx-auto space-y-6">
               <h2 className="text-4xl font-bold text-white drop-shadow-lg">
-                Prêt à connaître votre IMC ?
+                Commencez votre parcours santé aujourd'hui
               </h2>
               <p className="text-xl text-white mb-8">
-                Calcul gratuit et personnalisé en moins d'une minute
+                Rejoignez plus de 50 000 personnes qui ont déjà transformé leur vie avec notre calculateur
               </p>
               <Button
                 asChild
@@ -179,7 +192,7 @@ const Home = () => {
                 className="bg-white text-primary hover:bg-white/90 w-full sm:w-auto py-8 px-12 text-xl font-semibold shadow-lg hover:scale-105 transition-all duration-300"
               >
                 <Link to="/calculateur-imc">
-                  Obtenir mon calcul gratuit maintenant
+                  Calculer mon IMC gratuitement
                   <ArrowRight className="ml-2 h-6 w-6" />
                 </Link>
               </Button>
