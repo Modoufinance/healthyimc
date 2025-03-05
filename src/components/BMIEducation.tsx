@@ -1,7 +1,7 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Card } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { InfoIcon } from "lucide-react";
 import {
   Accordion,
@@ -17,8 +17,9 @@ const BMIEducation = () => {
     <div className="space-y-8">
       {/* Avertissement médical */}
       <Alert className="bg-yellow-50 border-yellow-200">
-        <InfoIcon className="h-4 w-4 text-yellow-600" />
-        <AlertDescription className="text-yellow-800">
+        <InfoIcon className="h-5 w-5 text-yellow-600" />
+        <AlertTitle className="text-yellow-800 text-base font-medium">Avis important</AlertTitle>
+        <AlertDescription className="text-yellow-800 mt-2">
           {t.disclaimer}
         </AlertDescription>
       </Alert>
