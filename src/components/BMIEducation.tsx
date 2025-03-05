@@ -16,12 +16,16 @@ const BMIEducation = () => {
   return (
     <div className="space-y-8">
       {/* Avertissement médical */}
-      <Alert className="bg-yellow-50 border-yellow-200">
-        <InfoIcon className="h-5 w-5 text-yellow-600" />
-        <AlertTitle className="text-yellow-800 text-base font-medium">Avis important</AlertTitle>
-        <AlertDescription className="text-yellow-800 mt-2">
-          {t.disclaimer}
-        </AlertDescription>
+      <Alert className="bg-amber-50 border border-amber-200 rounded-md p-4">
+        <div className="flex items-start">
+          <InfoIcon className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+          <div className="ml-3">
+            <h3 className="text-base font-medium text-amber-800">Avis important</h3>
+            <div className="mt-2 text-sm text-amber-700">
+              {t.disclaimer}
+            </div>
+          </div>
+        </div>
       </Alert>
 
       {/* FAQ */}
