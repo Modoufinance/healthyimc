@@ -12,7 +12,7 @@ const Navigation = () => {
 
   const links = [
     { to: "/", label: "Accueil", icon: <Home className="w-4 h-4" /> },
-    { to: "/calculateur-imc", label: "Calculatrice IMC", icon: <Scale className="w-4 h-4" /> },
+    { to: "/calculateur-imc", label: "Calculatrice d'IMC", icon: <Scale className="w-4 h-4" /> },
     { to: "/blog-sante", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/assistant-sante-ia", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
     { to: "/bien-etre", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
@@ -30,8 +30,8 @@ const Navigation = () => {
                 <Heart className="w-5 h-5" />
               </div>
               <div className="flex flex-col items-start ml-1">
-                <span className="text-lg font-bold text-blue-600 leading-none">Santé</span>
-                <span className="text-lg font-bold text-gray-700 leading-none">IMC</span>
+                <span className="text-lg font-bold text-blue-600 leading-none">IMC</span>
+                <span className="text-lg font-bold text-gray-700 leading-none">Santé</span>
               </div>
             </Link>
             <div className="flex items-center gap-2">
