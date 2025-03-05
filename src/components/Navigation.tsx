@@ -27,7 +27,7 @@ const Navigation = () => {
           <div className="flex justify-between items-center h-16 sm:h-auto">
             <Link to="/" className="flex items-center gap-1">
               <div className="flex items-center bg-gradient-to-r from-blue-500 to-cyan-400 text-white p-1.5 rounded-lg">
-                <Activity className="w-5 h-5" />
+                <Heart className="w-5 h-5" />
               </div>
               <div className="flex flex-col items-start ml-1">
                 <span className="text-lg font-bold text-blue-600 leading-none">Santé</span>

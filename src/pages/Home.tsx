@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { ArrowRight, Activity, Heart, Brain, Award, Users, Calculator, Shield, CheckCircle, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -66,7 +67,7 @@ const Home = () => {
           <section className="text-center space-y-8 animate-fade-in">
             <div className="flex items-center justify-center mb-6">
               <div className="flex items-center bg-white p-3 rounded-xl shadow-xl">
-                <Activity className="w-10 h-10 text-blue-600 mr-2" />
+                <Heart className="w-10 h-10 text-blue-600 mr-2" />
                 <div className="flex flex-col items-start">
                   <span className="text-2xl font-bold text-blue-600 leading-none">Santé</span>
                   <span className="text-2xl font-bold text-gray-700 leading-none">IMC</span>
