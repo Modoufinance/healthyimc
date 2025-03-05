@@ -72,6 +72,42 @@ export type Database = {
         }
         Relationships: []
       }
+      events: {
+        Row: {
+          author_id: string
+          created_at: string
+          date: string
+          description: string
+          id: string
+          location: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          created_at?: string
+          date: string
+          description: string
+          id?: string
+          location: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          created_at?: string
+          date?: string
+          description?: string
+          id?: string
+          location?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       healthyimc: {
         Row: {
           created_at: string
@@ -170,6 +206,36 @@ export type Database = {
           price?: number
           title?: string
           type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          author_id: string
+          created_at: string
+          description: string
+          icon: string
+          id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          created_at?: string
+          description: string
+          icon: string
+          id?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          title?: string
           updated_at?: string
         }
         Relationships: []
