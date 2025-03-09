@@ -6,7 +6,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://santeimc.fr/</loc>
-    <lastmod>2024-03-14</lastmod>
+    <lastmod>2024-05-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/" />
@@ -15,52 +15,52 @@
     <xhtml:link rel="alternate" hreflang="hi" href="https://santeimc.fr/hi/" />
     <image:image>
       <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Calculateur IMC</image:title>
-      <image:caption>Calculez votre IMC gratuitement</image:caption>
+      <image:title>Calculateur IMC en ligne gratuit</image:title>
+      <image:caption>Calculez votre IMC gratuitement - Indice de Masse Corporelle</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://santeimc.fr/calculateur-imc</loc>
-    <lastmod>2024-03-14</lastmod>
+    <lastmod>2024-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Calculateur IMC en ligne</image:title>
-      <image:caption>Outil gratuit de calcul d'IMC</image:caption>
+      <image:title>Calculateur IMC en ligne gratuit - Indice de Masse Corporelle</image:title>
+      <image:caption>Outil gratuit et précis pour calculer votre indice de masse corporelle selon l'OMS</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://santeimc.fr/assistant-sante-ia</loc>
-    <lastmod>2024-03-14</lastmod>
+    <lastmod>2024-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Assistant Santé IA</image:title>
-      <image:caption>Conseils santé personnalisés par IA</image:caption>
+      <image:title>Assistant Santé IA - Conseils personnalisés IMC</image:title>
+      <image:caption>Conseils santé personnalisés par intelligence artificielle pour votre poids idéal</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://santeimc.fr/bien-etre</loc>
-    <lastmod>2024-03-14</lastmod>
+    <lastmod>2024-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Bien-être et Santé</image:title>
-      <image:caption>Conseils pour votre bien-être</image:caption>
+      <image:title>Bien-être et Poids santé - Conseils IMC</image:title>
+      <image:caption>Conseils pour atteindre et maintenir votre poids de forme idéal</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://santeimc.fr/a-propos</loc>
-    <lastmod>2024-03-14</lastmod>
+    <lastmod>2024-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://santeimc.fr/confidentialite</loc>
-    <lastmod>2024-03-14</lastmod>
+    <lastmod>2024-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

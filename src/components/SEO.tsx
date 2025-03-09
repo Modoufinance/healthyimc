@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet";
 
 interface SEOProps {
@@ -12,6 +13,8 @@ interface SEOProps {
   publishedTime?: string;
   modifiedTime?: string;
   type?: string;
+  hasFAQ?: boolean;
+  faqItems?: {question: string, answer: string}[];
 }
 
 const SEO = ({
@@ -26,8 +29,42 @@ const SEO = ({
   publishedTime,
   modifiedTime,
   type = "website",
+  hasFAQ = false,
+  faqItems = [],
 }: SEOProps) => {
   const fullTitle = `${title} | SantéIMC`;
+
+  // Création de données structurées FAQ si nécessaire
+  let faqStructuredData = null;
+  if (hasFAQ && faqItems.length > 0) {
+    faqStructuredData = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqItems.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    };
+  }
+
+  // Création de données structurées par défaut pour les pages IMC si aucune n'est fournie
+  const defaultStructuredData = !structuredData && type === "website" ? {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculateur IMC en ligne - SantéIMC",
+    "applicationCategory": "HealthApplication",
+    "description": "Calculez gratuitement votre IMC (Indice de Masse Corporelle). Outil adapté pour hommes, femmes et enfants.",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    }
+  } : null;
 
   return (
     <Helmet>
@@ -54,11 +91,29 @@ const SEO = ({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
+      
+      {/* Balises additionnelles pour le SEO */}
+      <meta name="robots" content="index, follow, max-image-preview:large" />
+      <meta name="googlebot" content="index, follow" />
 
       {/* Structured Data */}
       {structuredData && (
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
+        </script>
+      )}
+      
+      {/* FAQ Structured Data if provided */}
+      {faqStructuredData && (
+        <script type="application/ld+json">
+          {JSON.stringify(faqStructuredData)}
+        </script>
+      )}
+      
+      {/* Default Structured Data if nothing provided */}
+      {defaultStructuredData && (
+        <script type="application/ld+json">
+          {JSON.stringify(defaultStructuredData)}
         </script>
       )}
     </Helmet>

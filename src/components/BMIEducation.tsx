@@ -28,7 +28,7 @@ const BMIEducation = () => {
         </div>
       </Alert>
 
-      {/* FAQ */}
+      {/* FAQ avec mots-clés SEO */}
       <Card className="p-6">
         <h2 className="text-2xl font-bold mb-4">{t.faq.title}</h2>
         <Accordion type="single" collapsible className="space-y-2">
@@ -45,9 +45,9 @@ const BMIEducation = () => {
         </Accordion>
       </Card>
 
-      {/* Contenu éducatif */}
+      {/* Contenu éducatif enrichi en SEO */}
       <Card className="p-6">
-        <h2 className="text-2xl font-bold mb-4">{t.education.title}</h2>
+        <h2 className="text-2xl font-bold mb-4" id="comprendre-imc">{t.education.title}</h2>
         <div className="space-y-6">
           {t.education.sections.map((section, index) => (
             <div key={index} className="space-y-2">
@@ -58,9 +58,9 @@ const BMIEducation = () => {
         </div>
       </Card>
 
-      {/* Échelle visuelle d'IMC */}
+      {/* Échelle visuelle d'IMC avec termes SEO */}
       <Card className="p-6">
-        <h2 className="text-2xl font-bold mb-4">Échelle d'IMC</h2>
+        <h2 className="text-2xl font-bold mb-4" id="echelle-imc">Échelle d'IMC - Indice de Masse Corporelle</h2>
         <div className="relative h-12 bg-gradient-to-r from-blue-300 via-green-300 via-yellow-300 to-red-300 rounded-lg">
           <div className="absolute -top-6 left-0 text-sm">16</div>
           <div className="absolute -top-6 left-1/4 text-sm">18.5</div>
@@ -68,11 +68,20 @@ const BMIEducation = () => {
           <div className="absolute -top-6 left-3/4 text-sm">30</div>
           <div className="absolute -top-6 right-0 text-sm">40</div>
         </div>
-        <div className="flex justify-between mt-6 text-sm">
-          <span>Maigreur</span>
-          <span>Normal</span>
-          <span>Surpoids</span>
-          <span>Obésité</span>
+        <div className="flex justify-between mt-6 text-sm font-medium">
+          <span title="IMC inférieur à 18.5">Maigreur</span>
+          <span title="IMC entre 18.5 et 24.9">Normal</span>
+          <span title="IMC entre 25 et 29.9">Surpoids</span>
+          <span title="IMC supérieur à 30">Obésité</span>
+        </div>
+        
+        {/* Informations complémentaires pour le SEO */}
+        <div className="mt-6 text-sm text-gray-600">
+          <p>
+            L'indice de masse corporelle (IMC) est un outil de calcul qui permet d'évaluer votre statut pondéral 
+            et d'estimer les risques potentiels pour votre santé. Il s'agit d'un indicateur utilisé par les 
+            professionnels de santé du monde entier.
+          </p>
         </div>
       </Card>
     </div>
