@@ -1,48 +1,13 @@
 
-import { Link } from "react-router-dom";
-import { ArrowRight, Activity, Heart, Brain, Award, Users, Calculator, Shield, CheckCircle, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@/components/ui/breadcrumb";
-import SEO from "@/components/SEO";
+import HeroSection from "@/components/home/HeroSection";
+import TrustIndicators from "@/components/home/TrustIndicators";
+import TrustBadges from "@/components/home/TrustBadges";
+import Testimonials from "@/components/home/Testimonials";
+import FinalCTA from "@/components/home/FinalCTA";
+import HomeSEO from "@/components/home/HomeSEO";
 
 const Home = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Calculateur IMC en ligne gratuit - SantéIMC",
-    "description": "Calculez gratuitement votre IMC (Indice de Masse Corporelle). Outil adapté pour hommes, femmes et enfants. Obtenez des recommandations personnalisées pour votre santé.",
-    "url": "https://santeimc.fr",
-    "keywords": "imc, calcul imc, imc femme, imc homme, imc enfant, calculateur imc, indice masse corporelle, imc calcul, imc gratuit, imc en ligne, poids idéal",
-  };
-
-  const testimonials = [
-    {
-      name: "Marie L.",
-      text: "Grâce à ce calculateur d'IMC, j'ai pu suivre mon indice de masse corporelle et atteindre mes objectifs de poids santé.",
-      rating: 5,
-      beforeWeight: "85kg",
-      afterWeight: "68kg",
-      duration: "6 mois"
-    },
-    {
-      name: "Pierre D.",
-      text: "Simple et précis. Les conseils personnalisés basés sur l'IMC sont vraiment utiles pour maintenir un poids forme idéal!",
-      rating: 5,
-      beforeWeight: "92kg",
-      afterWeight: "78kg",
-      duration: "4 mois"
-    },
-    {
-      name: "Sophie M.",
-      text: "Un outil indispensable pour calculer et suivre mon IMC. Recommandé par mon médecin pour atteindre mon poids idéal.",
-      rating: 5,
-      beforeWeight: "77kg",
-      afterWeight: "65kg",
-      duration: "5 mois"
-    }
-  ];
-
   // FAQ items for structured data
   const faqItems = [
     {
@@ -61,15 +26,7 @@ const Home = () => {
 
   return (
     <>
-      <SEO
-        title="Calculateur IMC en ligne gratuit | Calcul IMC pour Adultes et Enfants"
-        description="Calculez gratuitement votre IMC en ligne. Outil précis et fiable pour calculer l'Indice de Masse Corporelle (IMC). Adapté pour hommes, femmes et enfants avec suivi personnalisé et conseils santé."
-        keywords="imc, calcul imc, imc femme, imc homme, imc enfant, calculateur imc, indice masse corporelle, imc calcul, imc gratuit, imc en ligne, poids idéal, calcul poids santé, calculatrice imc, imc normal, imc surpoids, imc obésité"
-        canonicalUrl="https://santeimc.fr"
-        structuredData={structuredData}
-        hasFAQ={true}
-        faqItems={faqItems}
-      />
+      <HomeSEO faqItems={faqItems} />
       <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-[#4facfe] to-[#00f2fe]">
         <main className="container mx-auto px-4 py-6 space-y-12">
           {/* Fil d'Ariane */}
@@ -81,137 +38,11 @@ const Home = () => {
             </BreadcrumbItem>
           </Breadcrumb>
 
-          {/* Hero Section avec Call-to-Action */}
-          <section className="text-center space-y-8 animate-fade-in">
-            <div className="flex items-center justify-center mb-6">
-              <div className="flex items-center bg-white p-3 rounded-xl shadow-xl">
-                <Heart className="w-10 h-10 text-blue-600 mr-2" />
-                <div className="flex flex-col items-start">
-                  <span className="text-2xl font-bold text-blue-600 leading-none">IMC</span>
-                  <span className="text-2xl font-bold text-gray-700 leading-none">Santé</span>
-                </div>
-              </div>
-            </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-tight max-w-4xl mx-auto drop-shadow-lg">
-              Calculez votre IMC gratuitement en moins d'une minute
-            </h1>
-            <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto drop-shadow">
-              Rejoignez plus de 50 000 personnes qui ont déjà calculé leur indice de masse corporelle
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Button
-                asChild
-                size="lg"
-                className="bg-white text-primary hover:bg-white/90 text-lg w-full sm:w-auto py-8 px-12 text-xl font-semibold shadow-lg hover:scale-105 transition-all duration-300"
-              >
-                <Link to="/calculateur-imc">
-                  Calculer mon IMC maintenant
-                  <ArrowRight className="ml-2 h-6 w-6" />
-                </Link>
-              </Button>
-              <p className="text-white text-lg font-medium bg-white/10 backdrop-blur-sm rounded-full px-6 py-2">
-                Calcul IMC gratuit • Résultat immédiat
-              </p>
-            </div>
-          </section>
-
-          {/* Indicateurs de confiance */}
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8">
-            <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 text-center text-white transform hover:scale-105 transition-all duration-300 hover:bg-white/20">
-              <Users className="w-16 h-16 mx-auto mb-4" />
-              <h3 className="text-3xl font-bold mb-2">50 000+</h3>
-              <p className="text-lg">Utilisateurs du calculateur IMC</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 text-center text-white transform hover:scale-105 transition-all duration-300 hover:bg-white/20">
-              <Calculator className="w-16 h-16 mx-auto mb-4" />
-              <h3 className="text-3xl font-bold mb-2">100 000+</h3>
-              <p className="text-lg">Calculs d'IMC effectués</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 text-center text-white transform hover:scale-105 transition-all duration-300 hover:bg-white/20">
-              <Award className="w-16 h-16 mx-auto mb-4" />
-              <h3 className="text-3xl font-bold mb-2">96%</h3>
-              <p className="text-lg">Taux de satisfaction IMC</p>
-            </div>
-          </section>
-
-          {/* Badges de confiance */}
-          <section className="text-center space-y-8">
-            <h2 className="text-3xl font-bold text-white mb-8 drop-shadow-lg">
-              Méthode de calcul IMC approuvée par les professionnels de santé
-            </h2>
-            <div className="flex flex-wrap justify-center gap-6">
-              <div className="bg-white rounded-full px-8 py-3 flex items-center gap-3 transform hover:scale-105 transition-all duration-300 shadow-lg">
-                <Shield className="h-6 w-6 text-primary" />
-                <span className="text-base font-semibold">Formule IMC certifiée OMS</span>
-              </div>
-              <div className="bg-white rounded-full px-8 py-3 flex items-center gap-3 transform hover:scale-105 transition-all duration-300 shadow-lg">
-                <CheckCircle className="h-6 w-6 text-primary" />
-                <span className="text-base font-semibold">Calcul IMC validé par des médecins</span>
-              </div>
-              <div className="bg-white rounded-full px-8 py-3 flex items-center gap-3 transform hover:scale-105 transition-all duration-300 shadow-lg">
-                <Activity className="h-6 w-6 text-primary" />
-                <span className="text-base font-semibold">Précision IMC garantie</span>
-              </div>
-            </div>
-          </section>
-
-          {/* Histoires de réussite */}
-          <section className="py-12">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center drop-shadow-lg">
-              Témoignages IMC et histoires de réussite
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {testimonials.map((testimonial, index) => (
-                <div 
-                  key={index} 
-                  className="bg-white/10 backdrop-blur-lg rounded-xl p-8 text-white transform hover:scale-105 transition-all duration-300 hover:bg-white/20 shadow-lg"
-                >
-                  <div className="flex gap-1 mb-4">
-                    {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-current text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="mb-6 text-lg">"{testimonial.text}"</p>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center p-4 bg-white/10 rounded-lg">
-                      <span>IMC avant</span>
-                      <span className="font-bold text-xl">{testimonial.beforeWeight}</span>
-                    </div>
-                    <div className="flex justify-between items-center p-4 bg-white/10 rounded-lg">
-                      <span>IMC après</span>
-                      <span className="font-bold text-xl">{testimonial.afterWeight}</span>
-                    </div>
-                    <p className="text-sm text-white/80">
-                      Durée : {testimonial.duration}
-                    </p>
-                  </div>
-                  <p className="font-semibold mt-4">{testimonial.name}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* CTA final */}
-          <section className="text-center space-y-8 py-12">
-            <div className="max-w-2xl mx-auto space-y-6">
-              <h2 className="text-4xl font-bold text-white drop-shadow-lg">
-                Prêt à connaître votre indice de masse corporelle ?
-              </h2>
-              <p className="text-xl text-white mb-8">
-                Calcul IMC gratuit et personnalisé en moins d'une minute
-              </p>
-              <Button
-                asChild
-                size="lg"
-                className="bg-white text-primary hover:bg-white/90 w-full sm:w-auto py-8 px-12 text-xl font-semibold shadow-lg hover:scale-105 transition-all duration-300"
-              >
-                <Link to="/calculateur-imc">
-                  Obtenir mon calcul IMC gratuit maintenant
-                  <ArrowRight className="ml-2 h-6 w-6" />
-                </Link>
-              </Button>
-            </div>
-          </section>
+          <HeroSection />
+          <TrustIndicators />
+          <TrustBadges />
+          <Testimonials />
+          <FinalCTA />
         </main>
       </div>
     </>
