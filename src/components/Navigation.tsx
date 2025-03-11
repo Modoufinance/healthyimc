@@ -1,24 +1,40 @@
 
 import { Link, useLocation } from "react-router-dom";
-import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity } from "lucide-react";
+import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
 import PWAInstallButton from "./PWAInstallButton";
+import { useState } from "react";
+import { Button } from "./ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navigation = () => {
   const location = useLocation();
   const { t } = useLanguage();
+  const [isHealthDropdownOpen, setIsHealthDropdownOpen] = useState(false);
 
-  const links = [
+  // Items that will display directly in the navigation
+  const mainLinks = [
     { to: "/", label: "Accueil", icon: <Home className="w-4 h-4" /> },
     { to: "/calculateur-imc", label: "Calculatrice d'IMC", icon: <Scale className="w-4 h-4" /> },
-    { to: "/blog-sante", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
-    { to: "/assistant-sante-ia", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
     { to: "/bien-etre", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
     { to: "/blog-ia", label: "Blog IA", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/a-propos", label: "À propos", icon: <Info className="w-4 h-4" /> },
   ];
+
+  // Items that will be in the "Santé" dropdown
+  const healthLinks = [
+    { to: "/blog-sante", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
+    { to: "/assistant-sante-ia", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
+  ];
+
+  const isHealthActive = healthLinks.some(link => location.pathname === link.to);
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -40,7 +56,7 @@ const Navigation = () => {
             </div>
           </div>
           <div className="flex flex-row justify-center sm:justify-end pb-2 sm:pb-0 overflow-x-auto">
-            {links.map((link) => (
+            {mainLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
@@ -58,6 +74,47 @@ const Navigation = () => {
                 </span>
               </Link>
             ))}
+            
+            {/* Santé dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  className={cn(
+                    "px-3 py-2 h-auto text-sm font-medium rounded-md transition-colors",
+                    "hover:bg-gray-100",
+                    isHealthActive ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                  )}
+                >
+                  <span className="flex items-center gap-2">
+                    <Activity className="w-4 h-4" />
+                    <span className="hidden sm:inline">Santé</span>
+                    {isHealthDropdownOpen ? 
+                      <ChevronUp className="w-4 h-4" /> : 
+                      <ChevronDown className="w-4 h-4" />
+                    }
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                {healthLinks.map((link) => (
+                  <DropdownMenuItem key={link.to} asChild>
+                    <Link
+                      to={link.to}
+                      className={cn(
+                        "flex items-center gap-2 w-full",
+                        location.pathname === link.to
+                          ? "text-blue-600"
+                          : "text-gray-600"
+                      )}
+                    >
+                      {link.icon}
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
