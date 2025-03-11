@@ -7,6 +7,12 @@ import Testimonials from "@/components/home/Testimonials";
 import FinalCTA from "@/components/home/FinalCTA";
 import HomeSEO from "@/components/home/HomeSEO";
 import BeforeAfterHighlights from "@/components/home/BeforeAfterHighlights";
+import HomeFAQ from "@/components/home/HomeFAQ";
+import MedicalAuthorities from "@/components/home/MedicalAuthorities";
+import UserProfiles from "@/components/home/UserProfiles";
+import ComparaisonTable from "@/components/home/ComparaisonTable";
+import VideoExplication from "@/components/home/VideoExplication";
+import StickyHeader from "@/components/StickyHeader";
 
 const Home = () => {
   // FAQ items for structured data
@@ -22,12 +28,25 @@ const Home = () => {
     {
       question: "L'IMC est-il fiable pour tout le monde?",
       answer: "L'IMC est un bon indicateur général, mais ne tient pas compte de facteurs comme la masse musculaire, l'âge, le sexe ou la répartition des graisses. Il doit être interprété par un professionnel de santé."
+    },
+    {
+      question: "À quelle fréquence dois-je calculer mon IMC?",
+      answer: "Pour un suivi régulier de votre santé, il est recommandé de calculer votre IMC tous les 3 à 6 mois."
+    },
+    {
+      question: "Comment interpréter correctement mon résultat d'IMC?",
+      answer: "L'interprétation de l'IMC doit prendre en compte votre profil personnel (âge, sexe, niveau d'activité physique)."
+    },
+    {
+      question: "Existe-t-il des calculateurs d'IMC adaptés aux enfants?",
+      answer: "Oui, l'IMC des enfants et adolescents est évalué différemment en utilisant des courbes de croissance spécifiques à l'âge et au sexe."
     }
   ];
 
   return (
     <>
       <HomeSEO faqItems={faqItems} />
+      <StickyHeader />
       <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-[#4facfe] to-[#00f2fe]">
         <main className="container mx-auto px-4 py-6 space-y-12">
           {/* Fil d'Ariane */}
@@ -41,9 +60,14 @@ const Home = () => {
 
           <HeroSection />
           <TrustIndicators />
-          <TrustBadges />
           <BeforeAfterHighlights />
+          <UserProfiles />
+          <VideoExplication />
+          <MedicalAuthorities />
+          <ComparaisonTable />
           <Testimonials />
+          <HomeFAQ />
+          <TrustBadges />
           <FinalCTA />
         </main>
       </div>
