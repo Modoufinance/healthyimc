@@ -6,6 +6,7 @@ import TrustBadges from "@/components/home/TrustBadges";
 import Testimonials from "@/components/home/Testimonials";
 import FinalCTA from "@/components/home/FinalCTA";
 import HomeSEO from "@/components/home/HomeSEO";
+import BeforeAfterHighlights from "@/components/home/BeforeAfterHighlights";
 
 const Home = () => {
   // FAQ items for structured data
@@ -41,6 +42,7 @@ const Home = () => {
           <HeroSection />
           <TrustIndicators />
           <TrustBadges />
+          <BeforeAfterHighlights />
           <Testimonials />
           <FinalCTA />
         </main>
