@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { Timer, ArrowRight, Scale } from "lucide-react";
-import { Link } from "react-router-dom";
-import BMIScale from "@/components/BMIScale";
+import { Timer, Scale } from "lucide-react";
+import BMIResultDisplay from "@/components/BMIResultDisplay";
 
 const QuickBMICalculator = () => {
   const [weight, setWeight] = useState("");
@@ -79,25 +78,7 @@ const QuickBMICalculator = () => {
         </Button>
       </form>
       
-      {quickBMI && (
-        <div className="mt-4 text-center bg-white/30 p-4 rounded-lg animate-fade-in">
-          <p className="text-white font-bold text-2xl">Votre IMC rapide: {quickBMI}</p>
-          
-          {/* Intégration de l'échelle IMC visuelle */}
-          <BMIScale bmi={quickBMI} />
-          
-          <p className="text-white mt-4">Pour une analyse détaillée et des conseils personnalisés:</p>
-          <Button 
-            asChild
-            className="mt-2 bg-white text-primary hover:bg-white/90 font-semibold hover:scale-105 transition-transform"
-          >
-            <Link to="/calculateur-imc">
-              Analyse IMC complète
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      )}
+      {quickBMI && <BMIResultDisplay bmi={quickBMI} />}
     </div>
   );
 };

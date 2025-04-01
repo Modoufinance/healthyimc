@@ -1,7 +1,8 @@
-import BMICalculator from "@/components/BMICalculator";
+
+import QuickBMICalculator from "@/components/home/QuickBMICalculator";
 
 const Index = () => {
-  return <BMICalculator />;
+  return <QuickBMICalculator />;
 };
 
 export default Index;

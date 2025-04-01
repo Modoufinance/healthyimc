@@ -1,3 +1,4 @@
+
 import { BMIData } from "./BMICalculator";
 import { Badge } from "@/components/ui/badge";
 
