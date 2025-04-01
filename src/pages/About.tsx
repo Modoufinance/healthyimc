@@ -16,10 +16,10 @@ const About = () => {
   return (
     <>
       <SEO
-        title="À Propos de SantéIMC"
-        description="Découvrez SantéIMC, votre plateforme de santé et bien-être. Une équipe de professionnels dédiée à votre santé."
+        title="À Propos de HealthyIMC"
+        description="Découvrez HealthyIMC, votre plateforme de santé et bien-être. Une équipe de professionnels dédiée à votre santé."
         keywords="santé, bien-être, imc, professionnels santé, nutritionnistes"
-        canonicalUrl="https://santeimc.fr/about"
+        canonicalUrl="https://healthyimc.com/about"
         structuredData={structuredData}
       />
       

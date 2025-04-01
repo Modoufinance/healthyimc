@@ -138,26 +138,77 @@ export type Database = {
         }
         Relationships: []
       }
+      products: {
+        Row: {
+          category: string
+          created_at: string
+          id: number
+          image: string
+          name: string
+          price: number
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: number
+          image: string
+          name: string
+          price: number
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: number
+          image?: string
+          name?: string
+          price?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string
+          crops: string | null
           email: string | null
+          farm_size: string | null
+          farming_since: number | null
           id: string
+          location: string | null
+          name: string | null
+          phone: string | null
           role: string | null
+          soil_type: string | null
           updated_at: string
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string
+          crops?: string | null
           email?: string | null
+          farm_size?: string | null
+          farming_since?: number | null
           id: string
+          location?: string | null
+          name?: string | null
+          phone?: string | null
           role?: string | null
+          soil_type?: string | null
           updated_at?: string
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string
+          crops?: string | null
           email?: string | null
+          farm_size?: string | null
+          farming_since?: number | null
           id?: string
+          location?: string | null
+          name?: string | null
+          phone?: string | null
           role?: string | null
+          soil_type?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -237,6 +288,59 @@ export type Database = {
           id?: string
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          amount: number
+          created_at: string | null
+          id: string
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          id?: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          id?: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          name?: string
         }
         Relationships: []
       }

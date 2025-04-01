@@ -2,7 +2,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Heart, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import QuickBMICalculator from "./QuickBMICalculator";
 import ConversionElements from "./ConversionElements";
 
 const HeroSection = () => {
@@ -12,8 +11,8 @@ const HeroSection = () => {
         <div className="flex items-center bg-white p-3 rounded-xl shadow-xl">
           <Heart className="w-10 h-10 text-blue-600 mr-2" />
           <div className="flex flex-col items-start">
-            <span className="text-2xl font-bold text-blue-600 leading-none">IMC</span>
-            <span className="text-2xl font-bold text-gray-700 leading-none">Santé</span>
+            <span className="text-2xl font-bold text-blue-600 leading-none">Healthy</span>
+            <span className="text-2xl font-bold text-gray-700 leading-none">IMC</span>
           </div>
         </div>
       </div>
@@ -46,7 +45,6 @@ const HeroSection = () => {
       </div>
       
       <ConversionElements />
-      <QuickBMICalculator />
     </section>
   );
 };

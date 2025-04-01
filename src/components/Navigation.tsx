@@ -46,8 +46,8 @@ const Navigation = () => {
                 <Heart className="w-5 h-5" />
               </div>
               <div className="flex flex-col items-start ml-1">
-                <span className="text-lg font-bold text-blue-600 leading-none">IMC</span>
-                <span className="text-lg font-bold text-gray-700 leading-none">Santé</span>
+                <span className="text-lg font-bold text-blue-600 leading-none">Healthy</span>
+                <span className="text-lg font-bold text-gray-700 leading-none">IMC</span>
               </div>
             </Link>
             <div className="flex items-center gap-2">
