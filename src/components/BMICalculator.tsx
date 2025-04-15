@@ -11,6 +11,7 @@ import BMIPredictions from "./BMIPredictions";
 import UserDataForm from "./UserDataForm";
 import DeviceConnect from "./DeviceConnect";
 import { getPersonalizedAdvice, predictBMITrend } from "@/services/aiService";
+import BMIEducation from "./BMIEducation";
 
 export interface BMIData {
   bmi: number;
@@ -95,8 +96,12 @@ const BMICalculator = () => {
 
     toast({
       title: "Calcul effectué",
-      description: "Votre IMC a été calculé avec succès",
-      icon: <CheckCircle className="h-5 w-5 text-green-500" />
+      description: (
+        <div className="flex items-center gap-2">
+          <CheckCircle className="h-5 w-5 text-green-500" />
+          <span>Votre IMC a été calculé avec succès</span>
+        </div>
+      ),
     });
   };
 
