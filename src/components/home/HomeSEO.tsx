@@ -16,6 +16,11 @@ const HomeSEO = ({ faqItems }: HomeSEOProps) => {
     "description": "Calculez gratuitement votre IMC (Indice de Masse Corporelle). Outil adapté pour hommes, femmes et enfants. Obtenez des recommandations personnalisées pour votre santé.",
     "url": "https://healthyimc.com",
     "keywords": "imc, calcul imc, imc femme, imc homme, imc enfant, calculateur imc, indice masse corporelle, imc calcul, imc gratuit, imc en ligne, poids idéal",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://healthyimc.com/recherche?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
   };
 
   return (
