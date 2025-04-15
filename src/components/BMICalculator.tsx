@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Scale, Download, Mail, Bookmark, History } from "lucide-react";
+import { Scale, Download, Mail, Bookmark, History, CheckCircle } from "lucide-react";
 import BMIForm from "./BMIForm";
 import BMIResult from "./BMIResult";
 import BMIScale from "./BMIScale";
@@ -11,7 +11,6 @@ import BMIPredictions from "./BMIPredictions";
 import UserDataForm from "./UserDataForm";
 import DeviceConnect from "./DeviceConnect";
 import { getPersonalizedAdvice, predictBMITrend } from "@/services/aiService";
-import BMIEducation from "./BMIEducation";
 
 export interface BMIData {
   bmi: number;
@@ -25,7 +24,6 @@ const BMICalculator = () => {
   const [predictions, setPredictions] = useState(null);
   const [savedResults, setSavedResults] = useState<BMIData[]>([]);
   const [userData, setUserData] = useState(() => {
-    // Récupération des données utilisateur du localStorage
     const savedData = localStorage.getItem('userBmiData');
     return savedData ? JSON.parse(savedData) : {
       age: null,
@@ -39,14 +37,12 @@ const BMICalculator = () => {
   const { t } = useLanguage();
 
   useEffect(() => {
-    // Sauvegarder les données utilisateur dans localStorage
     if (userData.age || userData.gender || userData.activityLevel) {
       localStorage.setItem('userBmiData', JSON.stringify(userData));
     }
   }, [userData]);
 
   useEffect(() => {
-    // Charger les résultats sauvegardés du localStorage
     const saved = localStorage.getItem('savedBmiResults');
     if (saved) {
       setSavedResults(JSON.parse(saved));
@@ -93,7 +89,6 @@ const BMICalculator = () => {
       setPredictions(newPredictions);
     }
 
-    // Sauvegarder le résultat dans l'historique
     const newSavedResults = [...savedResults, { ...bmiDataObj, date: new Date().toISOString() }];
     setSavedResults(newSavedResults);
     localStorage.setItem('savedBmiResults', JSON.stringify(newSavedResults));
@@ -101,6 +96,7 @@ const BMICalculator = () => {
     toast({
       title: "Calcul effectué",
       description: "Votre IMC a été calculé avec succès",
+      icon: <CheckCircle className="h-5 w-5 text-green-500" />
     });
   };
 
@@ -258,7 +254,6 @@ const BMICalculator = () => {
           </Card>
         )}
 
-        {/* Section éducative */}
         <BMIEducation />
       </div>
     </div>
