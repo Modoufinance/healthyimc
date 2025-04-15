@@ -23,20 +23,7 @@ const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
   const { toast } = useToast();
   const { t } = useLanguage();
 
-  // Calcul instantané lors de la saisie
-  useEffect(() => {
-    if (weight && height && age) {
-      const weightNum = parseFloat(weight);
-      const heightNum = parseFloat(height);
-      const ageNum = parseInt(age);
-
-      if (weightNum > 0 && heightNum > 0 && ageNum > 0) {
-        const weightInKg = t.units.weight.unit === 'lb' ? weightNum / t.units.weight.factor : weightNum;
-        const heightInCm = t.units.height.unit === 'in' ? heightNum / t.units.height.factor : heightNum;
-        onCalculate(weightInKg, heightInCm, ageNum);
-      }
-    }
-  }, [weight, height, age, t.units.weight.unit, t.units.height.unit, onCalculate]);
+  // Removed automatic calculation effect
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
