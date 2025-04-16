@@ -5,22 +5,28 @@ Allow: /
 # Sitemap
 Sitemap: https://santeimc.fr/sitemap.xml
 
-# Optimisations pour tous les moteurs de recherche
+# Pages principales
 Allow: /*?lang=*
-Allow: /fr/*
 Allow: /calculateur-imc
 Allow: /assistant-sante-ia
+Allow: /blog-ia
+Allow: /blog-sante
 Allow: /bien-etre
 Allow: /a-propos
+Allow: /confidentialite
 
-# Pages optimisées pour le référencement
-Allow: /calcul-imc
+# Pages SEO spécifiques
+Allow: /calcul-imc-femme
+Allow: /calcul-imc-homme
+Allow: /calcul-imc-enfant
+Allow: /poids-ideal-calcul
 Allow: /indice-masse-corporelle
-Allow: /poids-ideal
-Allow: /imc-adulte
-Allow: /imc-enfant
-Allow: /imc-femme
-Allow: /imc-homme
+Allow: /imc-normal
+Allow: /imc-surpoids
+Allow: /imc-obesite
+
+# Ressources
+Allow: /lovable-uploads/
 
 # Interdire l'accès aux pages d'administration
 Disallow: /admin/*
@@ -34,6 +40,8 @@ Disallow: /dev/*
 Disallow: /*.json$
 Disallow: /*.js$
 Disallow: /*.css$
+Disallow: /*.svg$
+Disallow: /*.map
 
 # Optimisations pour les crawlers spécifiques
 User-agent: Googlebot
@@ -49,5 +57,9 @@ Allow: /
 Crawl-delay: 1
 
 User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+User-agent: YandexBot
 Allow: /
 Crawl-delay: 2

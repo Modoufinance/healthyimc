@@ -4,9 +4,10 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- Page d'accueil -->
   <url>
     <loc>https://santeimc.fr/</loc>
-    <lastmod>2024-05-20</lastmod>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/" />
@@ -19,9 +20,11 @@
       <image:caption>Calculez votre IMC gratuitement - Indice de Masse Corporelle</image:caption>
     </image:image>
   </url>
+  
+  <!-- Calculateur IMC -->
   <url>
     <loc>https://santeimc.fr/calculateur-imc</loc>
-    <lastmod>2024-05-20</lastmod>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -30,9 +33,11 @@
       <image:caption>Outil gratuit et précis pour calculer votre indice de masse corporelle selon l'OMS</image:caption>
     </image:image>
   </url>
+  
+  <!-- Assistant Santé IA -->
   <url>
     <loc>https://santeimc.fr/assistant-sante-ia</loc>
-    <lastmod>2024-05-20</lastmod>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -41,9 +46,37 @@
       <image:caption>Conseils santé personnalisés par intelligence artificielle pour votre poids idéal</image:caption>
     </image:image>
   </url>
+  
+  <!-- Blog IA -->
+  <url>
+    <loc>https://santeimc.fr/blog-ia</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
+      <image:title>Blog IA sur l'IMC et la santé</image:title>
+      <image:caption>Articles générés par IA sur l'indice de masse corporelle et la santé</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Blog Santé -->
+  <url>
+    <loc>https://santeimc.fr/blog-sante</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
+      <image:title>Blog Santé - Articles sur l'IMC</image:title>
+      <image:caption>Articles de santé sur l'indice de masse corporelle et le bien-être</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Bien-être -->
   <url>
     <loc>https://santeimc.fr/bien-etre</loc>
-    <lastmod>2024-05-20</lastmod>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -52,16 +85,54 @@
       <image:caption>Conseils pour atteindre et maintenir votre poids de forme idéal</image:caption>
     </image:image>
   </url>
+  
+  <!-- À propos -->
   <url>
     <loc>https://santeimc.fr/a-propos</loc>
-    <lastmod>2024-05-20</lastmod>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
+      <image:title>À propos de SantéIMC</image:title>
+      <image:caption>Qui sommes-nous et quelle est notre mission pour votre santé</image:caption>
+    </image:image>
   </url>
+  
+  <!-- Confidentialité -->
   <url>
     <loc>https://santeimc.fr/confidentialite</loc>
-    <lastmod>2024-05-20</lastmod>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  
+  <!-- Pages spécifiques pour le SEO -->
+  <url>
+    <loc>https://santeimc.fr/calcul-imc-femme</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/calcul-imc-homme</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/calcul-imc-enfant</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/poids-ideal-calcul</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
