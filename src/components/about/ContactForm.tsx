@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { Phone, MapPin, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 const ContactForm = () => {
@@ -55,32 +54,7 @@ const ContactForm = () => {
   return (
     <div className="grid md:grid-cols-2 gap-12">
       <div className="space-y-8">
-        <h3 className="text-2xl font-semibold mb-6">Nos Coordonnées</h3>
-        
-        <div className="flex items-center space-x-4">
-          <MapPin className="h-5 w-5 text-primary" />
-          <div>
-            <p className="font-medium">Notre adresse:</p>
-            <p className="text-gray-600">Touba</p>
-            <p className="text-gray-600">Sénégal</p>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-4">
-          <Phone className="h-5 w-5 text-primary" />
-          <div>
-            <p className="font-medium">Téléphone:</p>
-            <p className="text-gray-600">+221 78 448 82 59</p>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-4">
-          <Mail className="h-5 w-5 text-primary" />
-          <div>
-            <p className="font-medium">Email:</p>
-            <p className="text-gray-600">Modoufinance@gmail.com</p>
-          </div>
-        </div>
+        <h3 className="text-2xl font-semibold mb-6">Contactez-nous</h3>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -138,4 +112,3 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
-
