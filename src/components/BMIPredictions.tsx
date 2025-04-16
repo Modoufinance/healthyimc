@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -30,9 +31,21 @@ const BMIPredictions = ({ predictions, currentBMI }: BMIPredictionsProps) => {
       <h3 className="text-lg font-semibold mb-4">{t.bmiPredictions}</h3>
       <div className="w-full h-[200px]">
         <ResponsiveContainer>
-          <LineChart data={data}>
-            <XAxis dataKey="timeframe" />
-            <YAxis domain={['auto', 'auto']} />
+          <LineChart 
+            data={data}
+            aria-label="Graphique de prédiction d'évolution de l'IMC dans le temps"
+            role="img"
+          >
+            <XAxis 
+              dataKey="timeframe" 
+              aria-hidden="true"
+              aria-label="Périodes de temps futures"
+            />
+            <YAxis 
+              domain={['auto', 'auto']} 
+              aria-hidden="true"
+              aria-label="Valeurs d'IMC prédites" 
+            />
             <Tooltip
               content={({ active, payload }) => {
                 if (active && payload && payload.length) {
@@ -49,6 +62,7 @@ const BMIPredictions = ({ predictions, currentBMI }: BMIPredictionsProps) => {
                 }
                 return null;
               }}
+              aria-hidden="true"
             />
             <Line
               type="monotone"
@@ -56,10 +70,15 @@ const BMIPredictions = ({ predictions, currentBMI }: BMIPredictionsProps) => {
               stroke="#4facfe"
               strokeWidth={2}
               dot={{ r: 4 }}
+              aria-label={`Courbe de prédiction d'IMC partant de ${currentBMI} aujourd'hui`}
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
+      <p className="text-sm text-muted-foreground mt-3">
+        Ce graphique montre l'évolution potentielle de votre IMC basée sur vos objectifs.
+        Les prédictions sont des estimations et peuvent varier selon plusieurs facteurs.
+      </p>
     </Card>
   );
 };
