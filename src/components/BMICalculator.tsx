@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Scale, Download, Mail, Bookmark, History, CheckCircle } from "lucide-react";
 import BMIForm from "./BMIForm";

@@ -51,7 +51,7 @@ const HomeFAQ = () => {
               className="bg-white/10 rounded-lg overflow-hidden border-0"
             >
               <AccordionTrigger className="px-6 py-4 text-lg font-medium text-white hover:text-white/90 hover:no-underline">
-                {item.question}
+                <h3 className="text-left">{item.question}</h3>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-4 text-white/90">
                 {item.answer}
