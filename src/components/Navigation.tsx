@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity, ChevronDown, ChevronUp, Percent, Flame, Baby } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -20,7 +21,7 @@ const Navigation = () => {
 
   // Items that will display directly in the navigation
   const mainLinks = [
-    { to: "/", label: "Accueil", icon: <Home className="w-4 h-4" /> },
+    { to: "/accueil", label: "Accueil", icon: <Home className="w-4 h-4" /> },
     { to: "/bien-etre", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
     { to: "/blog-ia", label: "Blog IA", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/a-propos", label: "À propos", icon: <Info className="w-4 h-4" /> },

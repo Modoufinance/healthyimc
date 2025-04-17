@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useLocaleDetection } from "./hooks/useLocaleDetection";
 import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
+import Index from "./pages/Index";
 import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import Blog from "./pages/Blog";
@@ -22,8 +23,9 @@ const AppRoutes = () => {
       <Navigation />
       <main className="flex-1">
         <Routes>
-          <Route index element={<Home />} />
-          <Route path="/" element={<Home />} />
+          <Route index element={<Index />} />
+          <Route path="/" element={<Index />} />
+          <Route path="/accueil" element={<Home />} />
           <Route path="/calculateur-imc" element={<BMICalculator />} />
           <Route path="/calculateur-imc-enfants" element={<ChildrenBMICalculator />} />
           <Route path="/calculateur-graisse-corporelle" element={<BodyFatCalculator />} />
