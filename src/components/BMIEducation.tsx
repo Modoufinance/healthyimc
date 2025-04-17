@@ -39,20 +39,13 @@ const BMIEducation = () => {
       
       <div className="mt-8 p-4 bg-white/30 rounded-lg">
         <h3 className="text-xl font-semibold text-white mb-4">Ressources pédagogiques</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <img 
-            src="/lovable-uploads/5047c3f3-30f9-4769-8dc9-30d0d636d216.png" 
-            alt="Infographie détaillée des catégories d'IMC et leurs implications pour la santé avec code couleur et valeurs de référence" 
-            className="w-full h-auto rounded-lg" 
-          />
-          <img 
-            src="/lovable-uploads/5db5bbb5-92ee-48c8-b8d3-150d9d289649.png" 
-            alt="Graphique médical montrant la corrélation entre l'IMC et les risques de maladies cardiovasculaires selon des études récentes de l'OMS" 
-            className="w-full h-auto rounded-lg" 
-          />
-        </div>
+        <p className="text-white/90">
+          L'IMC est un outil de référence utilisé par l'Organisation Mondiale de la Santé pour évaluer les risques liés au poids. 
+          Pour des informations complètes sur l'IMC et ses implications pour la santé, consultez les ressources officielles ou 
+          discutez avec un professionnel de santé qualifié.
+        </p>
         <p className="mt-4 text-white/90 text-sm">
-          Images à titre illustratif. Pour des informations médicales précises, consultez toujours un professionnel de santé qualifié.
+          Pour des informations médicales précises, consultez toujours un professionnel de santé qualifié.
         </p>
       </div>
     </Card>
