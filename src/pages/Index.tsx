@@ -1,6 +1,8 @@
 
 import QuickBMICalculator from "@/components/home/QuickBMICalculator";
 import HomeSEO from "@/components/home/HomeSEO";
+import { Link } from "react-router-dom";
+import { Scale, Percent, Flame } from "lucide-react";
 
 const Index = () => {
   // FAQ items for structured data
@@ -44,6 +46,48 @@ const Index = () => {
           </h2>
           <QuickBMICalculator />
           
+          {/* Calculatrices disponibles */}
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Link 
+              to="/calculateur-imc" 
+              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
+            >
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="bg-blue-500/20 p-4 rounded-full group-hover:bg-blue-500/30 transition-colors">
+                  <Scale className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white">Calculatrice IMC</h3>
+                <p className="text-white/80">Calculez votre indice de masse corporelle et obtenez une analyse détaillée</p>
+              </div>
+            </Link>
+            
+            <Link 
+              to="/calculateur-graisse-corporelle" 
+              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
+            >
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="bg-purple-500/20 p-4 rounded-full group-hover:bg-purple-500/30 transition-colors">
+                  <Percent className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white">Calculatrice Graisse Corporelle</h3>
+                <p className="text-white/80">Estimez votre pourcentage de graisse corporelle en fonction de vos mesures</p>
+              </div>
+            </Link>
+            
+            <Link 
+              to="/calculateur-calories" 
+              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
+            >
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="bg-orange-500/20 p-4 rounded-full group-hover:bg-orange-500/30 transition-colors">
+                  <Flame className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white">Calculatrice Calories</h3>
+                <p className="text-white/80">Déterminez vos besoins caloriques quotidiens selon votre profil et vos objectifs</p>
+              </div>
+            </Link>
+          </div>
+
           <div className="mt-12 bg-white/20 backdrop-blur-lg p-6 rounded-xl">
             <h2 className="text-2xl font-bold text-white mb-4">Qu'est-ce que l'IMC?</h2>
             <p className="text-white">

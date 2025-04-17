@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from "react-router-dom";
-import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity, ChevronDown, ChevronUp } from "lucide-react";
+import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity, ChevronDown, ChevronUp, Percent, Flame } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -22,7 +22,6 @@ const Navigation = () => {
   // Items that will display directly in the navigation
   const mainLinks = [
     { to: "/", label: "Accueil", icon: <Home className="w-4 h-4" /> },
-    { to: "/calculateur-imc", label: "Calculatrice d'IMC", icon: <Scale className="w-4 h-4" /> },
     { to: "/bien-etre", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
     { to: "/blog-ia", label: "Blog IA", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/a-propos", label: "À propos", icon: <Info className="w-4 h-4" /> },
@@ -34,7 +33,15 @@ const Navigation = () => {
     { to: "/assistant-sante-ia", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
   ];
 
+  // Calculators dropdown items
+  const calculatorLinks = [
+    { to: "/calculateur-imc", label: "Calculatrice d'IMC", icon: <Scale className="w-4 h-4" /> },
+    { to: "/calculateur-graisse-corporelle", label: "Calculatrice de Graisse Corporelle", icon: <Percent className="w-4 h-4" /> },
+    { to: "/calculateur-calories", label: "Calculatrice de Calories", icon: <Flame className="w-4 h-4" /> },
+  ];
+
   const isHealthActive = healthLinks.some(link => location.pathname === link.to);
+  const isCalculatorActive = calculatorLinks.some(link => location.pathname === link.to);
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -75,6 +82,44 @@ const Navigation = () => {
               </Link>
             ))}
             
+            {/* Calculateurs dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  className={cn(
+                    "px-3 py-2 h-auto text-sm font-medium rounded-md transition-colors",
+                    "hover:bg-gray-100",
+                    isCalculatorActive ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                  )}
+                >
+                  <span className="flex items-center gap-2">
+                    <Scale className="w-4 h-4" />
+                    <span className="hidden sm:inline">Calculatrices</span>
+                    <ChevronDown className="w-4 h-4" />
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-64">
+                {calculatorLinks.map((link) => (
+                  <DropdownMenuItem key={link.to} asChild>
+                    <Link
+                      to={link.to}
+                      className={cn(
+                        "flex items-center gap-2 w-full",
+                        location.pathname === link.to
+                          ? "text-blue-600"
+                          : "text-gray-600"
+                      )}
+                    >
+                      {link.icon}
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
             {/* Santé dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -89,10 +134,7 @@ const Navigation = () => {
                   <span className="flex items-center gap-2">
                     <Activity className="w-4 h-4" />
                     <span className="hidden sm:inline">Santé</span>
-                    {isHealthDropdownOpen ? 
-                      <ChevronUp className="w-4 h-4" /> : 
-                      <ChevronDown className="w-4 h-4" />
-                    }
+                    <ChevronDown className="w-4 h-4" />
                   </span>
                 </Button>
               </DropdownMenuTrigger>
