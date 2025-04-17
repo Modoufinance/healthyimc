@@ -2,7 +2,7 @@
 import QuickBMICalculator from "@/components/home/QuickBMICalculator";
 import HomeSEO from "@/components/home/HomeSEO";
 import { Link } from "react-router-dom";
-import { Scale, Percent, Flame } from "lucide-react";
+import { Scale, Percent, Flame, Baby } from "lucide-react";
 
 const Index = () => {
   // FAQ items for structured data
@@ -47,7 +47,7 @@ const Index = () => {
           <QuickBMICalculator />
           
           {/* Calculatrices disponibles */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link 
               to="/calculateur-imc" 
               className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
@@ -58,6 +58,19 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-bold text-white">Calculatrice IMC</h3>
                 <p className="text-white/80">Calculez votre indice de masse corporelle et obtenez une analyse détaillée</p>
+              </div>
+            </Link>
+            
+            <Link 
+              to="/calculateur-imc-enfants" 
+              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
+            >
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="bg-green-500/20 p-4 rounded-full group-hover:bg-green-500/30 transition-colors">
+                  <Baby className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white">IMC Enfants</h3>
+                <p className="text-white/80">Calculez l'IMC de votre enfant avec interprétation adaptée à son âge</p>
               </div>
             </Link>
             

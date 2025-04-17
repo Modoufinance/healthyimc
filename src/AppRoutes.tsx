@@ -12,6 +12,7 @@ import WellnessCompanion from "./pages/WellnessCompanion";
 import AIBlog from "./pages/AIBlog";
 import BodyFatCalculator from "./components/BodyFatCalculator";
 import CalorieCalculator from "./components/CalorieCalculator";
+import ChildrenBMICalculator from "./components/ChildrenBMICalculator";
 
 const AppRoutes = () => {
   useLocaleDetection();
@@ -24,6 +25,7 @@ const AppRoutes = () => {
           <Route index element={<Home />} />
           <Route path="/" element={<Home />} />
           <Route path="/calculateur-imc" element={<BMICalculator />} />
+          <Route path="/calculateur-imc-enfants" element={<ChildrenBMICalculator />} />
           <Route path="/calculateur-graisse-corporelle" element={<BodyFatCalculator />} />
           <Route path="/calculateur-calories" element={<CalorieCalculator />} />
           <Route path="/blog-sante" element={<Blog />} />
