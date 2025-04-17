@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity, ChevronDown, ChevronUp, Percent, Flame, Baby } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -22,6 +21,11 @@ const Navigation = () => {
   // Items that will display directly in the navigation
   const mainLinks = [
     { to: "/accueil", label: "Accueil", icon: <Home className="w-4 h-4" /> },
+    // Other main links will be placed after the calculators dropdown
+  ];
+  
+  // Additional main links (to be displayed after calculators)
+  const additionalMainLinks = [
     { to: "/bien-etre", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
     { to: "/blog-ia", label: "Blog IA", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/a-propos", label: "À propos", icon: <Info className="w-4 h-4" /> },
@@ -83,7 +87,7 @@ const Navigation = () => {
               </Link>
             ))}
             
-            {/* Calculateurs dropdown */}
+            {/* Calculateurs dropdown - Now appears right after Accueil */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button 
@@ -120,6 +124,26 @@ const Navigation = () => {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+            
+            {/* Display additional main links after calculators */}
+            {additionalMainLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={cn(
+                  "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                  "hover:bg-gray-100",
+                  location.pathname === link.to
+                    ? "text-blue-600 bg-blue-50"
+                    : "text-gray-600"
+                )}
+              >
+                <span className="flex items-center gap-2">
+                  {link.icon}
+                  <span className="hidden sm:inline">{link.label}</span>
+                </span>
+              </Link>
+            ))}
             
             {/* Santé dropdown */}
             <DropdownMenu>
