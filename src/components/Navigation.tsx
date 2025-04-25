@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity, ChevronDown, ChevronUp, Percent, Flame, Baby } from "lucide-react";
+import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity, ChevronDown, ChevronUp, Percent, Flame, Baby, Hospital } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -43,6 +43,7 @@ const Navigation = () => {
     { to: "/calculateur-imc-enfants", label: "Calculatrice d'IMC Enfants", icon: <Baby className="w-4 h-4" /> },
     { to: "/calculateur-graisse-corporelle", label: "Calculatrice de Graisse Corporelle", icon: <Percent className="w-4 h-4" /> },
     { to: "/calculateur-calories", label: "Calculatrice de Calories", icon: <Flame className="w-4 h-4" /> },
+    { to: "/analyseur-symptomes", label: "Analyseur de Symptômes", icon: <Hospital className="w-4 h-4" /> },
   ];
 
   const isHealthActive = healthLinks.some(link => location.pathname === link.to);
