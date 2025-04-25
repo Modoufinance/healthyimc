@@ -14,6 +14,7 @@ import AIBlog from "./pages/AIBlog";
 import BodyFatCalculator from "./components/BodyFatCalculator";
 import CalorieCalculator from "./components/CalorieCalculator";
 import ChildrenBMICalculator from "./components/ChildrenBMICalculator";
+import FitnessTracker from "./pages/FitnessTracker";
 
 const AppRoutes = () => {
   useLocaleDetection();
@@ -31,6 +32,7 @@ const AppRoutes = () => {
           <Route path="/calculateur-graisse-corporelle" element={<BodyFatCalculator />} />
           <Route path="/calculateur-calories" element={<CalorieCalculator />} />
           <Route path="/blog-sante" element={<Blog />} />
+          <Route path="/fitness-tracker" element={<FitnessTracker />} />
           <Route path="/assistant-sante-ia" element={<AIHealthAssistant />} />
           <Route path="/bien-etre" element={<WellnessCompanion />} />
           <Route path="/blog-ia" element={<AIBlog />} />

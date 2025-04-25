@@ -21,7 +21,6 @@ const Navigation = () => {
   // Items that will display directly in the navigation
   const mainLinks = [
     { to: "/accueil", label: "Accueil", icon: <Home className="w-4 h-4" /> },
-    // Other main links will be placed after the calculators dropdown
   ];
   
   // Additional main links (to be displayed after calculators)
@@ -33,6 +32,7 @@ const Navigation = () => {
 
   // Items that will be in the "Santé" dropdown
   const healthLinks = [
+    { to: "/fitness-tracker", label: "Suivi Fitness", icon: <Activity className="w-4 h-4" /> },
     { to: "/blog-sante", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/assistant-sante-ia", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
   ];
