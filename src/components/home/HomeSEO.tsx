@@ -12,10 +12,26 @@ const HomeSEO = ({ faqItems }: HomeSEOProps) => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Calculateur IMC en ligne gratuit - HealthyIMC",
-    "description": "Calculez gratuitement votre IMC (Indice de Masse Corporelle). Outil adapté pour hommes, femmes et enfants. Obtenez des recommandations personnalisées pour votre santé.",
+    "name": "Calculateur IMC en ligne gratuit - Indice de Masse Corporelle",
+    "description": "Calculez gratuitement votre IMC (Indice de Masse Corporelle). Adapté pour hommes, femmes et enfants avec interprétation personnalisée et conseils santé. Calcul IMC en ligne simple et gratuit.",
     "url": "https://healthyimc.com",
-    "keywords": "imc, calcul imc, imc femme, imc homme, imc enfant, calculateur imc, indice masse corporelle, imc calcul, imc gratuit, imc en ligne, poids idéal",
+    "keywords": [
+      "calcul imc",
+      "indice de masse corporelle",
+      "calculatrice imc",
+      "imc en ligne",
+      "imc gratuit",
+      "imc femme",
+      "imc homme",
+      "imc enfant",
+      "calculateur imc",
+      "poids idéal",
+      "surpoids",
+      "obésité",
+      "calcul bmi",
+      "poids santé",
+      "imc calcul"
+    ].join(", "),
     "potentialAction": {
       "@type": "SearchAction",
       "target": "https://healthyimc.com/recherche?q={search_term_string}",
@@ -25,9 +41,9 @@ const HomeSEO = ({ faqItems }: HomeSEOProps) => {
 
   return (
     <SEO
-      title="Calculateur IMC en ligne gratuit | Calcul IMC pour Adultes et Enfants"
-      description="Calculez gratuitement votre IMC en ligne. Outil précis et fiable pour calculer l'Indice de Masse Corporelle (IMC). Adapté pour hommes, femmes et enfants avec suivi personnalisé et conseils santé."
-      keywords="imc, calcul imc, imc femme, imc homme, imc enfant, calculateur imc, indice masse corporelle, imc calcul, imc gratuit, imc en ligne, poids idéal, calcul poids santé, calculatrice imc, imc normal, imc surpoids, imc obésité"
+      title="Calculateur IMC en Ligne Gratuit | Calcul Indice de Masse Corporelle"
+      description="Calculez gratuitement votre IMC en ligne. Outil précis pour le calcul de l'Indice de Masse Corporelle (IMC). Adapté pour hommes, femmes et enfants avec suivi personnalisé, interprétation IMC et conseils santé. Calcul IMC gratuit pour surpoids, obésité et poids normal."
+      keywords="calcul imc, indice masse corporelle, imc femme, imc homme, imc enfant, calculateur imc, poids idéal, surpoids, obésité, calcul bmi, imc en ligne, calculatrice imc, poids santé, imc gratuit, imc calcul, calcul masse corporelle, imc normal, imc surpoids, comment calculer son imc, calcul imc en ligne simple"
       canonicalUrl="https://healthyimc.com"
       structuredData={structuredData}
       hasFAQ={true}
