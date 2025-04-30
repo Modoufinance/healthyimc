@@ -2,13 +2,21 @@
 // Mock implementation of device service functions
 
 /**
+ * Check if Web Bluetooth API is available
+ * @returns boolean indicating if Bluetooth is supported
+ */
+export const isBluetoothSupported = (): boolean => {
+  return 'bluetooth' in navigator;
+};
+
+/**
  * Connect to a bluetooth device
  * @returns A promise resolving to the connected device or null if connection fails
  */
 export const connectToDevice = async () => {
   try {
     // Check if the Web Bluetooth API is available
-    if (!navigator.bluetooth) {
+    if (!isBluetoothSupported()) {
       throw new Error("Bluetooth not supported");
     }
 
