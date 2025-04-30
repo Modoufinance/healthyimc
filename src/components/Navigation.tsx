@@ -32,7 +32,6 @@ const Navigation = () => {
 
   // Items that will be in the "Santé" dropdown
   const healthLinks = [
-    { to: "/fitness-tracker", label: "Suivi Fitness", icon: <Activity className="w-4 h-4" /> },
     { to: "/blog-sante", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/assistant-sante-ia", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
   ];

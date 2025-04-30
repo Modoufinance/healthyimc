@@ -14,7 +14,6 @@ import AIBlog from "./pages/AIBlog";
 import BodyFatCalculator from "./components/BodyFatCalculator";
 import CalorieCalculator from "./components/CalorieCalculator";
 import ChildrenBMICalculator from "./components/ChildrenBMICalculator";
-import FitnessTracker from "./pages/FitnessTracker";
 import SymptomAnalyzer from "./pages/SymptomAnalyzer";
 
 const AppRoutes = () => {
@@ -34,7 +33,6 @@ const AppRoutes = () => {
           <Route path="/calculateur-calories" element={<CalorieCalculator />} />
           <Route path="/analyseur-symptomes" element={<SymptomAnalyzer />} />
           <Route path="/blog-sante" element={<Blog />} />
-          <Route path="/fitness-tracker" element={<FitnessTracker />} />
           <Route path="/assistant-sante-ia" element={<AIHealthAssistant />} />
           <Route path="/bien-etre" element={<WellnessCompanion />} />
           <Route path="/blog-ia" element={<AIBlog />} />
