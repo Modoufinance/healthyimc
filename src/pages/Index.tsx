@@ -2,7 +2,8 @@
 import QuickBMICalculator from "@/components/home/QuickBMICalculator";
 import HomeSEO from "@/components/home/HomeSEO";
 import { Link } from "react-router-dom";
-import { Scale, Percent, Flame, Baby } from "lucide-react";
+import { Scale, Percent, Flame, Baby, Award, Calculator, HelpCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   // FAQ items for structured data
@@ -36,100 +37,154 @@ const Index = () => {
   return (
     <>
       <HomeSEO faqItems={faqItems} />
-      <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] flex flex-col items-center justify-center p-4">
-        <div className="w-full max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-5xl font-bold text-white text-center mb-8 drop-shadow-lg">
-            Calculateur IMC Gratuit en Ligne
-          </h1>
-          <h2 className="text-xl md:text-2xl text-white text-center mb-10 font-medium">
-            Calculez votre Indice de Masse Corporelle en quelques secondes
-          </h2>
-          <QuickBMICalculator />
+      <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe]">
+        {/* Hero Section */}
+        <div className="container mx-auto px-4 pt-16 pb-24">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-6xl font-bold text-white text-center mb-6 drop-shadow-lg">
+              Calculateur IMC Gratuit en Ligne
+            </h1>
+            <h2 className="text-xl md:text-2xl text-white text-center mb-8 font-medium max-w-3xl mx-auto">
+              Calculez votre Indice de Masse Corporelle en quelques secondes et obtenez une analyse personnalisée
+            </h2>
+            <div className="max-w-3xl mx-auto bg-white/20 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+              <QuickBMICalculator />
+            </div>
+          </div>
+          
+          {/* Stats Section */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto my-16">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center">
+              <div className="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Calculator className="h-8 w-8 text-white" />
+              </div>
+              <p className="text-3xl font-bold text-white">100 000+</p>
+              <p className="text-white opacity-80">Calculs réalisés</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center">
+              <div className="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Award className="h-8 w-8 text-white" />
+              </div>
+              <p className="text-3xl font-bold text-white">96%</p>
+              <p className="text-white opacity-80">Taux de satisfaction</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center">
+              <div className="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <HelpCircle className="h-8 w-8 text-white" />
+              </div>
+              <p className="text-3xl font-bold text-white">24/7</p>
+              <p className="text-white opacity-80">Support disponible</p>
+            </div>
+          </div>
           
           {/* Calculatrices disponibles */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Link 
-              to="/calculateur-imc" 
-              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
-            >
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="bg-blue-500/20 p-4 rounded-full group-hover:bg-blue-500/30 transition-colors">
-                  <Scale className="h-8 w-8 text-white" />
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-white text-center mb-8">Nos Calculateurs Santé</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Link 
+                to="/calculateur-imc" 
+                className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
+              >
+                <div className="flex flex-col items-center text-center gap-4">
+                  <div className="bg-blue-500/20 p-4 rounded-full group-hover:bg-blue-500/30 transition-colors">
+                    <Scale className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Calculatrice IMC</h3>
+                  <p className="text-white/80">Calculez votre indice de masse corporelle et obtenez une analyse détaillée</p>
+                  <Button variant="outline" className="text-white border-white hover:bg-white hover:text-blue-500">
+                    Calculer mon IMC
+                  </Button>
                 </div>
-                <h3 className="text-xl font-bold text-white">Calculatrice IMC</h3>
-                <p className="text-white/80">Calculez votre indice de masse corporelle et obtenez une analyse détaillée</p>
-              </div>
-            </Link>
-            
-            <Link 
-              to="/calculateur-imc-enfants" 
-              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
-            >
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="bg-green-500/20 p-4 rounded-full group-hover:bg-green-500/30 transition-colors">
-                  <Baby className="h-8 w-8 text-white" />
+              </Link>
+              
+              <Link 
+                to="/calculateur-imc-enfants" 
+                className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
+              >
+                <div className="flex flex-col items-center text-center gap-4">
+                  <div className="bg-green-500/20 p-4 rounded-full group-hover:bg-green-500/30 transition-colors">
+                    <Baby className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">IMC Enfants</h3>
+                  <p className="text-white/80">Calculez l'IMC de votre enfant avec interprétation adaptée à son âge</p>
+                  <Button variant="outline" className="text-white border-white hover:bg-white hover:text-green-500">
+                    Calculer l'IMC enfant
+                  </Button>
                 </div>
-                <h3 className="text-xl font-bold text-white">IMC Enfants</h3>
-                <p className="text-white/80">Calculez l'IMC de votre enfant avec interprétation adaptée à son âge</p>
-              </div>
-            </Link>
-            
-            <Link 
-              to="/calculateur-graisse-corporelle" 
-              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
-            >
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="bg-purple-500/20 p-4 rounded-full group-hover:bg-purple-500/30 transition-colors">
-                  <Percent className="h-8 w-8 text-white" />
+              </Link>
+              
+              <Link 
+                to="/calculateur-graisse-corporelle" 
+                className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
+              >
+                <div className="flex flex-col items-center text-center gap-4">
+                  <div className="bg-purple-500/20 p-4 rounded-full group-hover:bg-purple-500/30 transition-colors">
+                    <Percent className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Graisse Corporelle</h3>
+                  <p className="text-white/80">Estimez votre pourcentage de graisse corporelle en fonction de vos mesures</p>
+                  <Button variant="outline" className="text-white border-white hover:bg-white hover:text-purple-500">
+                    Calculer ma graisse corporelle
+                  </Button>
                 </div>
-                <h3 className="text-xl font-bold text-white">Calculatrice Graisse Corporelle</h3>
-                <p className="text-white/80">Estimez votre pourcentage de graisse corporelle en fonction de vos mesures</p>
-              </div>
-            </Link>
-            
-            <Link 
-              to="/calculateur-calories" 
-              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
-            >
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="bg-orange-500/20 p-4 rounded-full group-hover:bg-orange-500/30 transition-colors">
-                  <Flame className="h-8 w-8 text-white" />
+              </Link>
+              
+              <Link 
+                to="/calculateur-calories" 
+                className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
+              >
+                <div className="flex flex-col items-center text-center gap-4">
+                  <div className="bg-orange-500/20 p-4 rounded-full group-hover:bg-orange-500/30 transition-colors">
+                    <Flame className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Calculatrice Calories</h3>
+                  <p className="text-white/80">Déterminez vos besoins caloriques quotidiens selon votre profil et vos objectifs</p>
+                  <Button variant="outline" className="text-white border-white hover:bg-white hover:text-orange-500">
+                    Calculer mes calories
+                  </Button>
                 </div>
-                <h3 className="text-xl font-bold text-white">Calculatrice Calories</h3>
-                <p className="text-white/80">Déterminez vos besoins caloriques quotidiens selon votre profil et vos objectifs</p>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
 
-          <div className="mt-12 bg-white/20 backdrop-blur-lg p-6 rounded-xl">
-            <h2 className="text-2xl font-bold text-white mb-4">Qu'est-ce que l'IMC?</h2>
-            <p className="text-white">
-              L'Indice de Masse Corporelle (IMC) est un indicateur qui permet d'évaluer rapidement votre corpulence 
-              en fonction de votre taille et de votre poids. C'est un outil largement utilisé par les professionnels 
-              de santé pour dépister les risques liés au poids.
-            </p>
-            
-            <h3 className="text-xl font-bold text-white mt-6 mb-2">Comment se calcule l'IMC?</h3>
-            <p className="text-white">
-              La formule de calcul de l'IMC est simple: IMC = Poids (kg) / Taille² (m). Par exemple, une personne 
-              de 70 kg mesurant 1,75 m aura un IMC de 70 / (1,75 × 1,75) = 22,9.
-            </p>
-            
-            <h3 className="text-xl font-bold text-white mt-6 mb-2">Interprétation des résultats</h3>
-            <ul className="text-white list-disc pl-5 space-y-2">
-              <li>Moins de 18,5 : Insuffisance pondérale (maigreur)</li>
-              <li>Entre 18,5 et 24,9 : Corpulence normale</li>
-              <li>Entre 25 et 29,9 : Surpoids</li>
-              <li>Entre 30 et 34,9 : Obésité modérée</li>
-              <li>Entre 35 et 39,9 : Obésité sévère</li>
-              <li>Plus de 40 : Obésité morbide</li>
-            </ul>
+          <div className="mt-16 max-w-4xl mx-auto bg-white/20 backdrop-blur-lg p-8 rounded-xl">
+            <h2 className="text-2xl font-bold text-white mb-6">Qu'est-ce que l'IMC?</h2>
+            <div className="space-y-4 text-white">
+              <p>
+                L'Indice de Masse Corporelle (IMC) est un indicateur qui permet d'évaluer rapidement votre corpulence 
+                en fonction de votre taille et de votre poids. C'est un outil largement utilisé par les professionnels 
+                de santé pour dépister les risques liés au poids.
+              </p>
+              
+              <h3 className="text-xl font-bold mt-6 mb-2">Comment se calcule l'IMC?</h3>
+              <p>
+                La formule de calcul de l'IMC est simple: IMC = Poids (kg) / Taille² (m). Par exemple, une personne 
+                de 70 kg mesurant 1,75 m aura un IMC de 70 / (1,75 × 1,75) = 22,9.
+              </p>
+              
+              <h3 className="text-xl font-bold mt-6 mb-2">Interprétation des résultats</h3>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Moins de 18,5 : Insuffisance pondérale (maigreur)</li>
+                <li>Entre 18,5 et 24,9 : Corpulence normale</li>
+                <li>Entre 25 et 29,9 : Surpoids</li>
+                <li>Entre 30 et 34,9 : Obésité modérée</li>
+                <li>Entre 35 et 39,9 : Obésité sévère</li>
+                <li>Plus de 40 : Obésité morbide</li>
+              </ul>
+            </div>
           </div>
         </div>
         
-        <footer className="w-full mt-16 text-center text-white/80 text-sm">
-          <p>© {new Date().getFullYear()} HealthyIMC - Tous droits réservés</p>
-          <p className="mt-1">Ce calculateur d'IMC ne remplace pas l'avis médical professionnel.</p>
+        <footer className="w-full py-8 bg-white/10 backdrop-blur-sm text-center text-white">
+          <div className="container mx-auto px-4">
+            <p className="mb-2">© {new Date().getFullYear()} HealthyIMC - Tous droits réservés</p>
+            <p className="text-sm opacity-75">Ce calculateur d'IMC ne remplace pas l'avis médical professionnel.</p>
+            <div className="flex justify-center gap-4 mt-4">
+              <Link to="/a-propos" className="text-white/80 hover:text-white transition-colors">À propos</Link>
+              <Link to="/confidentialite" className="text-white/80 hover:text-white transition-colors">Confidentialité</Link>
+              <Link to="/blog-sante" className="text-white/80 hover:text-white transition-colors">Blog</Link>
+            </div>
+          </div>
         </footer>
       </div>
     </>
