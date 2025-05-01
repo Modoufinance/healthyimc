@@ -1,4 +1,3 @@
-
 import QuickBMICalculator from "@/components/home/QuickBMICalculator";
 import HomeSEO from "@/components/home/HomeSEO";
 import { Link } from "react-router-dom";
@@ -37,7 +36,7 @@ const Index = () => {
   return (
     <>
       <HomeSEO faqItems={faqItems} />
-      <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-b from-[#1e40af] to-[#3b82f6] flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-4xl mx-auto">
           <div className="text-center mb-12 animate-fade-in">
             <div className="flex items-center justify-center mb-6">
