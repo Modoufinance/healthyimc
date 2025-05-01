@@ -7,8 +7,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import AppRoutes from "./AppRoutes";
-import StickyHeader from "./components/StickyHeader";
-import './App.css';
 
 const queryClient = new QueryClient();
 
@@ -18,8 +16,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <LanguageProvider>
           <TooltipProvider>
-            <div className="min-h-screen flex flex-col bg-gray-50">
-              <StickyHeader />
+            <div className="min-h-screen flex flex-col">
               <Toaster />
               <Sonner />
               <AppRoutes />

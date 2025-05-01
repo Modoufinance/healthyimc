@@ -1,9 +1,8 @@
-
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Scale, Download, Mail, Bookmark, History, CheckCircle, Activity, Info } from "lucide-react";
+import { Scale, Download, Mail, Bookmark, History, CheckCircle } from "lucide-react";
 import BMIForm from "./BMIForm";
 import BMIResult from "./BMIResult";
 import BMIScale from "./BMIScale";
@@ -217,34 +216,19 @@ const BMICalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#1a79e5] to-[#63b3ed] p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
-        <div className="flex items-center justify-center mb-8">
-          <div className="flex items-center gap-3 bg-white/20 backdrop-blur-md px-6 py-3 rounded-full text-white">
-            <Activity className="h-5 w-5" />
-            <h1 className="text-xl font-bold">Calculatrice d'IMC (Indice de Masse Corporelle)</h1>
-          </div>
-        </div>
-        
-        <div className="text-center max-w-3xl mx-auto mb-8">
-          <p className="text-white/90 text-lg">
-            Notre calculatrice vous permet d'évaluer rapidement votre IMC et de recevoir des conseils personnalisés 
-            basés sur vos résultats. L'IMC est un indicateur utilisé par les professionnels de santé pour évaluer
-            les risques liés au poids.
-          </p>
-        </div>
-      
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="p-6 shadow-lg rounded-lg bg-white/90 backdrop-blur-sm border-0">
+          <Card className="p-6 shadow-lg rounded-lg">
             <div className="space-y-4 text-center">
               <div className="flex items-center justify-center gap-2">
-                <Scale className="h-8 w-8 text-blue-600" aria-hidden="true" />
-                <h2 className="text-2xl font-bold tracking-tight text-blue-600">
-                  {t.title || "Calculateur d'IMC"}
-                </h2>
+                <Scale className="h-8 w-8 text-[#4facfe]" aria-hidden="true" />
+                <h1 className="text-2xl font-bold tracking-tight text-[#4facfe]">
+                  {t.title}
+                </h1>
               </div>
               <p className="text-sm text-muted-foreground">
-                {t.subtitle || "Calculez votre Indice de Masse Corporelle en quelques secondes"}
+                {t.subtitle}
               </p>
             </div>
 
@@ -262,7 +246,7 @@ const BMICalculator = () => {
                 <div className="flex flex-wrap gap-2 justify-center">
                   <button
                     onClick={exportToPDF}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-md text-sm hover:bg-blue-200 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
                     aria-label="Exporter en PDF"
                   >
                     <Download className="h-4 w-4" aria-hidden="true" />
@@ -271,7 +255,7 @@ const BMICalculator = () => {
                   
                   <button
                     onClick={sendByEmail}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-md text-sm hover:bg-blue-200 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
                     aria-label="Envoyer par email"
                   >
                     <Mail className="h-4 w-4" aria-hidden="true" />
@@ -286,7 +270,7 @@ const BMICalculator = () => {
                         description: "Vous pourrez retrouver ce résultat plus tard",
                       });
                     }}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-md text-sm hover:bg-blue-200 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
                     aria-label="Sauvegarder ce résultat"
                   >
                     <Bookmark className="h-4 w-4" aria-hidden="true" />
@@ -313,27 +297,18 @@ const BMICalculator = () => {
               <BMIChart bmi={bmiData.bmi} />
               {predictions && <BMIPredictions predictions={predictions} currentBMI={bmiData.bmi} />}
             </div>
-            
-            {/* Recommandations personnalisées basées sur l'IMC */}
-            <Card className="p-6 shadow-lg rounded-lg bg-white/90 backdrop-blur-sm border-0">
-              <div className="flex items-center gap-2 mb-4">
-                <Info className="h-6 w-6 text-blue-600" />
-                <h3 className="text-xl font-semibold text-blue-600">Conseils personnalisés</h3>
-              </div>
-              <BMIEducation category={bmiData.category} />
-            </Card>
           </div>
         )}
 
         {savedResults.length > 0 && (
-          <Card className="p-6 shadow-lg rounded-lg bg-white/90 backdrop-blur-sm border-0">
+          <Card className="p-6 shadow-lg rounded-lg">
             <div className="flex items-center gap-2 mb-4">
-              <History className="h-6 w-6 text-blue-600" aria-hidden="true" />
-              <h2 className="text-xl font-semibold text-blue-600">Historique des calculs</h2>
+              <History className="h-6 w-6 text-[#4facfe]" aria-hidden="true" />
+              <h2 className="text-xl font-semibold">Historique des calculs</h2>
             </div>
             <div className="space-y-2">
               {savedResults.slice(-5).map((result, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div>
                     <span className="font-medium">IMC: {result.bmi}</span>
                     <span className="text-sm text-gray-600 ml-4">{result.category}</span>
@@ -354,28 +329,7 @@ const BMICalculator = () => {
           className="bg-white/10"
         />
 
-        <Card className="p-6 shadow-lg rounded-lg bg-white/90 backdrop-blur-sm border-0 mt-8">
-          <div className="text-center mb-4">
-            <h2 className="text-xl font-bold text-blue-600">À propos de notre calculateur d'IMC</h2>
-          </div>
-          <p className="text-gray-700 mb-4">
-            Notre calculateur d'IMC utilise la formule standard reconnue par l'Organisation Mondiale de la Santé. 
-            Il vous permet d'obtenir une estimation rapide et fiable de votre indice de masse corporelle.
-          </p>
-          <p className="text-gray-700 mb-4">
-            En plus du calcul de base, nous vous proposons des fonctionnalités avancées comme :
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-6">
-            <li>Des conseils personnalisés basés sur votre profil</li>
-            <li>Un suivi de votre progression dans le temps</li>
-            <li>Une prédiction de l'évolution de votre IMC</li>
-            <li>La possibilité de connecter des appareils bluetooth compatibles</li>
-            <li>L'export de vos résultats au format PDF</li>
-          </ul>
-          <div className="text-sm text-gray-500 text-center">
-            <p>Note: Ce calculateur d'IMC est fourni à titre informatif uniquement et ne remplace pas l'avis d'un professionnel de santé.</p>
-          </div>
-        </Card>
+        <BMIEducation />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 import QuickBMICalculator from "@/components/home/QuickBMICalculator";
 import HomeSEO from "@/components/home/HomeSEO";
 import { Link } from "react-router-dom";
-import { Scale, Percent, Flame, Baby, Users, Star, Award, ArrowRight, Info, Heart } from "lucide-react";
+import { Scale, Percent, Flame, Baby } from "lucide-react";
 
 const Index = () => {
   // FAQ items for structured data
@@ -36,7 +36,7 @@ const Index = () => {
   return (
     <>
       <HomeSEO faqItems={faqItems} />
-      <div className="min-h-screen bg-gradient-to-b from-[#1a79e5] to-[#63b3ed] flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-5xl font-bold text-white text-center mb-8 drop-shadow-lg">
             Calculateur IMC Gratuit en Ligne
@@ -44,31 +44,13 @@ const Index = () => {
           <h2 className="text-xl md:text-2xl text-white text-center mb-10 font-medium">
             Calculez votre Indice de Masse Corporelle en quelques secondes
           </h2>
-          
-          <div className="flex flex-wrap gap-4 justify-center items-center mb-8">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl mx-auto">
-              <div className="flex items-center justify-center bg-white/20 backdrop-blur-sm p-3 rounded-lg">
-                <Users className="h-5 w-5 text-white mr-2 flex-shrink-0" />
-                <p className="text-white text-sm font-medium">+50 000 utilisateurs</p>
-              </div>
-              <div className="flex items-center justify-center bg-white/20 backdrop-blur-sm p-3 rounded-lg">
-                <Star className="h-5 w-5 text-white mr-2 flex-shrink-0" />
-                <p className="text-white text-sm font-medium">Évaluation 4.8/5</p>
-              </div>
-              <div className="flex items-center justify-center bg-white/20 backdrop-blur-sm p-3 rounded-lg">
-                <Award className="h-5 w-5 text-white mr-2 flex-shrink-0" />
-                <p className="text-white text-sm font-medium">Médecins approuvés</p>
-              </div>
-            </div>
-          </div>
-          
           <QuickBMICalculator />
           
           {/* Calculatrices disponibles */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link 
               to="/calculateur-imc" 
-              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group hover:scale-105 transition-transform duration-300"
+              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
             >
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="bg-blue-500/20 p-4 rounded-full group-hover:bg-blue-500/30 transition-colors">
@@ -81,7 +63,7 @@ const Index = () => {
             
             <Link 
               to="/calculateur-imc-enfants" 
-              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group hover:scale-105 transition-transform duration-300"
+              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
             >
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="bg-green-500/20 p-4 rounded-full group-hover:bg-green-500/30 transition-colors">
@@ -94,7 +76,7 @@ const Index = () => {
             
             <Link 
               to="/calculateur-graisse-corporelle" 
-              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group hover:scale-105 transition-transform duration-300"
+              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
             >
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="bg-purple-500/20 p-4 rounded-full group-hover:bg-purple-500/30 transition-colors">
@@ -107,7 +89,7 @@ const Index = () => {
             
             <Link 
               to="/calculateur-calories" 
-              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group hover:scale-105 transition-transform duration-300"
+              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
             >
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="bg-orange-500/20 p-4 rounded-full group-hover:bg-orange-500/30 transition-colors">
@@ -120,29 +102,20 @@ const Index = () => {
           </div>
 
           <div className="mt-12 bg-white/20 backdrop-blur-lg p-6 rounded-xl">
-            <h2 className="flex items-center justify-center text-2xl font-bold text-white mb-4">
-              <Info className="h-6 w-6 mr-2" />
-              Qu'est-ce que l'IMC?
-            </h2>
+            <h2 className="text-2xl font-bold text-white mb-4">Qu'est-ce que l'IMC?</h2>
             <p className="text-white">
               L'Indice de Masse Corporelle (IMC) est un indicateur qui permet d'évaluer rapidement votre corpulence 
               en fonction de votre taille et de votre poids. C'est un outil largement utilisé par les professionnels 
               de santé pour dépister les risques liés au poids.
             </p>
             
-            <h3 className="flex items-center text-xl font-bold text-white mt-6 mb-2">
-              <Heart className="h-5 w-5 mr-2 text-white" />
-              Comment se calcule l'IMC?
-            </h3>
+            <h3 className="text-xl font-bold text-white mt-6 mb-2">Comment se calcule l'IMC?</h3>
             <p className="text-white">
               La formule de calcul de l'IMC est simple: IMC = Poids (kg) / Taille² (m). Par exemple, une personne 
               de 70 kg mesurant 1,75 m aura un IMC de 70 / (1,75 × 1,75) = 22,9.
             </p>
             
-            <h3 className="flex items-center text-xl font-bold text-white mt-6 mb-2">
-              <Scale className="h-5 w-5 mr-2 text-white" />
-              Interprétation des résultats
-            </h3>
+            <h3 className="text-xl font-bold text-white mt-6 mb-2">Interprétation des résultats</h3>
             <ul className="text-white list-disc pl-5 space-y-2">
               <li>Moins de 18,5 : Insuffisance pondérale (maigreur)</li>
               <li>Entre 18,5 et 24,9 : Corpulence normale</li>
@@ -151,16 +124,6 @@ const Index = () => {
               <li>Entre 35 et 39,9 : Obésité sévère</li>
               <li>Plus de 40 : Obésité morbide</li>
             </ul>
-            
-            <div className="mt-6 flex justify-center">
-              <Link 
-                to="/calculateur-imc"
-                className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-              >
-                Calculer mon IMC maintenant
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </div>
           </div>
         </div>
         
