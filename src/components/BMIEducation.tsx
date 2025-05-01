@@ -3,7 +3,11 @@ import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Info, BookOpen, HeartPulse } from "lucide-react";
 
-const BMIEducation = () => {
+interface BMIEducationProps {
+  category: string;
+}
+
+const BMIEducation = ({ category }: BMIEducationProps) => {
   const educationSections = [
     {
       icon: <BookOpen className="h-6 w-6 text-blue-500" aria-hidden="true" />,
@@ -21,6 +25,9 @@ const BMIEducation = () => {
       description: "L'IMC ne tient pas compte de la répartition de la masse grasse et de la masse musculaire, ni des différences liées à l'âge, au sexe et à l'origine ethnique. Un avis médical reste indispensable pour une évaluation complète."
     }
   ];
+
+  // Use category to potentially provide different education based on BMI category
+  console.log(`Providing education for BMI category: ${category}`);
 
   return (
     <Card className="p-6 shadow-lg rounded-lg bg-white/10 backdrop-blur-lg">

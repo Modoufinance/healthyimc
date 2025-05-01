@@ -2,7 +2,7 @@
 import QuickBMICalculator from "@/components/home/QuickBMICalculator";
 import HomeSEO from "@/components/home/HomeSEO";
 import { Link } from "react-router-dom";
-import { Scale, Percent, Flame, Baby, Calculator, Award, Users, Check } from "lucide-react";
+import { Scale, Percent, Flame, Baby, Calculator, Award, Users, Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
