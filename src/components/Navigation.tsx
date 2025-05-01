@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity, ChevronDown, ChevronUp, Percent, Flame, Baby, Hospital } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -32,7 +33,6 @@ const Navigation = () => {
 
   // Items that will be in the "Santé" dropdown
   const healthLinks = [
-    { to: "/blog-sante", label: "Blog Santé", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/assistant-sante-ia", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
   ];
 

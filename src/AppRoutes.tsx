@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Privacy from "./pages/Privacy";
-import Blog from "./pages/Blog";
 import BMICalculator from "./components/BMICalculator";
 import AIHealthAssistant from "./pages/AIHealthAssistant";
 import WellnessCompanion from "./pages/WellnessCompanion";
@@ -32,7 +31,6 @@ const AppRoutes = () => {
           <Route path="/calculateur-graisse-corporelle" element={<BodyFatCalculator />} />
           <Route path="/calculateur-calories" element={<CalorieCalculator />} />
           <Route path="/analyseur-symptomes" element={<SymptomAnalyzer />} />
-          <Route path="/blog-sante" element={<Blog />} />
           <Route path="/assistant-sante-ia" element={<AIHealthAssistant />} />
           <Route path="/bien-etre" element={<WellnessCompanion />} />
           <Route path="/blog-ia" element={<AIBlog />} />
