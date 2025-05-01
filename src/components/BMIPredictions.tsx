@@ -2,39 +2,20 @@
 import { Card } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { BMIData } from "./BMICalculator";
 
-interface BMIPredictionsProps {
-  bmiData: BMIData;
+interface BMIPrediction {
+  predictedBMI: number;
+  timeframe: string;
+  confidence: number;
 }
 
-const BMIPredictions = ({ bmiData }: BMIPredictionsProps) => {
+interface BMIPredictionsProps {
+  predictions: BMIPrediction[];
+  currentBMI: number;
+}
+
+const BMIPredictions = ({ predictions, currentBMI }: BMIPredictionsProps) => {
   const { t } = useLanguage();
-  const currentBMI = bmiData.bmi;
-
-  // Generate mock predictions based on current BMI
-  const generatePredictions = () => {
-    const predictions = [
-      {
-        timeframe: "1 mois",
-        predictedBMI: parseFloat((currentBMI - 0.3).toFixed(1)),
-        confidence: 0.9
-      },
-      {
-        timeframe: "3 mois",
-        predictedBMI: parseFloat((currentBMI - 0.8).toFixed(1)),
-        confidence: 0.8
-      },
-      {
-        timeframe: "6 mois",
-        predictedBMI: parseFloat((currentBMI - 1.5).toFixed(1)),
-        confidence: 0.7
-      }
-    ];
-    return predictions;
-  };
-
-  const predictions = generatePredictions();
 
   const data = [
     { timeframe: "Aujourd'hui", bmi: currentBMI },
@@ -47,7 +28,7 @@ const BMIPredictions = ({ bmiData }: BMIPredictionsProps) => {
 
   return (
     <Card className="p-4">
-      <h3 className="text-lg font-semibold mb-4">{t?.bmiPredictions || 'Prédictions IMC'}</h3>
+      <h3 className="text-lg font-semibold mb-4">{t.bmiPredictions}</h3>
       <div className="w-full h-[200px]">
         <ResponsiveContainer>
           <LineChart 

@@ -1,12 +1,12 @@
 
 import { Link } from "react-router-dom";
-import { ArrowRight, Heart, Timer, Check } from "lucide-react";
+import { ArrowRight, Heart, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ConversionElements from "./ConversionElements";
 
 const HeroSection = () => {
   return (
-    <section className="text-center space-y-8 animate-fade-in relative">
+    <section className="text-center space-y-8 animate-fade-in">
       <div className="flex items-center justify-center mb-6">
         <div className="flex items-center bg-white p-3 rounded-xl shadow-xl">
           <Heart className="w-10 h-10 text-blue-600 mr-2" />
@@ -44,33 +44,7 @@ const HeroSection = () => {
         </div>
       </div>
       
-      <div className="flex flex-wrap gap-3 justify-center mt-4">
-        <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-1 text-sm flex items-center">
-          <Check className="h-4 w-4 mr-1 text-green-400" />
-          Gratuit
-        </div>
-        <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-1 text-sm flex items-center">
-          <Check className="h-4 w-4 mr-1 text-green-400" />
-          Certifié OMS
-        </div>
-        <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-1 text-sm flex items-center">
-          <Check className="h-4 w-4 mr-1 text-green-400" />
-          Sans inscription
-        </div>
-        <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-1 text-sm flex items-center">
-          <Check className="h-4 w-4 mr-1 text-green-400" />
-          Résultat instantané
-        </div>
-      </div>
-      
       <ConversionElements />
-      
-      {/* Wave divider */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px]">
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[60px]">
-          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="fill-white"></path>
-        </svg>
-      </div>
     </section>
   );
 };

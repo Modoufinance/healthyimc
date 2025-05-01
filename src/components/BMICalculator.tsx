@@ -1,215 +1,337 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import BMIForm from "@/components/BMIForm";
-import BMIResultDisplay from "@/components/BMIResultDisplay";
-import DeviceConnect from "@/components/DeviceConnect";
-import BMIEducation from "@/components/BMIEducation";
-import BMIChart from "@/components/BMIChart";
-import BMIPredictions from "@/components/BMIPredictions";
-import { Ruler, Info, Activity, TrendingUp } from "lucide-react";
-import SEO from "@/components/SEO";
+import { useState, useEffect } from "react";
+import { Card } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Scale, Download, Mail, Bookmark, History, CheckCircle } from "lucide-react";
+import BMIForm from "./BMIForm";
+import BMIResult from "./BMIResult";
+import BMIScale from "./BMIScale";
+import BMIChart from "./BMIChart";
+import BMIPredictions from "./BMIPredictions";
+import UserDataForm from "./UserDataForm";
+import DeviceConnect from "./DeviceConnect";
+import { getPersonalizedAdvice, predictBMITrend } from "@/services/aiService";
+import BMIEducation from "./BMIEducation";
+import EnhancedFAQ from "./EnhancedFAQ";
+import VoiceSearch from "./VoiceSearch";
 
 export interface BMIData {
   bmi: number;
-  weight: number;
-  height: number;
-  age: number;
   category: string;
   advice: string;
+  date?: string;
 }
 
 const BMICalculator = () => {
   const [bmiData, setBmiData] = useState<BMIData | null>(null);
+  const [predictions, setPredictions] = useState(null);
+  const [savedResults, setSavedResults] = useState<BMIData[]>([]);
+  const [userData, setUserData] = useState(() => {
+    const savedData = localStorage.getItem('userBmiData');
+    return savedData ? JSON.parse(savedData) : {
+      age: null,
+      gender: "",
+      activityLevel: "",
+      targetBMI: null
+    };
+  });
+  
+  const { toast } = useToast();
+  const { t } = useLanguage();
 
-  const handleCalculateBMI = (weight: number, height: number, age: number) => {
-    // Convert height from cm to meters
+  useEffect(() => {
+    if (userData.age || userData.gender || userData.activityLevel) {
+      localStorage.setItem('userBmiData', JSON.stringify(userData));
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('savedBmiResults');
+    if (saved) {
+      setSavedResults(JSON.parse(saved));
+    }
+  }, []);
+
+  const handleBMICalculation = (weight: number, height: number, age: number) => {
     const heightInMeters = height / 100;
+    const bmi = Number((weight / (heightInMeters * heightInMeters)).toFixed(2));
     
-    // Calculate BMI using the formula: weight / height²
-    const bmi = parseFloat((weight / (heightInMeters * heightInMeters)).toFixed(1));
-    
-    // Determine BMI category and advice
     let category = "";
     let advice = "";
-    
+
     if (bmi < 18.5) {
-      category = "Maigreur";
-      advice = "Votre IMC indique une insuffisance pondérale. Un suivi médical pourrait être bénéfique pour s'assurer que vous recevez une nutrition adéquate.";
-    } else if (bmi >= 18.5 && bmi < 25) {
-      category = "Poids normal";
-      advice = "Votre IMC est dans la plage considérée comme normale. Continuez à maintenir de bonnes habitudes alimentaires et une activité physique régulière.";
-    } else if (bmi >= 25 && bmi < 30) {
-      category = "Surpoids";
-      advice = "Votre IMC indique un surpoids. Envisagez d'adopter une alimentation plus équilibrée et d'augmenter votre activité physique.";
-    } else if (bmi >= 30 && bmi < 35) {
-      category = "Obésité modérée";
-      advice = "Votre IMC indique une obésité modérée. Il est recommandé de consulter un médecin pour discuter d'un plan de gestion du poids.";
-    } else if (bmi >= 35 && bmi < 40) {
-      category = "Obésité sévère";
-      advice = "Votre IMC indique une obésité sévère. Une consultation médicale est fortement recommandée pour évaluer votre santé et discuter des options de gestion du poids.";
+      category = t.categories.underweight;
+      advice = "Vous êtes en dessous du poids recommandé. Pensez à consulter un professionnel de santé pour des conseils alimentaires.";
+    } else if (bmi >= 18.5 && bmi < 24.9) {
+      category = t.categories.normal;
+      advice = "Votre poids est dans la plage normale. Continuez à maintenir un mode de vie sain !";
+    } else if (bmi >= 25 && bmi < 29.9) {
+      category = t.categories.overweight;
+      advice = "Vous êtes en surpoids. Un professionnel de santé peut vous aider à établir un programme adapté.";
     } else {
-      category = "Obésité morbide";
-      advice = "Votre IMC indique une obésité morbide. Veuillez consulter un professionnel de santé dès que possible pour une évaluation complète et un plan de traitement personnalisé.";
+      category = t.categories.obese;
+      advice = "Vous êtes en obésité. Il est important de consulter un professionnel de santé pour des conseils personnalisés.";
     }
+
+    const bmiDataObj = { bmi, category, advice };
     
-    // Set BMI data
-    setBmiData({
-      bmi,
-      weight,
-      height,
-      age,
-      category,
-      advice
+    if (userData.gender && userData.activityLevel) {
+      const personalizedAdvice = getPersonalizedAdvice(bmiDataObj, {
+        ...userData,
+        age,
+        weight,
+        height
+      });
+      bmiDataObj.advice = personalizedAdvice;
+    }
+
+    setBmiData(bmiDataObj);
+
+    if (userData.targetBMI) {
+      const newPredictions = predictBMITrend(bmi, userData.targetBMI, 12);
+      setPredictions(newPredictions);
+    }
+
+    const newSavedResults = [...savedResults, { ...bmiDataObj, date: new Date().toISOString() }];
+    setSavedResults(newSavedResults);
+    localStorage.setItem('savedBmiResults', JSON.stringify(newSavedResults));
+
+    toast({
+      title: "Calcul effectué",
+      description: (
+        <div className="flex items-center gap-2">
+          <CheckCircle className="h-5 w-5 text-green-500" />
+          <span>Votre IMC a été calculé avec succès</span>
+        </div>
+      ),
+    });
+  };
+
+  const handleUserDataSubmit = (data: any) => {
+    setUserData(data);
+    localStorage.setItem('userBmiData', JSON.stringify(data));
+    toast({
+      title: "Profil mis à jour",
+      description: "Vos informations ont été enregistrées avec succès",
     });
   };
 
   const handleDeviceData = (weight?: number, height?: number) => {
-    if (weight && height && bmiData?.age) {
-      handleCalculateBMI(weight, height, bmiData.age);
+    if (weight && height) {
+      handleBMICalculation(weight, height, userData.age);
     }
   };
 
+  const exportToPDF = async () => {
+    if (!bmiData) return;
+    
+    const pdfContent = `
+      IMC: ${bmiData.bmi}
+      Catégorie: ${bmiData.category}
+      Conseils: ${bmiData.advice}
+      Date: ${new Date().toLocaleDateString()}
+    `;
+
+    const blob = new Blob([pdfContent], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `IMC-Rapport-${new Date().toLocaleDateString()}.pdf`;
+    a.click();
+    
+    toast({
+      title: "Export réussi",
+      description: "Votre rapport a été téléchargé au format PDF",
+    });
+  };
+
+  const sendByEmail = () => {
+    if (!bmiData) return;
+    
+    const mailtoLink = `mailto:?subject=Mon rapport IMC&body=Voici mes résultats IMC:%0D%0A
+    IMC: ${bmiData.bmi}%0D%0A
+    Catégorie: ${bmiData.category}%0D%0A
+    Conseils: ${bmiData.advice}`;
+    
+    window.location.href = mailtoLink;
+    
+    toast({
+      title: "Email préparé",
+      description: "Votre client mail va s'ouvrir avec le rapport",
+    });
+  };
+  
+  // Liste de questions fréquentes pour l'IMC
+  const bmiRelatedFAQs = [
+    {
+      question: "Comment calculer son IMC?",
+      answer: "L'IMC se calcule en divisant votre poids (en kg) par le carré de votre taille (en mètres). La formule exacte est: IMC = Poids(kg) / Taille²(m). Notre calculateur fait ce calcul automatiquement pour vous en quelques secondes.",
+      keywords: ["calcul", "formule", "imc", "poids", "taille"]
+    },
+    {
+      question: "Quel est l'IMC idéal?",
+      answer: "Un IMC entre 18,5 et 24,9 est considéré comme normal selon l'Organisation Mondiale de la Santé. Cependant, l'IMC idéal peut varier selon l'âge, le sexe, la masse musculaire et d'autres facteurs individuels.",
+      keywords: ["idéal", "normal", "recommandé", "sain", "poids santé"]
+    },
+    {
+      question: "L'IMC est-il fiable pour tout le monde?",
+      answer: "L'IMC est un bon indicateur général, mais ne tient pas compte de facteurs comme la masse musculaire, l'âge, le sexe ou la répartition des graisses. Par exemple, les sportifs peuvent avoir un IMC élevé en raison de leur masse musculaire. Il doit être interprété par un professionnel de santé et complété par d'autres mesures.",
+      keywords: ["fiabilité", "limites", "précision", "sportif", "muscle"]
+    },
+    {
+      question: "À quelle fréquence dois-je calculer mon IMC?",
+      answer: "Pour un suivi régulier de votre santé, il est recommandé de calculer votre IMC tous les 3 à 6 mois. En cas de programme de perte ou de prise de poids, un calcul mensuel peut être utile pour suivre vos progrès.",
+      keywords: ["fréquence", "suivi", "régularité", "mesure", "progression"]
+    },
+    {
+      question: "Comment interpréter correctement mon résultat d'IMC?",
+      answer: "L'interprétation de l'IMC doit prendre en compte votre profil personnel (âge, sexe, niveau d'activité physique, masse musculaire, etc.). Un IMC inférieur à 18,5 indique une insuffisance pondérale, entre 18,5 et 24,9 un poids normal, entre 25 et 29,9 un surpoids, et au-dessus de 30 une obésité. Notre calculateur fournit une première analyse, mais consultez un professionnel de santé pour une interprétation personnalisée complète.",
+      keywords: ["interprétation", "analyse", "catégorie", "obésité", "maigreur"]
+    },
+    {
+      question: "L'IMC est-il adapté aux enfants?",
+      answer: "L'IMC des enfants et adolescents est évalué différemment en utilisant des courbes de croissance spécifiques à l'âge et au sexe. Les seuils standards pour adultes ne s'appliquent pas aux enfants en croissance. Notre calculateur propose une section dédiée aux enfants qui utilise ces courbes spécifiques.",
+      keywords: ["enfant", "adolescent", "croissance", "pédiatrie", "courbe"]
+    },
+    {
+      question: "Comment l'IMC est-il lié aux risques pour la santé?",
+      answer: "Un IMC trop bas ou trop élevé est associé à divers risques pour la santé. Un IMC inférieur à 18,5 peut indiquer une malnutrition ou d'autres problèmes de santé. Un IMC supérieur à 25 augmente progressivement le risque de maladies cardiovasculaires, diabète de type 2, problèmes articulaires, apnée du sommeil et certains cancers.",
+      keywords: ["risque", "santé", "maladie", "cardiovasculaire", "diabète"]
+    },
+    {
+      question: "Comment réduire mon IMC de façon saine?",
+      answer: "Pour réduire votre IMC de manière saine, adoptez une alimentation équilibrée riche en fruits, légumes, protéines maigres et grains entiers, tout en limitant les aliments transformés, sucrés et gras. Pratiquez une activité physique régulière (150 minutes par semaine minimum). Visez une perte de poids progressive de 0,5 à 1 kg par semaine. Consultez un médecin ou un nutritionniste pour un programme personnalisé.",
+      keywords: ["réduire", "perte de poids", "régime", "exercice", "nutrition"]
+    }
+  ];
+
+  // Fonction de recherche pour l'IMC
+  const handleBMISearch = (query: string) => {
+    toast({
+      title: "Recherche vocale effectuée",
+      description: `Recherche: "${query}" - Consultez les résultats dans la FAQ ci-dessous`,
+    });
+    
+    // La recherche sera gérée par le composant EnhancedFAQ
+  };
+
   return (
-    <>
-      <SEO 
-        title="Calculateur d'IMC en ligne gratuit" 
-        description="Calculez votre indice de masse corporelle (IMC) avec notre calculateur gratuit et obtenez une analyse personnalisée de votre poids santé."
-        keywords="calculateur IMC, indice masse corporelle, IMC en ligne, calculer IMC, IMC gratuit"
-      />
-      <div className="container mx-auto px-4 py-8 max-w-5xl">
-        <h1 className="text-3xl md:text-4xl font-bold text-center mb-2 text-primary">
-          Calculateur d'IMC
-        </h1>
-        <p className="text-center text-muted-foreground mb-8">
-          Calculez votre Indice de Masse Corporelle (IMC) et recevez une analyse personnalisée
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="md:col-span-1">
-            <CardHeader>
-              <CardTitle>Entrez vos données</CardTitle>
-              <CardDescription>
-                Saisissez vos informations pour calculer votre IMC
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <DeviceConnect onDataReceived={handleDeviceData} />
-              <BMIForm onCalculate={handleCalculateBMI} savedData={bmiData} />
-            </CardContent>
-          </Card>
-          
-          <div className="md:col-span-2">
-            {bmiData ? (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Votre résultat IMC</CardTitle>
-                  <CardDescription>
-                    Analyse basée sur vos données
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <BMIResultDisplay bmi={bmiData.bmi} category={bmiData.category} />
+    <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card className="p-6 shadow-lg rounded-lg">
+            <div className="space-y-4 text-center">
+              <div className="flex items-center justify-center gap-2">
+                <Scale className="h-8 w-8 text-[#4facfe]" aria-hidden="true" />
+                <h1 className="text-2xl font-bold tracking-tight text-[#4facfe]">
+                  {t.title}
+                </h1>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {t.subtitle}
+              </p>
+            </div>
+
+            <div className="my-4">
+              <VoiceSearch onSearch={handleBMISearch} placeholder="Posez une question sur l'IMC..." />
+            </div>
+
+            <DeviceConnect onDataReceived={handleDeviceData} />
+            <BMIForm onCalculate={handleBMICalculation} savedData={userData} />
+
+            {bmiData && (
+              <div className="animate-slide-up mt-6 space-y-4">
+                <BMIResult bmiData={bmiData} />
+                
+                <div className="flex flex-wrap gap-2 justify-center">
+                  <button
+                    onClick={exportToPDF}
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
+                    aria-label="Exporter en PDF"
+                  >
+                    <Download className="h-4 w-4" aria-hidden="true" />
+                    Exporter en PDF
+                  </button>
                   
-                  <Tabs defaultValue="education" className="mt-6">
-                    <TabsList className="grid grid-cols-4 mb-4">
-                      <TabsTrigger value="education" className="flex items-center">
-                        <Info className="mr-2 h-4 w-4" />
-                        <span className="hidden sm:inline">Information</span>
-                      </TabsTrigger>
-                      <TabsTrigger value="chart" className="flex items-center">
-                        <Activity className="mr-2 h-4 w-4" />
-                        <span className="hidden sm:inline">Échelle</span>
-                      </TabsTrigger>
-                      <TabsTrigger value="predictions" className="flex items-center">
-                        <TrendingUp className="mr-2 h-4 w-4" />
-                        <span className="hidden sm:inline">Prédictions</span>
-                      </TabsTrigger>
-                      <TabsTrigger value="advice" className="flex items-center">
-                        <Ruler className="mr-2 h-4 w-4" />
-                        <span className="hidden sm:inline">Conseils</span>
-                      </TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="education">
-                      <BMIEducation category={bmiData.category} />
-                    </TabsContent>
-                    <TabsContent value="chart">
-                      <BMIChart bmi={bmiData.bmi} />
-                    </TabsContent>
-                    <TabsContent value="predictions">
-                      <BMIPredictions bmiData={bmiData} />
-                    </TabsContent>
-                    <TabsContent value="advice">
-                      <div className="space-y-4">
-                        <h3 className="text-lg font-medium">Conseils personnalisés</h3>
-                        <p>{bmiData.advice}</p>
-                        <div className="bg-primary/10 p-4 rounded-lg mt-4">
-                          <h4 className="font-medium text-primary">Note importante</h4>
-                          <p className="text-sm mt-2">
-                            L'IMC est un indicateur général et ne tient pas compte de facteurs comme la masse musculaire, 
-                            la répartition des graisses ou d'autres caractéristiques individuelles. 
-                            Consultez toujours un professionnel de santé pour une évaluation complète.
-                          </p>
-                        </div>
-                      </div>
-                    </TabsContent>
-                  </Tabs>
-                </CardContent>
-                <CardFooter className="flex justify-between border-t pt-4">
-                  <p className="text-sm text-muted-foreground">
-                    Données enregistrées localement
-                  </p>
-                </CardFooter>
-              </Card>
-            ) : (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Qu'est-ce que l'IMC?</CardTitle>
-                  <CardDescription>
-                    Comprendre l'Indice de Masse Corporelle
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <p>
-                      L'Indice de Masse Corporelle (IMC) est un indicateur qui permet d'évaluer rapidement votre corpulence
-                      en fonction de votre taille et de votre poids. C'est un outil largement utilisé par les professionnels
-                      de santé pour dépister les risques liés au poids.
-                    </p>
-                    
-                    <h3 className="text-lg font-medium mt-6">Comment se calcule l'IMC?</h3>
-                    <div className="bg-muted p-4 rounded-md font-mono text-sm">
-                      IMC = Poids (kg) / Taille² (m)
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Exemple: Une personne pesant 70 kg et mesurant 1,75 m aura un IMC de 70 ÷ (1,75)² = 22,9
-                    </p>
-                    
-                    <h3 className="text-lg font-medium mt-6">Interprétation des résultats</h3>
-                    <ul className="list-disc pl-5 space-y-2">
-                      <li>Moins de 18,5 : <span className="text-blue-500 font-medium">Insuffisance pondérale (maigreur)</span></li>
-                      <li>Entre 18,5 et 24,9 : <span className="text-green-500 font-medium">Corpulence normale</span></li>
-                      <li>Entre 25 et 29,9 : <span className="text-yellow-500 font-medium">Surpoids</span></li>
-                      <li>Entre 30 et 34,9 : <span className="text-orange-500 font-medium">Obésité modérée</span></li>
-                      <li>Entre 35 et 39,9 : <span className="text-red-500 font-medium">Obésité sévère</span></li>
-                      <li>Plus de 40 : <span className="text-red-700 font-medium">Obésité morbide</span></li>
-                    </ul>
-                    
-                    <div className="bg-primary/10 p-4 rounded-lg mt-6">
-                      <h4 className="font-medium text-primary">Commencez maintenant</h4>
-                      <p className="text-sm mt-2">
-                        Remplissez le formulaire à gauche pour calculer votre IMC et recevoir une analyse personnalisée.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  <button
+                    onClick={sendByEmail}
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
+                    aria-label="Envoyer par email"
+                  >
+                    <Mail className="h-4 w-4" aria-hidden="true" />
+                    Envoyer par email
+                  </button>
+                  
+                  <button
+                    onClick={() => {
+                      localStorage.setItem('bookmarkedResult', JSON.stringify(bmiData));
+                      toast({
+                        title: "Résultat sauvegardé",
+                        description: "Vous pourrez retrouver ce résultat plus tard",
+                      });
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
+                    aria-label="Sauvegarder ce résultat"
+                  >
+                    <Bookmark className="h-4 w-4" aria-hidden="true" />
+                    Sauvegarder
+                  </button>
+                </div>
+              </div>
             )}
-          </div>
+          </Card>
+
+          <UserDataForm 
+            onSubmit={handleUserDataSubmit} 
+            age={userData.age}
+            gender={userData.gender}
+            activityLevel={userData.activityLevel}
+            targetBMI={userData.targetBMI}
+          />
         </div>
+
+        {bmiData && (
+          <div className="animate-slide-up space-y-6">
+            <BMIScale bmi={bmiData.bmi} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <BMIChart bmi={bmiData.bmi} />
+              {predictions && <BMIPredictions predictions={predictions} currentBMI={bmiData.bmi} />}
+            </div>
+          </div>
+        )}
+
+        {savedResults.length > 0 && (
+          <Card className="p-6 shadow-lg rounded-lg">
+            <div className="flex items-center gap-2 mb-4">
+              <History className="h-6 w-6 text-[#4facfe]" aria-hidden="true" />
+              <h2 className="text-xl font-semibold">Historique des calculs</h2>
+            </div>
+            <div className="space-y-2">
+              {savedResults.slice(-5).map((result, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div>
+                    <span className="font-medium">IMC: {result.bmi}</span>
+                    <span className="text-sm text-gray-600 ml-4">{result.category}</span>
+                  </div>
+                  <span className="text-sm text-gray-500">
+                    {new Date(result.date!).toLocaleDateString()}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
+
+        <EnhancedFAQ 
+          title="Questions fréquentes sur l'IMC" 
+          description="Trouvez les réponses aux questions les plus courantes sur l'Indice de Masse Corporelle"
+          faqItems={bmiRelatedFAQs}
+          className="bg-white/10"
+        />
+
+        <BMIEducation />
       </div>
-    </>
+    </div>
   );
 };
 
