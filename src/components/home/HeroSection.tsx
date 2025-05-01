@@ -1,14 +1,14 @@
 
 import { Link } from "react-router-dom";
-import { ArrowRight, Heart, Timer } from "lucide-react";
+import { ArrowRight, Heart, Timer, Users, Star, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ConversionElements from "./ConversionElements";
 
 const HeroSection = () => {
   return (
-    <section className="text-center space-y-8 animate-fade-in">
+    <section className="text-center space-y-8 animate-fade-in pb-8">
       <div className="flex items-center justify-center mb-6">
-        <div className="flex items-center bg-white p-3 rounded-xl shadow-xl">
+        <div className="flex items-center bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-xl transform hover:scale-105 transition-all duration-300">
           <Heart className="w-10 h-10 text-blue-600 mr-2" />
           <div className="flex flex-col items-start">
             <span className="text-2xl font-bold text-blue-600 leading-none">Healthy</span>
@@ -25,7 +25,22 @@ const HeroSection = () => {
         Rejoignez plus de 50 000 personnes qui ont déjà calculé leur indice de masse corporelle
       </p>
       
-      <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+      <div className="flex flex-wrap gap-4 justify-center items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl mx-auto mb-6">
+          <div className="flex items-center bg-white/20 backdrop-blur-sm p-3 rounded-lg">
+            <Users className="h-6 w-6 text-white mr-2 flex-shrink-0" />
+            <p className="text-white text-sm font-medium">Plus de 50 000 utilisateurs</p>
+          </div>
+          <div className="flex items-center bg-white/20 backdrop-blur-sm p-3 rounded-lg">
+            <Star className="h-6 w-6 text-white mr-2 flex-shrink-0" />
+            <p className="text-white text-sm font-medium">Évaluation 4.8/5</p>
+          </div>
+          <div className="flex items-center bg-white/20 backdrop-blur-sm p-3 rounded-lg">
+            <Award className="h-6 w-6 text-white mr-2 flex-shrink-0" />
+            <p className="text-white text-sm font-medium">Médecins approuvés</p>
+          </div>
+        </div>
+        
         <Button
           asChild
           size="lg"

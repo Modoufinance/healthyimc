@@ -1,10 +1,11 @@
+
 import { Link, useLocation } from "react-router-dom";
-import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity, ChevronDown, ChevronUp, Percent, Flame, Baby, Hospital } from "lucide-react";
+import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity, ChevronDown, ChevronUp, Percent, Flame, Baby, Hospital, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
 import PWAInstallButton from "./PWAInstallButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -16,7 +17,22 @@ import {
 const Navigation = () => {
   const location = useLocation();
   const { t } = useLanguage();
-  const [isHealthDropdownOpen, setIsHealthDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Items that will display directly in the navigation
   const mainLinks = [
@@ -49,12 +65,15 @@ const Navigation = () => {
   const isCalculatorActive = calculatorLinks.some(link => location.pathname === link.to);
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav className={cn(
+      "sticky top-0 z-50 transition-all duration-300",
+      isScrolled ? "bg-white/95 backdrop-blur-md shadow-md" : "bg-white shadow-sm"
+    )}>
       <div className="container mx-auto px-4">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:h-16">
           <div className="flex justify-between items-center h-16 sm:h-auto">
             <Link to="/" className="flex items-center gap-1">
-              <div className="flex items-center bg-gradient-to-r from-blue-500 to-cyan-400 text-white p-1.5 rounded-lg">
+              <div className="flex items-center bg-gradient-to-r from-blue-500 to-blue-400 text-white p-2 rounded-lg">
                 <Heart className="w-5 h-5" />
               </div>
               <div className="flex flex-col items-start ml-1">
@@ -62,28 +81,38 @@ const Navigation = () => {
                 <span className="text-lg font-bold text-gray-700 leading-none">IMC</span>
               </div>
             </Link>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 sm:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 rounded-md text-gray-700 hover:bg-gray-100"
+              >
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+            <div className="hidden sm:flex items-center gap-2">
               <PWAInstallButton />
               <LanguageSelector />
             </div>
           </div>
-          <div className="flex flex-row justify-center sm:justify-end pb-2 sm:pb-0 overflow-x-auto">
+          
+          <div className={cn(
+            "flex-col sm:flex-row sm:justify-end pb-3 sm:pb-0 overflow-x-auto",
+            isMobileMenuOpen ? "flex" : "hidden sm:flex"
+          )}>
             {mainLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 className={cn(
-                  "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                  "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center",
                   "hover:bg-gray-100",
                   location.pathname === link.to
                     ? "text-blue-600 bg-blue-50"
                     : "text-gray-600"
                 )}
               >
-                <span className="flex items-center gap-2">
-                  {link.icon}
-                  <span className="hidden sm:inline">{link.label}</span>
-                </span>
+                {link.icon}
+                <span className="ml-2">{link.label}</span>
               </Link>
             ))}
             
@@ -100,7 +129,7 @@ const Navigation = () => {
                 >
                   <span className="flex items-center gap-2">
                     <Scale className="w-4 h-4" />
-                    <span className="hidden sm:inline">Calculatrices</span>
+                    <span className="sm:inline">Calculatrices</span>
                     <ChevronDown className="w-4 h-4" />
                   </span>
                 </Button>
@@ -131,17 +160,15 @@ const Navigation = () => {
                 key={link.to}
                 to={link.to}
                 className={cn(
-                  "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                  "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center",
                   "hover:bg-gray-100",
                   location.pathname === link.to
                     ? "text-blue-600 bg-blue-50"
                     : "text-gray-600"
                 )}
               >
-                <span className="flex items-center gap-2">
-                  {link.icon}
-                  <span className="hidden sm:inline">{link.label}</span>
-                </span>
+                {link.icon}
+                <span className="ml-2">{link.label}</span>
               </Link>
             ))}
             
@@ -158,7 +185,7 @@ const Navigation = () => {
                 >
                   <span className="flex items-center gap-2">
                     <Activity className="w-4 h-4" />
-                    <span className="hidden sm:inline">Santé</span>
+                    <span className="sm:inline">Santé</span>
                     <ChevronDown className="w-4 h-4" />
                   </span>
                 </Button>
@@ -182,6 +209,11 @@ const Navigation = () => {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+            
+            <div className="sm:hidden flex items-center gap-2 mt-4 justify-center">
+              <PWAInstallButton />
+              <LanguageSelector />
+            </div>
           </div>
         </div>
       </div>
