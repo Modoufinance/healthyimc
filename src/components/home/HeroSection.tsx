@@ -9,9 +9,9 @@ const HeroSection = () => {
     <section className="text-center space-y-8 animate-fade-in">
       <div className="flex items-center justify-center mb-6">
         <div className="flex items-center bg-white p-3 rounded-xl shadow-xl">
-          <Heart className="w-10 h-10 text-purple-600 mr-2" />
+          <Heart className="w-10 h-10 text-blue-600 mr-2" />
           <div className="flex flex-col items-start">
-            <span className="text-2xl font-bold text-purple-600 leading-none">Healthy</span>
+            <span className="text-2xl font-bold text-blue-600 leading-none">Healthy</span>
             <span className="text-2xl font-bold text-gray-700 leading-none">IMC</span>
           </div>
         </div>
@@ -29,7 +29,7 @@ const HeroSection = () => {
         <Button
           asChild
           size="lg"
-          className="bg-[#9b87f5] text-white hover:bg-[#7E69AB] text-lg w-full sm:w-auto py-8 px-12 text-xl font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+          className="bg-[#F97316] text-white hover:bg-[#F97316]/90 text-lg w-full sm:w-auto py-8 px-12 text-xl font-semibold shadow-lg hover:scale-105 transition-all duration-300"
         >
           <Link to="/calculateur-imc">
             Calculer mon IMC maintenant

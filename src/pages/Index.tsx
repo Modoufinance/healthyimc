@@ -36,7 +36,7 @@ const Index = () => {
   return (
     <>
       <HomeSEO faqItems={faqItems} />
-      <div className="min-h-screen bg-gradient-to-b from-[#9b87f5] to-[#7E69AB] flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-5xl font-bold text-white text-center mb-8 drop-shadow-lg">
             Calculateur IMC Gratuit en Ligne
@@ -53,7 +53,7 @@ const Index = () => {
               className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
             >
               <div className="flex flex-col items-center text-center gap-4">
-                <div className="bg-purple-500/20 p-4 rounded-full group-hover:bg-purple-500/30 transition-colors">
+                <div className="bg-blue-500/20 p-4 rounded-full group-hover:bg-blue-500/30 transition-colors">
                   <Scale className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-white">Calculatrice IMC</h3>
@@ -92,7 +92,7 @@ const Index = () => {
               className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
             >
               <div className="flex flex-col items-center text-center gap-4">
-                <div className="bg-purple-500/20 p-4 rounded-full group-hover:bg-purple-500/30 transition-colors">
+                <div className="bg-orange-500/20 p-4 rounded-full group-hover:bg-orange-500/30 transition-colors">
                   <Flame className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-white">Calculatrice Calories</h3>

@@ -1,9 +1,8 @@
-
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Scale, Download, Mail, Bookmark, History, CheckCircle, TrendingUp, LineChart } from "lucide-react";
+import { Scale, Download, Mail, Bookmark, History, CheckCircle } from "lucide-react";
 import BMIForm from "./BMIForm";
 import BMIResult from "./BMIResult";
 import BMIScale from "./BMIScale";
@@ -15,8 +14,6 @@ import { getPersonalizedAdvice, predictBMITrend } from "@/services/aiService";
 import BMIEducation from "./BMIEducation";
 import EnhancedFAQ from "./EnhancedFAQ";
 import VoiceSearch from "./VoiceSearch";
-import BMIStatistics from "./BMIStatistics";
-import BMITrendComparison from "./BMITrendComparison";
 
 export interface BMIData {
   bmi: number;
@@ -219,18 +216,18 @@ const BMICalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#4361EE] to-[#3A0CA3] p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="p-6 shadow-lg rounded-lg backdrop-blur-sm bg-white/10 border border-white/20">
+          <Card className="p-6 shadow-lg rounded-lg">
             <div className="space-y-4 text-center">
               <div className="flex items-center justify-center gap-2">
-                <Scale className="h-8 w-8 text-white" aria-hidden="true" />
-                <h1 className="text-2xl font-bold tracking-tight text-white">
+                <Scale className="h-8 w-8 text-[#4facfe]" aria-hidden="true" />
+                <h1 className="text-2xl font-bold tracking-tight text-[#4facfe]">
                   {t.title}
                 </h1>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-muted-foreground">
                 {t.subtitle}
               </p>
             </div>
@@ -249,7 +246,7 @@ const BMICalculator = () => {
                 <div className="flex flex-wrap gap-2 justify-center">
                   <button
                     onClick={exportToPDF}
-                    className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-md text-sm text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
                     aria-label="Exporter en PDF"
                   >
                     <Download className="h-4 w-4" aria-hidden="true" />
@@ -258,7 +255,7 @@ const BMICalculator = () => {
                   
                   <button
                     onClick={sendByEmail}
-                    className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-md text-sm text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
                     aria-label="Envoyer par email"
                   >
                     <Mail className="h-4 w-4" aria-hidden="true" />
@@ -273,7 +270,7 @@ const BMICalculator = () => {
                         description: "Vous pourrez retrouver ce résultat plus tard",
                       });
                     }}
-                    className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-md text-sm text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
                     aria-label="Sauvegarder ce résultat"
                   >
                     <Bookmark className="h-4 w-4" aria-hidden="true" />
@@ -296,33 +293,27 @@ const BMICalculator = () => {
         {bmiData && (
           <div className="animate-slide-up space-y-6">
             <BMIScale bmi={bmiData.bmi} />
-            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <BMIChart bmi={bmiData.bmi} />
               {predictions && <BMIPredictions predictions={predictions} currentBMI={bmiData.bmi} />}
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <BMIStatistics bmi={bmiData.bmi} userData={userData} />
-              <BMITrendComparison bmi={bmiData.bmi} />
             </div>
           </div>
         )}
 
         {savedResults.length > 0 && (
-          <Card className="p-6 shadow-lg rounded-lg backdrop-blur-sm bg-white/10 border border-white/20">
+          <Card className="p-6 shadow-lg rounded-lg">
             <div className="flex items-center gap-2 mb-4">
-              <History className="h-6 w-6 text-white" aria-hidden="true" />
-              <h2 className="text-xl font-semibold text-white">Historique des calculs</h2>
+              <History className="h-6 w-6 text-[#4facfe]" aria-hidden="true" />
+              <h2 className="text-xl font-semibold">Historique des calculs</h2>
             </div>
             <div className="space-y-2">
               {savedResults.slice(-5).map((result, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-white/20 rounded-lg backdrop-blur-sm">
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div>
-                    <span className="font-medium text-white">IMC: {result.bmi}</span>
-                    <span className="text-sm text-white/80 ml-4">{result.category}</span>
+                    <span className="font-medium">IMC: {result.bmi}</span>
+                    <span className="text-sm text-gray-600 ml-4">{result.category}</span>
                   </div>
-                  <span className="text-sm text-white/80">
+                  <span className="text-sm text-gray-500">
                     {new Date(result.date!).toLocaleDateString()}
                   </span>
                 </div>
@@ -335,7 +326,7 @@ const BMICalculator = () => {
           title="Questions fréquentes sur l'IMC" 
           description="Trouvez les réponses aux questions les plus courantes sur l'Indice de Masse Corporelle"
           faqItems={bmiRelatedFAQs}
-          className="bg-white/10 backdrop-blur-sm border border-white/20"
+          className="bg-white/10"
         />
 
         <BMIEducation />
