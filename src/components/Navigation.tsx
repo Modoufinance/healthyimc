@@ -1,6 +1,5 @@
-
 import { Link, useLocation } from "react-router-dom";
-import { Home, Scale, Bot, Info, Shield, Heart, BookOpen, Star, Activity, ChevronDown, ChevronUp, Percent, Flame, Baby, Hospital } from "lucide-react";
+import { Home, Scale, Bot, Info, Shield, Heart, Dumbbell, Star, Activity, ChevronDown, ChevronUp, Percent, Flame, Baby, Hospital } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -27,7 +26,7 @@ const Navigation = () => {
   // Additional main links (to be displayed after calculators)
   const additionalMainLinks = [
     { to: "/bien-etre", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
-    { to: "/blog-ia", label: "Blog IA", icon: <BookOpen className="w-4 h-4" /> },
+    { to: "/programme-fitness-ia", label: "Coach Fitness IA", icon: <Dumbbell className="w-4 h-4" /> },
     { to: "/a-propos", label: "À propos", icon: <Info className="w-4 h-4" /> },
   ];
 

@@ -9,7 +9,6 @@ import Privacy from "./pages/Privacy";
 import BMICalculator from "./components/BMICalculator";
 import AIHealthAssistant from "./pages/AIHealthAssistant";
 import WellnessCompanion from "./pages/WellnessCompanion";
-import AIBlog from "./pages/AIBlog";
 import BodyFatCalculator from "./components/BodyFatCalculator";
 import CalorieCalculator from "./components/CalorieCalculator";
 import ChildrenBMICalculator from "./components/ChildrenBMICalculator";
@@ -34,7 +33,6 @@ const AppRoutes = () => {
           <Route path="/analyseur-symptomes" element={<SymptomAnalyzer />} />
           <Route path="/assistant-sante-ia" element={<AIHealthAssistant />} />
           <Route path="/bien-etre" element={<WellnessCompanion />} />
-          <Route path="/blog-ia" element={<AIBlog />} />
           <Route path="/programme-fitness-ia" element={<AIFitnessProgram />} />
           <Route path="/a-propos" element={<About />} />
           <Route path="/confidentialite" element={<Privacy />} />
