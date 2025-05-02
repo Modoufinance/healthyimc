@@ -7,7 +7,7 @@ const FinalCTA = () => {
   return (
     <section className="text-center space-y-8 py-12">
       <div className="max-w-2xl mx-auto space-y-6 bg-white/10 backdrop-blur-xl p-8 rounded-xl shadow-xl">
-        <div className="inline-flex items-center bg-[#F97316]/20 text-[#F97316] px-4 py-2 rounded-full mb-4">
+        <div className="inline-flex items-center bg-[#9b87f5]/20 text-[#D6BCFA] px-4 py-2 rounded-full mb-4">
           <Clock className="w-5 h-5 mr-2" />
           <span className="font-semibold">Seulement 30 secondes</span>
         </div>
@@ -23,7 +23,7 @@ const FinalCTA = () => {
         <Button
           asChild
           size="lg"
-          className="bg-[#F97316] text-white hover:bg-[#F97316]/90 w-full sm:w-auto py-8 px-12 text-xl font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+          className="bg-[#9b87f5] text-white hover:bg-[#7E69AB] w-full sm:w-auto py-8 px-12 text-xl font-semibold shadow-lg hover:scale-105 transition-all duration-300"
         >
           <Link to="/calculateur-imc">
             Obtenir mon calcul IMC gratuit maintenant

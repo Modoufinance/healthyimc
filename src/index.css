@@ -11,7 +11,7 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 199 98% 65%;
+    --primary: 271 91% 65%;
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -23,7 +23,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 199 98% 65%;
+    --ring: 271 91% 65%;
     --radius: 0.5rem;
   }
 
@@ -33,12 +33,12 @@
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(135deg, #9b87f5 0%, #7E69AB 100%);
 }
 
-/* Modern Blue-Purple Gradient for BMI Calculator */
+/* Modern Purple Gradient for BMI Calculator */
 .bmi-gradient {
-  background: linear-gradient(135deg, #4361EE 0%, #3A0CA3 100%);
+  background: linear-gradient(135deg, #9b87f5 0%, #6E59A5 100%);
 }
 
 /* Glass Morphism Effect */
@@ -142,7 +142,7 @@
 /* Modern button styles */
 .btn-modern {
   @apply px-6 py-3 rounded-lg font-medium transition-all duration-300;
-  @apply bg-gradient-to-r from-primary to-blue-500 text-white;
+  @apply bg-gradient-to-r from-primary to-purple-500 text-white;
   @apply hover:shadow-lg hover:scale-105;
 }
 

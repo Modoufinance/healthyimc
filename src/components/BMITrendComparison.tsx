@@ -12,31 +12,31 @@ const BMITrendComparison = ({ bmi }: BMITrendComparisonProps) => {
     { 
       name: "Votre IMC", 
       bmi: bmi,
-      fill: "#4CC9F0" 
+      fill: "#9b87f5" 
     },
     { 
       name: "Moyenne nationale", 
       bmi: 24.7, 
-      fill: "#F72585" 
+      fill: "#7E69AB" 
     },
     { 
       name: "Idéal santé", 
       bmi: 22,
-      fill: "#4895EF"  
+      fill: "#D6BCFA"  
     },
     { 
       name: "Votre tranche d'âge", 
       bmi: 25.3,
-      fill: "#560BAD" 
+      fill: "#6E59A5" 
     }
   ];
 
   // BMI category ranges for the background
   const categoryRanges = [
-    { category: "Insuffisance", range: [0, 18.5], color: "#93C5FD" },
-    { category: "Normal", range: [18.5, 24.9], color: "#86EFAC" },
-    { category: "Surpoids", range: [24.9, 29.9], color: "#FCD34D" },
-    { category: "Obésité", range: [29.9, 50], color: "#FCA5A5" }
+    { category: "Insuffisance", range: [0, 18.5], color: "#D6BCFA" },
+    { category: "Normal", range: [18.5, 24.9], color: "#9b87f5" },
+    { category: "Surpoids", range: [24.9, 29.9], color: "#7E69AB" },
+    { category: "Obésité", range: [29.9, 50], color: "#6E59A5" }
   ];
 
   // Find the BMI category of the user

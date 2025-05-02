@@ -47,7 +47,7 @@ const Home = () => {
     <>
       <HomeSEO faqItems={faqItems} />
       <StickyHeader />
-      <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-[#4facfe] to-[#00f2fe]">
+      <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-[#9b87f5] to-[#7E69AB]">
         <main className="container mx-auto px-4 py-6 space-y-12">
           {/* Fil d'Ariane */}
           <Breadcrumb className="text-white/90">
