@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,6 +36,20 @@
   background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
 }
 
+/* Modern Blue-Purple Gradient for BMI Calculator */
+.bmi-gradient {
+  background: linear-gradient(135deg, #4361EE 0%, #3A0CA3 100%);
+}
+
+/* Glass Morphism Effect */
+.glass {
+  backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {
@@ -64,6 +79,44 @@
 
 .animate-slide-in {
   animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Enhanced chart styles */
+.recharts-surface {
+  overflow: visible;
+}
+
+.recharts-default-tooltip {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Card styles */
@@ -108,4 +161,15 @@
 
 .nav-link.active {
   @apply bg-primary/10 text-primary font-medium;
+}
+
+/* BMI Progress Ring Animation */
+@keyframes fillProgressRing {
+  from {
+    stroke-dasharray: 0 283;
+  }
+}
+
+.progress-ring-animate {
+  animation: fillProgressRing 1s ease-out forwards;
 }
