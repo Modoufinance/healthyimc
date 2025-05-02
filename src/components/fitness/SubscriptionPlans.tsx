@@ -21,6 +21,9 @@ const SubscriptionPlans = ({ onSelectPlan }: SubscriptionPlansProps) => {
       <div className="grid md:grid-cols-2 gap-8">
         {/* Plan Gratuit */}
         <Card className="overflow-hidden border-white/20 bg-white/10 backdrop-blur-lg relative">
+          <div className="bg-blue-500/70 text-white text-xs font-bold px-3 py-1 absolute top-0 left-0 rounded-br-md">
+            GRATUIT
+          </div>
           <div className="p-6 border-b border-white/10">
             <h3 className="text-xl font-bold text-white mb-2">Plan Gratuit</h3>
             <div className="flex items-baseline">
@@ -63,8 +66,8 @@ const SubscriptionPlans = ({ onSelectPlan }: SubscriptionPlansProps) => {
 
             <Button 
               onClick={() => onSelectPlan("free")} 
-              variant="outline" 
-              className="w-full mt-6 border-white/30 text-white hover:bg-white/20"
+              className="w-full mt-6 bg-blue-500 text-white hover:bg-blue-600 shadow-md hover:shadow-lg border-2 border-white/30 font-semibold text-base py-6"
+              size="lg"
             >
               Commencer gratuitement
             </Button>
@@ -119,7 +122,8 @@ const SubscriptionPlans = ({ onSelectPlan }: SubscriptionPlansProps) => {
 
             <Button 
               onClick={() => onSelectPlan("premium")}
-              className="w-full mt-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:opacity-90"
+              className="w-full mt-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:opacity-90 shadow-lg hover:shadow-xl font-semibold text-base py-6"
+              size="lg"
             >
               S'abonner au Premium
             </Button>
