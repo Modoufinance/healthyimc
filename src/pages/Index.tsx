@@ -2,7 +2,7 @@
 import QuickBMICalculator from "@/components/home/QuickBMICalculator";
 import HomeSEO from "@/components/home/HomeSEO";
 import { Link } from "react-router-dom";
-import { Scale, Percent, Flame, Baby } from "lucide-react";
+import { Scale, Percent, Flame, Baby, Dumbbell } from "lucide-react";
 
 const Index = () => {
   // FAQ items for structured data
@@ -47,7 +47,7 @@ const Index = () => {
           <QuickBMICalculator />
           
           {/* Calculatrices disponibles */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <Link 
               to="/calculateur-imc" 
               className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group"
@@ -97,6 +97,20 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-bold text-white">Calculatrice Calories</h3>
                 <p className="text-white/80">Déterminez vos besoins caloriques quotidiens selon votre profil et vos objectifs</p>
+              </div>
+            </Link>
+
+            <Link 
+              to="/programme-fitness-ia" 
+              className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group border border-blue-400/30"
+            >
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="bg-blue-500/20 p-4 rounded-full group-hover:bg-blue-500/30 transition-colors">
+                  <Dumbbell className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white">Programme Fitness IA</h3>
+                <p className="text-white/80">Découvrez notre nouveau programme d'entraînement personnalisé par IA</p>
+                <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">NOUVEAU</span>
               </div>
             </Link>
           </div>

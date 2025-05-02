@@ -44,6 +44,20 @@ const HeroSection = () => {
         </div>
       </div>
       
+      {/* Nouveau bouton pour le programme fitness */}
+      <div className="pt-4">
+        <Button
+          asChild
+          variant="outline"
+          size="lg"
+          className="bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20 text-lg w-full sm:w-auto py-6 px-8 font-semibold"
+        >
+          <Link to="/programme-fitness-ia">
+            Nouveau ! Découvrez notre programme fitness basé sur l'IA
+          </Link>
+        </Button>
+      </div>
+      
       <ConversionElements />
     </section>
   );
