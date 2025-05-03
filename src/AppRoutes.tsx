@@ -1,45 +1,30 @@
 
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useLocaleDetection } from "./hooks/useLocaleDetection";
-import Navigation from "./components/Navigation";
-import Home from "./pages/Home";
-import Index from "./pages/Index";
-import About from "./pages/About";
-import Privacy from "./pages/Privacy";
-import BMICalculator from "./components/BMICalculator";
-import AIHealthAssistant from "./pages/AIHealthAssistant";
-import WellnessCompanion from "./pages/WellnessCompanion";
-import BodyFatCalculator from "./components/BodyFatCalculator";
-import CalorieCalculator from "./components/CalorieCalculator";
-import ChildrenBMICalculator from "./components/ChildrenBMICalculator";
-import SymptomAnalyzer from "./pages/SymptomAnalyzer";
-import AIFitnessProgram from "./pages/AIFitnessProgram";
+import { Route, Routes } from "react-router-dom";
+import Index from "@/pages/Index";
+import About from "@/pages/About";
+import Home from "@/pages/Home";
+import Privacy from "@/pages/Privacy";
+import WellnessCompanion from "@/pages/WellnessCompanion";
+import AIBlog from "@/pages/AIBlog";
+import AIFitnessProgram from "@/pages/AIFitnessProgram";
+import AIHealthAssistant from "@/pages/AIHealthAssistant";
+import SymptomAnalyzer from "@/pages/SymptomAnalyzer";
+import IMCCalculator from "@/pages/IMCCalculator";
 
 const AppRoutes = () => {
-  useLocaleDetection();
-
   return (
-    <>
-      <Navigation />
-      <main className="flex-1">
-        <Routes>
-          <Route index element={<Index />} />
-          <Route path="/" element={<Index />} />
-          <Route path="/accueil" element={<Home />} />
-          <Route path="/calculateur-imc" element={<BMICalculator />} />
-          <Route path="/calculateur-imc-enfants" element={<ChildrenBMICalculator />} />
-          <Route path="/calculateur-graisse-corporelle" element={<BodyFatCalculator />} />
-          <Route path="/calculateur-calories" element={<CalorieCalculator />} />
-          <Route path="/analyseur-symptomes" element={<SymptomAnalyzer />} />
-          <Route path="/assistant-sante-ia" element={<AIHealthAssistant />} />
-          <Route path="/bien-etre" element={<WellnessCompanion />} />
-          <Route path="/programme-fitness-ia" element={<AIFitnessProgram />} />
-          <Route path="/a-propos" element={<About />} />
-          <Route path="/confidentialite" element={<Privacy />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
-    </>
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/wellness" element={<WellnessCompanion />} />
+      <Route path="/ai-blog" element={<AIBlog />} />
+      <Route path="/ai-fitness" element={<AIFitnessProgram />} />
+      <Route path="/ai-health" element={<AIHealthAssistant />} />
+      <Route path="/symptom-analyzer" element={<SymptomAnalyzer />} />
+      <Route path="/imc-calculator" element={<IMCCalculator />} />
+    </Routes>
   );
 };
 
