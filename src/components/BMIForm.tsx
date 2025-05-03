@@ -23,25 +23,16 @@ const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
   const { toast } = useToast();
   const { t } = useLanguage();
 
-  // Automatic calculation with debounce
+  // Chargement des dernières valeurs au montage du composant
   useEffect(() => {
-    if (weight && height && age) {
-      const weightNum = parseFloat(weight);
-      const heightNum = parseFloat(height);
-      const ageNum = parseInt(age);
-
-      if (weightNum > 0 && heightNum > 0 && ageNum > 0) {
-        // Set a timeout to avoid too many calculations when typing
-        const timer = setTimeout(() => {
-          const weightInKg = t.units.weight.unit === 'lb' ? weightNum / t.units.weight.factor : weightNum;
-          const heightInCm = t.units.height.unit === 'in' ? heightNum / t.units.height.factor : heightNum;
-          onCalculate(weightInKg, heightInCm, ageNum);
-        }, 500);
-        
-        return () => clearTimeout(timer);
-      }
+    const savedValues = localStorage.getItem('lastBmiFormValues');
+    if (savedValues && !weight && !height && !age) {
+      const { weight: w, height: h, age: a } = JSON.parse(savedValues);
+      setWeight(w);
+      setHeight(h);
+      setAge(a);
     }
-  }, [weight, height, age, t.units.weight.unit, t.units.height.unit, onCalculate]);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,17 +57,6 @@ const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
     // Sauvegarder les valeurs dans le localStorage
     localStorage.setItem('lastBmiFormValues', JSON.stringify({ weight, height, age }));
   };
-
-  // Charger les dernières valeurs au montage du composant
-  useEffect(() => {
-    const savedValues = localStorage.getItem('lastBmiFormValues');
-    if (savedValues && !weight && !height && !age) {
-      const { weight: w, height: h, age: a } = JSON.parse(savedValues);
-      setWeight(w);
-      setHeight(h);
-      setAge(a);
-    }
-  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 mt-4">
