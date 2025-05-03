@@ -74,6 +74,7 @@ const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
           required
           min="1"
           max="120"
+          className="border-blue-200 focus-visible:ring-blue-400"
         />
       </div>
 
@@ -89,6 +90,7 @@ const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
           required
+          className="border-blue-200 focus-visible:ring-blue-400"
         />
       </div>
 
@@ -104,11 +106,15 @@ const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
           value={height}
           onChange={(e) => setHeight(e.target.value)}
           required
+          className="border-blue-200 focus-visible:ring-blue-400"
         />
       </div>
 
-      <Button type="submit" className="w-full bg-[#4facfe] hover:bg-[#00f2fe]">
-        <Calculator className="mr-2 h-4 w-4" />
+      <Button 
+        type="submit" 
+        className="w-full bg-gradient-to-r from-[#4facfe] to-[#00f2fe] hover:from-[#4facfe] hover:to-[#00d8e0] transition-all shadow-lg hover:shadow-xl"
+      >
+        <Calculator className="mr-2 h-5 w-5" />
         Calculer l'IMC
       </Button>
     </form>
