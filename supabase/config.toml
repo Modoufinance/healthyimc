@@ -1,1 +1,8 @@
+
 project_id = "rzqkytriimmwfsnjirwf"
+
+[functions.analyze-symptoms]
+verify_jwt = false
+
+[functions.save-symptom-query]
+verify_jwt = false
