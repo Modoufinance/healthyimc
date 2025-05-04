@@ -1,3 +1,4 @@
+
 export type Language = 'fr' | 'en' | 'zh' | 'es' | 'ar' | 'hi' | 'pt' | 'bn' | 'ru' | 'ja';
 
 export interface Categories {
@@ -9,11 +10,11 @@ export interface Categories {
 
 export interface UnitTranslations {
   weight: {
-    unit: 'kg' | 'lb';
+    unit: string; // Changed from 'kg' | 'lb' to allow any string
     factor: number;
   };
   height: {
-    unit: 'cm' | 'in';
+    unit: string; // Changed from 'cm' | 'in' to allow any string
     factor: number;
   };
 }
