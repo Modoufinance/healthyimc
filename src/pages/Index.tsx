@@ -101,15 +101,15 @@ const Index = () => {
             </Link>
 
             <Link 
-              to="/calculatrice-imc" 
+              to="/programme-fitness-ia" 
               className="bg-white/20 backdrop-blur-lg p-6 rounded-xl hover:bg-white/30 transition-colors group border border-blue-400/30"
             >
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="bg-blue-500/20 p-4 rounded-full group-hover:bg-blue-500/30 transition-colors">
-                  <Scale className="h-8 w-8 text-white" />
+                  <Dumbbell className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Calculatrice IMC Simple</h3>
-                <p className="text-white/80">Calculez rapidement votre IMC avec notre calculatrice simple et efficace</p>
+                <h3 className="text-xl font-bold text-white">Programme Fitness IA</h3>
+                <p className="text-white/80">Découvrez notre nouveau programme d'entraînement personnalisé par IA</p>
                 <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">NOUVEAU</span>
               </div>
             </Link>

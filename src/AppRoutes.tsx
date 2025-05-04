@@ -1,30 +1,45 @@
 
-import { Route, Routes } from 'react-router-dom';
-import Index from '@/pages/Index';
-import About from '@/pages/About';
-import Privacy from '@/pages/Privacy';
-import WellnessCompanion from '@/pages/WellnessCompanion';
-import AIHealthAssistant from '@/pages/AIHealthAssistant';
-import AIFitnessProgram from '@/pages/AIFitnessProgram';
-import AIBlog from '@/pages/AIBlog';
-import Home from '@/pages/Home';
-import SymptomAnalyzer from '@/pages/SymptomAnalyzer';
-import CalculatriceIMC from '@/pages/CalculatriceIMC';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useLocaleDetection } from "./hooks/useLocaleDetection";
+import Navigation from "./components/Navigation";
+import Home from "./pages/Home";
+import Index from "./pages/Index";
+import About from "./pages/About";
+import Privacy from "./pages/Privacy";
+import BMICalculator from "./components/BMICalculator";
+import AIHealthAssistant from "./pages/AIHealthAssistant";
+import WellnessCompanion from "./pages/WellnessCompanion";
+import BodyFatCalculator from "./components/BodyFatCalculator";
+import CalorieCalculator from "./components/CalorieCalculator";
+import ChildrenBMICalculator from "./components/ChildrenBMICalculator";
+import SymptomAnalyzer from "./pages/SymptomAnalyzer";
+import AIFitnessProgram from "./pages/AIFitnessProgram";
 
 const AppRoutes = () => {
+  useLocaleDetection();
+
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/fr" element={<Index />} />
-      <Route path="/a-propos" element={<About />} />
-      <Route path="/confidentialite" element={<Privacy />} />
-      <Route path="/bien-etre" element={<WellnessCompanion />} />
-      <Route path="/assistant-sante-ia" element={<AIHealthAssistant />} />
-      <Route path="/analyseur-symptomes" element={<SymptomAnalyzer />} />
-      <Route path="/programme-fitness-ia" element={<AIFitnessProgram />} />
-      <Route path="/blog-ia" element={<AIBlog />} />
-      <Route path="/calculatrice-imc" element={<CalculatriceIMC />} />
-    </Routes>
+    <>
+      <Navigation />
+      <main className="flex-1">
+        <Routes>
+          <Route index element={<Index />} />
+          <Route path="/" element={<Index />} />
+          <Route path="/accueil" element={<Home />} />
+          <Route path="/calculateur-imc" element={<BMICalculator />} />
+          <Route path="/calculateur-imc-enfants" element={<ChildrenBMICalculator />} />
+          <Route path="/calculateur-graisse-corporelle" element={<BodyFatCalculator />} />
+          <Route path="/calculateur-calories" element={<CalorieCalculator />} />
+          <Route path="/analyseur-symptomes" element={<SymptomAnalyzer />} />
+          <Route path="/assistant-sante-ia" element={<AIHealthAssistant />} />
+          <Route path="/bien-etre" element={<WellnessCompanion />} />
+          <Route path="/programme-fitness-ia" element={<AIFitnessProgram />} />
+          <Route path="/a-propos" element={<About />} />
+          <Route path="/confidentialite" element={<Privacy />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
+    </>
   );
 };
 
