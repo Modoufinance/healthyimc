@@ -17,6 +17,7 @@ import AIFitnessProgram from "./pages/AIFitnessProgram";
 import { useEffect } from "react";
 import { useLanguage } from "./contexts/LanguageContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Language } from "./i18n/types";
 
 const AppRoutes = () => {
   useLocaleDetection();
@@ -24,22 +25,28 @@ const AppRoutes = () => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // Gérer le changement de langue dans l'URL
   useEffect(() => {
     // Détecter si l'URL contient un code de langue
     const pathSegments = location.pathname.split('/');
     const potentialLangCode = pathSegments[1];
-    const supportedLangs = ['fr', 'en', 'zh', 'es', 'ar', 'hi', 'pt', 'bn', 'ru', 'ja'];
+    const supportedLangs: Language[] = ['fr', 'en', 'zh', 'es', 'ar', 'hi', 'pt', 'bn', 'ru', 'ja'];
     
-    if (supportedLangs.includes(potentialLangCode) && potentialLangCode !== language) {
-      // Si l'URL contient un code de langue différent de la langue actuelle
-      setLanguage(potentialLangCode as any);
-    } else if (pathSegments[1] && !supportedLangs.includes(pathSegments[1]) && language !== 'fr') {
-      // Si nous sommes sur une page de contenu mais avec une langue autre que le français,
-      // ajoutons le préfixe de langue à l'URL
+    // Si nous sommes sur la page racine, pas besoin de vérifier
+    if (location.pathname === '/') return;
+    
+    // Si l'URL contient un code de langue valide
+    if (supportedLangs.includes(potentialLangCode as Language)) {
+      if (potentialLangCode !== language) {
+        // Mettre à jour la langue dans le contexte
+        setLanguage(potentialLangCode as Language);
+      }
+    } 
+    // Si nous sommes sur une page de contenu sans préfixe de langue et que la langue n'est pas française
+    else if (language !== 'fr') {
+      // Rediriger vers la même page mais avec le préfixe de langue
       navigate(`/${language}${location.pathname}`, { replace: true });
     }
-  }, [location.pathname, language, setLanguage, navigate]);
+  }, [location.pathname, language, navigate, setLanguage]);
 
   // Fonction pour générer des routes pour chaque langue
   const generateLanguageRoutes = (langCode: string) => {
@@ -66,7 +73,7 @@ const AppRoutes = () => {
   return (
     <>
       <Navigation />
-      <main className="flex-1">
+      <main className="flex-1" dir={language === 'ar' ? 'rtl' : 'ltr'}>
         <Routes>
           {/* Routes en français (par défaut) */}
           {generateLanguageRoutes('fr')}

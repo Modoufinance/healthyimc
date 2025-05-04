@@ -19,17 +19,41 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
     
+    // Adapter l'interface selon la direction du texte
+    if (language === 'ar') {
+      document.body.classList.add('rtl');
+    } else {
+      document.body.classList.remove('rtl');
+    }
+    
     // Enregistrer la préférence de langue
     localStorage.setItem('preferredLanguage', language);
-  }, [language]);
-
-  // Récupérer la préférence de langue au chargement
-  React.useEffect(() => {
-    const savedLanguage = localStorage.getItem('preferredLanguage');
-    if (savedLanguage && Object.keys(translations).includes(savedLanguage)) {
-      setLanguage(savedLanguage as Language);
+    
+    // Mettre à jour l'URL si nécessaire
+    const currentPath = window.location.pathname;
+    const pathSegments = currentPath.split('/');
+    const supportedLangs: Language[] = ['fr', 'en', 'zh', 'es', 'ar', 'hi', 'pt', 'bn', 'ru', 'ja'];
+    
+    // Si nous sommes sur la page d'accueil ou si le premier segment n'est pas une langue
+    if (currentPath === '/' || (pathSegments[1] && !supportedLangs.includes(pathSegments[1] as Language))) {
+      // Ne pas modifier l'URL pour le français (langue par défaut)
+      if (language !== 'fr') {
+        const newPath = `/${language}${currentPath === '/' ? '' : currentPath}`;
+        window.history.replaceState(null, '', newPath);
+      }
+    } 
+    // Si nous changeons de langue et sommes déjà sur une page avec préfixe de langue
+    else if (supportedLangs.includes(pathSegments[1] as Language)) {
+      const restOfPath = currentPath.substring(pathSegments[1].length + 1) || '';
+      if (language === 'fr') {
+        // Pour le français, retirer le préfixe de langue
+        window.history.replaceState(null, '', `/${restOfPath}`);
+      } else {
+        // Pour les autres langues, mettre à jour le préfixe
+        window.history.replaceState(null, '', `/${language}/${restOfPath}`);
+      }
     }
-  }, []);
+  }, [language]);
 
   const value = React.useMemo(
     () => ({
