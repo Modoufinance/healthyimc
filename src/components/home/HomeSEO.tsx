@@ -12,44 +12,44 @@ const HomeSEO = ({ faqItems }: HomeSEOProps) => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Free BMI Calculator Online - Body Mass Index Calculator",
-    "description": "Calculate your BMI (Body Mass Index) online for free. Accurate tool for men, women, and children with personalized interpretation and health advice. Simple and free BMI calculator.",
-    "url": "https://healthyimc.com",
+    "name": "Calculateur IMC en Ligne Gratuit - Indice de Masse Corporelle",
+    "description": "Calculez votre IMC (Indice de Masse Corporelle) en ligne gratuitement. Outil précis pour hommes, femmes et enfants avec interprétation personnalisée et conseils santé. Calculateur IMC simple et gratuit.",
+    "url": "https://santeimc.fr",
     "keywords": [
-      "bmi calculator",
-      "body mass index",
-      "bmi calculator women",
-      "bmi calculator men",
-      "body mass index calculator",
-      "bmi chart",
-      "bmi index chart",
-      "bmi formula",
-      "ideal weight calculator",
-      "body fat index",
-      "bmi scale",
-      "bmi calculator by age",
-      "bmi calculator female",
-      "bmi calculator male",
-      "nhs bmi",
-      "bmi test",
-      "imc calculator",
-      "body mass index chart",
-      "calculate bmi formula",
-      "ideal body weight calculator"
+      "calculateur imc",
+      "indice de masse corporelle",
+      "calculateur imc femme",
+      "calculateur imc homme",
+      "calcul imc",
+      "tableau imc",
+      "imc calcul",
+      "calcul poids idéal",
+      "indice graisse corporelle",
+      "imc adulte",
+      "imc formule",
+      "calculateur imc par âge",
+      "imc femme",
+      "imc homme",
+      "imc norme",
+      "test imc",
+      "calculateur imc",
+      "tableau indice masse corporelle",
+      "calculer imc formule",
+      "calculateur poids idéal"
     ].join(", "),
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://healthyimc.com/search?q={search_term_string}",
+      "target": "https://santeimc.fr/recherche?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };
 
   return (
     <SEO
-      title="Free BMI Calculator Online | Body Mass Index Calculator"
-      description="Calculate your BMI online for free. Accurate Body Mass Index (BMI) calculator tool. Perfect for men, women, and children with personalized tracking, BMI interpretation, and health advice. Free BMI calculation for overweight, obesity, and normal weight ranges."
-      keywords="bmi calculator, body mass index, bmi calculator women, bmi calculator men, body mass index calculator, bmi chart, ideal weight calculator, overweight, obesity, bmi formula, online bmi, calculator tool, healthy weight, free bmi, bmi calculation, body mass calculation, normal bmi, overweight bmi, how to calculate bmi, simple bmi calculator"
-      canonicalUrl="https://healthyimc.com"
+      title="Calculateur IMC en Ligne Gratuit | Calcul Indice de Masse Corporelle"
+      description="Calculez votre IMC en ligne gratuitement. Outil précis pour le calcul de l'Indice de Masse Corporelle. Idéal pour hommes, femmes et enfants avec suivi personnalisé, interprétation IMC et conseils santé. Calcul IMC gratuit pour surpoids, obésité et plages de poids normal."
+      keywords="calculateur imc, indice de masse corporelle, calculateur imc femmes, calculateur imc hommes, calcul imc, tableau imc, imc calcul, calcul poids idéal, surpoids, obésité, imc formule, imc en ligne, outil calculateur, poids santé, imc gratuit, calcul imc, calcul masse corporelle, imc normal, imc surpoids, comment calculer imc, calculateur imc simple"
+      canonicalUrl="https://santeimc.fr"
       structuredData={structuredData}
       hasFAQ={true}
       faqItems={faqItems}
