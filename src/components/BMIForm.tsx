@@ -21,7 +21,7 @@ const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
   const [height, setHeight] = useState(savedData?.height?.toString() || "");
   const [age, setAge] = useState(savedData?.age?.toString() || "");
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   // Chargement des dernières valeurs au montage du composant
   useEffect(() => {
@@ -42,15 +42,17 @@ const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
 
     if (!weightNum || !heightNum || !ageNum || heightNum <= 0 || ageNum <= 0) {
       toast({
-        title: "Erreur",
-        description: "Veuillez entrer des valeurs valides.",
+        title: language === 'fr' ? "Erreur" : "Error",
+        description: language === 'fr' 
+          ? "Veuillez entrer des valeurs valides." 
+          : "Please enter valid values.",
         variant: "destructive",
       });
       return;
     }
 
-    const weightInKg = t.units.weight.unit === 'lb' ? weightNum / t.units.weight.factor : weightNum;
-    const heightInCm = t.units.height.unit === 'in' ? heightNum / t.units.height.factor : heightNum;
+    const weightInKg = t.units.weight.unit === 'kg' ? weightNum : weightNum / t.units.weight.factor;
+    const heightInCm = t.units.height.unit === 'cm' ? heightNum : heightNum / t.units.height.factor * 100;
 
     onCalculate(weightInKg, heightInCm, ageNum);
     
@@ -58,55 +60,61 @@ const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
     localStorage.setItem('lastBmiFormValues', JSON.stringify({ weight, height, age }));
   };
 
+  // Direction du texte pour les langues RTL comme l'arabe
+  const textDirection = language === 'ar' ? 'rtl' : 'ltr';
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+    <form onSubmit={handleSubmit} className="space-y-4 mt-4" dir={textDirection}>
       <div className="space-y-2">
         <Label htmlFor="age" className="flex items-center gap-2">
           <Calendar className="h-4 w-4" />
-          Âge
+          {t.labels.age}
         </Label>
         <Input
           id="age"
           type="number"
-          placeholder="Ex: 30"
+          placeholder={t.placeholders.age}
           value={age}
           onChange={(e) => setAge(e.target.value)}
           required
           min="1"
           max="120"
           className="border-blue-200 focus-visible:ring-blue-400"
+          dir={textDirection}
         />
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="weight" className="flex items-center gap-2">
           <Weight className="h-4 w-4" />
-          Poids ({t.units.weight.unit})
+          {t.labels.weight} ({t.units.weight.unit})
         </Label>
         <Input
           id="weight"
           type="number"
-          placeholder={`Ex: ${t.units.weight.unit === 'kg' ? '70' : '154'}`}
+          placeholder={t.placeholders.weight}
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
           required
           className="border-blue-200 focus-visible:ring-blue-400"
+          dir={textDirection}
         />
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="height" className="flex items-center gap-2">
           <Ruler className="h-4 w-4" />
-          Taille ({t.units.height.unit})
+          {t.labels.height} ({t.units.height.unit})
         </Label>
         <Input
           id="height"
           type="number"
-          placeholder={`Ex: ${t.units.height.unit === 'cm' ? '175' : '69'}`}
+          placeholder={t.placeholders.height}
           value={height}
           onChange={(e) => setHeight(e.target.value)}
           required
           className="border-blue-200 focus-visible:ring-blue-400"
+          dir={textDirection}
         />
       </div>
 
@@ -115,7 +123,7 @@ const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
         className="w-full bg-gradient-to-r from-[#4facfe] to-[#00f2fe] hover:from-[#4facfe] hover:to-[#00d8e0] transition-all shadow-lg hover:shadow-xl"
       >
         <Calculator className="mr-2 h-5 w-5" />
-        Calculer l'IMC
+        {t.buttons.calculate}
       </Button>
     </form>
   );

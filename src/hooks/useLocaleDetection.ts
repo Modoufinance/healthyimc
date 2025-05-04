@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -6,15 +7,19 @@ export const useLocaleDetection = () => {
 
   useEffect(() => {
     const detectLanguage = () => {
-      const browserLang = navigator.language.split('-')[0];
-      // Priorise le français, sinon utilise la langue du navigateur si supportée
-      if (browserLang === 'fr') {
-        setLanguage('fr');
-      } else {
-        const supportedLangs = ['en', 'fr', 'ar', 'hi'];
-        const detectedLang = supportedLangs.includes(browserLang) ? browserLang : 'fr';
-        setLanguage(detectedLang as 'en' | 'fr' | 'ar' | 'hi');
+      const savedLanguage = localStorage.getItem('preferredLanguage');
+      if (savedLanguage) {
+        setLanguage(savedLanguage as any);
+        return;
       }
+
+      const browserLang = navigator.language.split('-')[0];
+      // Liste des langues supportées
+      const supportedLangs = ['fr', 'en', 'zh', 'es', 'ar', 'hi', 'pt', 'bn', 'ru', 'ja'];
+      
+      // Utiliser la langue du navigateur si elle est supportée, sinon français par défaut
+      const detectedLang = supportedLangs.includes(browserLang) ? browserLang : 'fr';
+      setLanguage(detectedLang as any);
     };
 
     detectLanguage();

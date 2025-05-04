@@ -1,5 +1,4 @@
-
-export type Language = 'en' | 'fr' | 'ar' | 'hi';
+export type Language = 'fr' | 'en' | 'zh' | 'es' | 'ar' | 'hi' | 'pt' | 'bn' | 'ru' | 'ja';
 
 export interface Categories {
   underweight: string;
@@ -87,4 +86,5 @@ export interface TranslationType {
   advice: Advice;
   faq: FAQ;
   education: Education;
+  language: string; // Ajout du nom de la langue dans la langue native
 }

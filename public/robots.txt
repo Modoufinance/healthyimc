@@ -15,6 +15,17 @@ Allow: /bien-etre
 Allow: /a-propos
 Allow: /confidentialite
 
+# Versions linguistiques
+Allow: /en/*
+Allow: /zh/*
+Allow: /es/*
+Allow: /ar/*
+Allow: /hi/*
+Allow: /pt/*
+Allow: /bn/*
+Allow: /ru/*
+Allow: /ja/*
+
 # Pages SEO spécifiques
 Allow: /calcul-imc-femme
 Allow: /calcul-imc-homme
@@ -58,8 +69,16 @@ Crawl-delay: 1
 
 User-agent: Baiduspider
 Allow: /
-Crawl-delay: 2
+Crawl-delay: 1
 
 User-agent: YandexBot
 Allow: /
-Crawl-delay: 2
+Crawl-delay: 1
+
+User-agent: Sogou web spider
+Allow: /
+Crawl-delay: 1
+
+User-agent: Naver
+Allow: /
+Crawl-delay: 1
