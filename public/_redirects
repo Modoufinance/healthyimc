@@ -1,4 +1,8 @@
 
+# Exception pour permettre l'accès direct aux fichiers techniques essentiels
+/sitemap.xml              /sitemap.xml                  200
+/robots.txt               /robots.txt                   200
+
 # Redirection permanente pour les URLs optimisées SEO
 /calcul-imc/*              /calculateur-imc              301
 /imc/*                     /calculateur-imc              301

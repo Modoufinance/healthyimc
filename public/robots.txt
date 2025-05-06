@@ -5,8 +5,8 @@
 User-agent: *
 Allow: /
 
-# Sitemap principal
-Sitemap: https://santeimc.fr/sitemap.xml
+# Sitemap principal (chemin relatif pour éviter les problèmes de domaine)
+Sitemap: /sitemap.xml
 
 # Pages principales - Haute priorité
 Allow: /calculateur-imc$
