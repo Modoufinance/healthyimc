@@ -6,14 +6,24 @@ Allow: /
 Sitemap: https://santeimc.fr/sitemap.xml
 
 # Pages principales
-Allow: /*?lang=*
 Allow: /calculateur-imc
+Allow: /calculateur-imc-enfants
+Allow: /calculateur-graisse-corporelle
+Allow: /calculateur-calories
+Allow: /programme-fitness-ia
 Allow: /assistant-sante-ia
-Allow: /blog-ia
-Allow: /blog-sante
 Allow: /bien-etre
 Allow: /a-propos
 Allow: /confidentialite
+
+# Pages SEO optimisées
+Allow: /calcul-imc-femme
+Allow: /calcul-imc-homme
+Allow: /poids-ideal-calcul
+Allow: /indice-masse-corporelle
+Allow: /imc-normal
+Allow: /imc-surpoids
+Allow: /imc-obesite
 
 # Versions linguistiques
 Allow: /en/*
@@ -25,16 +35,6 @@ Allow: /pt/*
 Allow: /bn/*
 Allow: /ru/*
 Allow: /ja/*
-
-# Pages SEO spécifiques
-Allow: /calcul-imc-femme
-Allow: /calcul-imc-homme
-Allow: /calcul-imc-enfant
-Allow: /poids-ideal-calcul
-Allow: /indice-masse-corporelle
-Allow: /imc-normal
-Allow: /imc-surpoids
-Allow: /imc-obesite
 
 # Ressources
 Allow: /lovable-uploads/

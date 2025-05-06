@@ -1,2 +1,19 @@
 
-/* /index.html 200
+# Redirection permanente pour les URLs optimisées SEO
+/calcul-imc/*              /calculateur-imc              301
+/imc/*                     /calculateur-imc              301
+/poids-ideal/*             /calculateur-imc              301
+
+# Redirection pour les langues
+/en/*                      /en/:splat                    200
+/zh/*                      /zh/:splat                    200
+/es/*                      /es/:splat                    200
+/ar/*                      /ar/:splat                    200
+/hi/*                      /hi/:splat                    200
+/pt/*                      /pt/:splat                    200
+/bn/*                      /bn/:splat                    200
+/ru/*                      /ru/:splat                    200
+/ja/*                      /ja/:splat                    200
+
+# Redirection par défaut pour SPA
+/*                         /index.html                   200

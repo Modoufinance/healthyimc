@@ -48,22 +48,37 @@ const AppRoutes = () => {
     }
   }, [location.pathname, language, navigate, setLanguage]);
 
-  // Fonction pour générer des routes pour chaque langue
-  const generateLanguageRoutes = (langCode: string) => {
-    const prefix = langCode === 'fr' ? '' : `/${langCode}`;
+  // Routes optimisées pour le SEO
+  const getOptimizedRoutes = (langPrefix = '') => {
+    const prefix = langPrefix ? `/${langPrefix}` : '';
     
     return (
       <>
         <Route path={`${prefix}/`} element={<Index />} />
         <Route path={`${prefix}/accueil`} element={<Home />} />
+        
+        {/* Routes calculateurs optimisées */}
         <Route path={`${prefix}/calculateur-imc`} element={<BMICalculator />} />
         <Route path={`${prefix}/calculateur-imc-enfants`} element={<ChildrenBMICalculator />} />
         <Route path={`${prefix}/calculateur-graisse-corporelle`} element={<BodyFatCalculator />} />
         <Route path={`${prefix}/calculateur-calories`} element={<CalorieCalculator />} />
+        
+        {/* Routes spécifiques pour le SEO */}
+        <Route path={`${prefix}/calcul-imc-femme`} element={<BMICalculator />} />
+        <Route path={`${prefix}/calcul-imc-homme`} element={<BMICalculator />} />
+        <Route path={`${prefix}/poids-ideal-calcul`} element={<BMICalculator />} />
+        <Route path={`${prefix}/indice-masse-corporelle`} element={<BMICalculator />} />
+        <Route path={`${prefix}/imc-normal`} element={<BMICalculator />} />
+        <Route path={`${prefix}/imc-surpoids`} element={<BMICalculator />} />
+        <Route path={`${prefix}/imc-obesite`} element={<BMICalculator />} />
+        
+        {/* Routes assistants et outils */}
         <Route path={`${prefix}/analyseur-symptomes`} element={<SymptomAnalyzer />} />
         <Route path={`${prefix}/assistant-sante-ia`} element={<AIHealthAssistant />} />
         <Route path={`${prefix}/bien-etre`} element={<WellnessCompanion />} />
         <Route path={`${prefix}/programme-fitness-ia`} element={<AIFitnessProgram />} />
+        
+        {/* Pages légales et informatives */}
         <Route path={`${prefix}/a-propos`} element={<About />} />
         <Route path={`${prefix}/confidentialite`} element={<Privacy />} />
       </>
@@ -76,18 +91,18 @@ const AppRoutes = () => {
       <main className="flex-1" dir={language === 'ar' ? 'rtl' : 'ltr'}>
         <Routes>
           {/* Routes en français (par défaut) */}
-          {generateLanguageRoutes('fr')}
+          {getOptimizedRoutes()}
           
-          {/* Routes pour chaque langue */}
-          {generateLanguageRoutes('en')}
-          {generateLanguageRoutes('zh')}
-          {generateLanguageRoutes('es')}
-          {generateLanguageRoutes('ar')}
-          {generateLanguageRoutes('hi')}
-          {generateLanguageRoutes('pt')}
-          {generateLanguageRoutes('bn')}
-          {generateLanguageRoutes('ru')}
-          {generateLanguageRoutes('ja')}
+          {/* Routes pour chaque langue supportée */}
+          {getOptimizedRoutes('en')}
+          {getOptimizedRoutes('zh')}
+          {getOptimizedRoutes('es')}
+          {getOptimizedRoutes('ar')}
+          {getOptimizedRoutes('hi')}
+          {getOptimizedRoutes('pt')}
+          {getOptimizedRoutes('bn')}
+          {getOptimizedRoutes('ru')}
+          {getOptimizedRoutes('ja')}
           
           {/* Redirection par défaut */}
           <Route path="*" element={<Navigate to="/" replace />} />

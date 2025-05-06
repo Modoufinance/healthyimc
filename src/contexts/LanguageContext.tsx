@@ -2,6 +2,7 @@
 import * as React from "react";
 import { translations } from "../i18n/translations";
 import type { Language, TranslationType } from "../i18n/types";
+import { useNavigate, useLocation } from "react-router-dom";
 
 type LanguageContextType = {
   language: Language;
@@ -13,6 +14,8 @@ const LanguageContext = React.createContext<LanguageContextType | undefined>(und
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = React.useState<Language>("fr");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Gérer le changement de langue et mettre à jour la direction du texte pour l'arabe
   React.useEffect(() => {
@@ -29,31 +32,29 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     // Enregistrer la préférence de langue
     localStorage.setItem('preferredLanguage', language);
     
-    // Mettre à jour l'URL si nécessaire
-    const currentPath = window.location.pathname;
+    // Optimisation des URLs: mise à jour de l'URL selon la langue sélectionnée
+    const currentPath = location.pathname;
     const pathSegments = currentPath.split('/');
     const supportedLangs: Language[] = ['fr', 'en', 'zh', 'es', 'ar', 'hi', 'pt', 'bn', 'ru', 'ja'];
     
-    // Si nous sommes sur la page d'accueil ou si le premier segment n'est pas une langue
-    if (currentPath === '/' || (pathSegments[1] && !supportedLangs.includes(pathSegments[1] as Language))) {
-      // Ne pas modifier l'URL pour le français (langue par défaut)
-      if (language !== 'fr') {
-        const newPath = `/${language}${currentPath === '/' ? '' : currentPath}`;
-        window.history.replaceState(null, '', newPath);
+    // Si premier segment est une langue
+    if (pathSegments[1] && supportedLangs.includes(pathSegments[1] as Language)) {
+      if (language === 'fr') {
+        // Pour le français (langue par défaut), on retire le préfixe
+        const newPath = '/' + pathSegments.slice(2).join('/');
+        navigate(newPath || '/', { replace: true });
+      } else if (pathSegments[1] !== language) {
+        // Si on change de langue mais qu'on a déjà un préfixe, on le remplace
+        const newPath = `/${language}/` + pathSegments.slice(2).join('/');
+        navigate(newPath, { replace: true });
       }
     } 
-    // Si nous changeons de langue et sommes déjà sur une page avec préfixe de langue
-    else if (supportedLangs.includes(pathSegments[1] as Language)) {
-      const restOfPath = currentPath.substring(pathSegments[1].length + 1) || '';
-      if (language === 'fr') {
-        // Pour le français, retirer le préfixe de langue
-        window.history.replaceState(null, '', `/${restOfPath}`);
-      } else {
-        // Pour les autres langues, mettre à jour le préfixe
-        window.history.replaceState(null, '', `/${language}/${restOfPath}`);
-      }
+    // Si on n'a pas de préfixe de langue dans l'URL
+    else if (language !== 'fr') {
+      // On ajoute le préfixe pour toutes les langues sauf le français
+      navigate(`/${language}${currentPath === '/' ? '' : currentPath}`, { replace: true });
     }
-  }, [language]);
+  }, [language, navigate, location.pathname]);
 
   const value = React.useMemo(
     () => ({

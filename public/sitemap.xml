@@ -14,6 +14,12 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/" />
     <xhtml:link rel="alternate" hreflang="ar" href="https://santeimc.fr/ar/" />
     <xhtml:link rel="alternate" hreflang="hi" href="https://santeimc.fr/hi/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://santeimc.fr/zh/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://santeimc.fr/es/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://santeimc.fr/pt/" />
+    <xhtml:link rel="alternate" hreflang="bn" href="https://santeimc.fr/bn/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://santeimc.fr/ru/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://santeimc.fr/ja/" />
     <image:image>
       <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
       <image:title>Calculateur IMC en ligne gratuit</image:title>
@@ -27,6 +33,9 @@
     <lastmod>2024-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/calculateur-imc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/calculateur-imc" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://santeimc.fr/ar/calculateur-imc" />
     <image:image>
       <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
       <image:title>Calculateur IMC en ligne gratuit - Indice de Masse Corporelle</image:title>
@@ -34,105 +43,140 @@
     </image:image>
   </url>
   
-  <!-- Assistant Santé IA -->
-  <url>
-    <loc>https://santeimc.fr/assistant-sante-ia</loc>
-    <lastmod>2024-06-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Assistant Santé IA - Conseils personnalisés IMC</image:title>
-      <image:caption>Conseils santé personnalisés par intelligence artificielle pour votre poids idéal</image:caption>
-    </image:image>
-  </url>
-  
-  <!-- Blog IA -->
-  <url>
-    <loc>https://santeimc.fr/blog-ia</loc>
-    <lastmod>2024-06-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Blog IA sur l'IMC et la santé</image:title>
-      <image:caption>Articles générés par IA sur l'indice de masse corporelle et la santé</image:caption>
-    </image:image>
-  </url>
-  
-  <!-- Blog Santé -->
-  <url>
-    <loc>https://santeimc.fr/blog-sante</loc>
-    <lastmod>2024-06-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Blog Santé - Articles sur l'IMC</image:title>
-      <image:caption>Articles de santé sur l'indice de masse corporelle et le bien-être</image:caption>
-    </image:image>
-  </url>
-  
-  <!-- Bien-être -->
-  <url>
-    <loc>https://santeimc.fr/bien-etre</loc>
-    <lastmod>2024-06-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Bien-être et Poids santé - Conseils IMC</image:title>
-      <image:caption>Conseils pour atteindre et maintenir votre poids de forme idéal</image:caption>
-    </image:image>
-  </url>
-  
-  <!-- À propos -->
-  <url>
-    <loc>https://santeimc.fr/a-propos</loc>
-    <lastmod>2024-06-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>À propos de SantéIMC</image:title>
-      <image:caption>Qui sommes-nous et quelle est notre mission pour votre santé</image:caption>
-    </image:image>
-  </url>
-  
-  <!-- Confidentialité -->
-  <url>
-    <loc>https://santeimc.fr/confidentialite</loc>
-    <lastmod>2024-06-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <!-- Pages spécifiques pour le SEO -->
+  <!-- URLs optimisées pour le SEO -->
   <url>
     <loc>https://santeimc.fr/calcul-imc-femme</loc>
     <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/calcul-imc-femme" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/calcul-imc-femme" />
   </url>
   
   <url>
     <loc>https://santeimc.fr/calcul-imc-homme</loc>
     <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://santeimc.fr/calcul-imc-enfant</loc>
-    <lastmod>2024-06-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/calcul-imc-homme" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/calcul-imc-homme" />
   </url>
   
   <url>
     <loc>https://santeimc.fr/poids-ideal-calcul</loc>
     <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/poids-ideal-calcul" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/poids-ideal-calcul" />
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/indice-masse-corporelle</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/indice-masse-corporelle" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/indice-masse-corporelle" />
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/imc-normal</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/imc-normal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/imc-normal" />
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/imc-surpoids</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/imc-surpoids" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/imc-surpoids" />
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/imc-obesite</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/imc-obesite" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/imc-obesite" />
+  </url>
+  
+  <!-- Autres pages importantes -->
+  <url>
+    <loc>https://santeimc.fr/calculateur-imc-enfants</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/calculateur-imc-enfants" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/calculateur-imc-enfants" />
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/calculateur-graisse-corporelle</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/calculateur-graisse-corporelle" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/calculateur-graisse-corporelle" />
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/calculateur-calories</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/calculateur-calories" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/calculateur-calories" />
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/programme-fitness-ia</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/programme-fitness-ia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/programme-fitness-ia" />
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/assistant-sante-ia</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/assistant-sante-ia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/assistant-sante-ia" />
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/bien-etre</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/bien-etre" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/bien-etre" />
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/a-propos</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/a-propos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/a-propos" />
+  </url>
+  
+  <url>
+    <loc>https://santeimc.fr/confidentialite</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/confidentialite" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/confidentialite" />
   </url>
 </urlset>

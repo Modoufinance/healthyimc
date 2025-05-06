@@ -11,11 +11,11 @@ import {
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Globe } from "lucide-react";
 import { Language } from "@/i18n/types";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const LanguageSelector = () => {
   const { language, setLanguage, t } = useLanguage();
-  const navigate = useNavigate();
+  const location = useLocation();
 
   const languages: Record<Language, string> = {
     fr: "Français",
@@ -33,10 +33,8 @@ const LanguageSelector = () => {
   const handleLanguageChange = (lang: Language) => {
     if (lang === language) return;
     
+    // Changement de langue - la redirection sera gérée par le LanguageContext
     setLanguage(lang);
-    
-    // La redirection est gérée par le LanguageContext
-    // qui adapte l'URL en fonction de la langue sélectionnée
   };
 
   return (
