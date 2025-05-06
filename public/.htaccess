@@ -16,6 +16,9 @@ RewriteRule ^sitemap\.xml$ - [L]
 # Règle spécifique pour robots.txt - assurez-vous qu'il est accessible directement
 RewriteRule ^robots\.txt$ - [L]
 
+# Règle spécifique pour blog - ne pas appliquer la réécriture SPA
+RewriteRule ^blog/?$ - [L]
+
 # Redirection des URLs avec trailing slash
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [L,R=301]

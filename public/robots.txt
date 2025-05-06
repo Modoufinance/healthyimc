@@ -16,6 +16,7 @@ Allow: /calculateur-calories$
 Allow: /programme-fitness-ia$
 Allow: /assistant-sante-ia$
 Allow: /bien-etre$
+Allow: /blog$
 Allow: /a-propos$
 Allow: /confidentialite$
 
@@ -103,11 +104,13 @@ Crawl-delay: 2
 User-agent: AhrefsBot
 Crawl-delay: 10
 Allow: /calculateur-imc
+Allow: /blog
 Allow: /
 
 User-agent: SemrushBot
 Crawl-delay: 10
 Allow: /calculateur-imc
+Allow: /blog
 Allow: /
 
 User-agent: MJ12bot
@@ -116,6 +119,7 @@ Disallow: /
 User-agent: PetalBot
 Crawl-delay: 10
 Allow: /calculateur-imc
+Allow: /blog
 Allow: /
 
 # Empêcher les robots d'archive

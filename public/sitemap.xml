@@ -51,6 +51,22 @@
     </image:image>
   </url>
   
+  <!-- Blog Santé -->
+  <url>
+    <loc>/blog</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="/blog" />
+    <xhtml:link rel="alternate" hreflang="en" href="/en/blog" />
+    <xhtml:link rel="alternate" hreflang="es" href="/es/blog" />
+    <image:image>
+      <image:loc>/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
+      <image:title>Blog Santé et IMC</image:title>
+      <image:caption>Articles et conseils sur la santé et l'IMC</image:caption>
+    </image:image>
+  </url>
+  
   <!-- URLs optimisées pour le SEO (avec traductions) -->
   <url>
     <loc>/calcul-imc-femme</loc>

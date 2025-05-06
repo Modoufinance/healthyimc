@@ -1,5 +1,6 @@
+
 import { Link, useLocation } from "react-router-dom";
-import { Home, Scale, Bot, Info, Shield, Heart, Dumbbell, Star, Activity, ChevronDown, ChevronUp, Percent, Flame, Baby, Hospital } from "lucide-react";
+import { Home, Scale, Bot, Info, Shield, Heart, Dumbbell, Star, Activity, ChevronDown, ChevronUp, Percent, Flame, Baby, Hospital, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -21,6 +22,7 @@ const Navigation = () => {
   // Items that will display directly in the navigation
   const mainLinks = [
     { to: "/accueil", label: "Accueil", icon: <Home className="w-4 h-4" /> },
+    { to: "/blog", label: "Blog", icon: <BookOpen className="w-4 h-4" /> },
   ];
   
   // Additional main links (to be displayed after calculators)
@@ -33,6 +35,7 @@ const Navigation = () => {
   // Items that will be in the "Santé" dropdown
   const healthLinks = [
     { to: "/assistant-sante-ia", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
+    { to: "/confidentialite", label: "Confidentialité", icon: <Shield className="w-4 h-4" /> },
   ];
 
   // Calculators dropdown items

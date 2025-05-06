@@ -14,6 +14,7 @@ import CalorieCalculator from "./components/CalorieCalculator";
 import ChildrenBMICalculator from "./components/ChildrenBMICalculator";
 import SymptomAnalyzer from "./pages/SymptomAnalyzer";
 import AIFitnessProgram from "./pages/AIFitnessProgram";
+import Blog from "./pages/Blog";
 import { useEffect } from "react";
 import { useLanguage } from "./contexts/LanguageContext";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -77,6 +78,9 @@ const AppRoutes = () => {
         <Route path={`${prefix}/assistant-sante-ia`} element={<AIHealthAssistant />} />
         <Route path={`${prefix}/bien-etre`} element={<WellnessCompanion />} />
         <Route path={`${prefix}/programme-fitness-ia`} element={<AIFitnessProgram />} />
+        
+        {/* Nouvelle route pour le blog */}
+        <Route path={`${prefix}/blog`} element={<Blog />} />
         
         {/* Pages légales et informatives */}
         <Route path={`${prefix}/a-propos`} element={<About />} />

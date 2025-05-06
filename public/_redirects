@@ -19,6 +19,11 @@
 /poids-ideal               /calculateur-imc              301
 /imc-gratuit               /calculateur-imc              301
 
+# Redirections pour le blog
+/articles                  /blog                         301
+/sante-blog                /blog                         301
+/conseils-sante            /blog                         301
+
 # Redirection des URL avec paramètres vers les URL propres
 /calculateur?*             /calculateur-imc              301
 /imc?*                     /calculateur-imc              301
