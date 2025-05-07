@@ -1,12 +1,12 @@
 
-# Robots.txt principal pour SanteIMC.fr
+# Robots.txt principal pour HealthyIMC.com
 # Dernière mise à jour: 2024-06-16
 
 User-agent: *
 Allow: /
 
 # Sitemap principal (URL absolue pour éviter les problèmes)
-Sitemap: https://santeimc.fr/sitemap.xml
+Sitemap: https://healthyimc.com/sitemap.xml
 
 # Pages principales - Haute priorité
 Allow: /calculateur-imc$

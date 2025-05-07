@@ -55,7 +55,7 @@ RewriteRule ^(.*)/$ /$1 [L,R=301]
 
 # Protection contre le hotlinking des images
 RewriteCond %{HTTP_REFERER} !^$
-RewriteCond %{HTTP_REFERER} !^https?://(www\.)?santeimc\.fr [NC]
+RewriteCond %{HTTP_REFERER} !^https?://(www\.)?healthyimc\.com [NC]
 RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
 
 # Gestion des erreurs

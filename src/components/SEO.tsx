@@ -21,7 +21,7 @@ const SEO = ({
   title,
   description,
   keywords = "",
-  canonicalUrl = "https://santeimc.fr",
+  canonicalUrl = "https://healthyimc.com",
   ogImage = "/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png",
   structuredData,
   language = "fr",
@@ -32,7 +32,7 @@ const SEO = ({
   hasFAQ = false,
   faqItems = [],
 }: SEOProps) => {
-  const fullTitle = `${title} | SantéIMC`;
+  const fullTitle = `${title} | HealthyIMC`;
 
   // Création de données structurées FAQ si nécessaire
   let faqStructuredData = null;
@@ -55,7 +55,7 @@ const SEO = ({
   const defaultStructuredData = !structuredData && type === "website" ? {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Calculateur IMC en ligne - SantéIMC",
+    "name": "Calculateur IMC en ligne - HealthyIMC",
     "applicationCategory": "HealthApplication",
     "description": "Calculez gratuitement votre IMC (Indice de Masse Corporelle). Outil adapté pour hommes, femmes et enfants.",
     "operatingSystem": "All",
