@@ -22,13 +22,13 @@ const Navigation = () => {
   // Items that will display directly in the navigation
   const mainLinks = [
     { to: "/accueil", label: "Accueil", icon: <Home className="w-4 h-4" /> },
-    { to: "/blog", label: "Blog", icon: <BookOpen className="w-4 h-4" /> },
   ];
   
   // Additional main links (to be displayed after calculators)
   const additionalMainLinks = [
     { to: "/bien-etre", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
     { to: "/programme-fitness-ia", label: "Coach Fitness IA", icon: <Dumbbell className="w-4 h-4" /> },
+    { to: "/blog", label: "Blog", icon: <BookOpen className="w-4 h-4" /> },
     { to: "/a-propos", label: "À propos", icon: <Info className="w-4 h-4" /> },
   ];
 
