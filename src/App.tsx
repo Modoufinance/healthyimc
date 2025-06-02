@@ -1,6 +1,6 @@
 
 import { StrictMode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,21 +12,19 @@ const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <StrictMode>
+    <Router>
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <LanguageProvider>
-            <TooltipProvider>
-              <div className="min-h-screen flex flex-col">
-                <Toaster />
-                <Sonner />
-                <AppRoutes />
-              </div>
-            </TooltipProvider>
-          </LanguageProvider>
-        </BrowserRouter>
+        <LanguageProvider>
+          <TooltipProvider>
+            <div className="min-h-screen flex flex-col">
+              <Toaster />
+              <Sonner />
+              <AppRoutes />
+            </div>
+          </TooltipProvider>
+        </LanguageProvider>
       </QueryClientProvider>
-    </StrictMode>
+    </Router>
   );
 };
 
