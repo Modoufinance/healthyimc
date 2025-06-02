@@ -13,19 +13,19 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <StrictMode>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <LanguageProvider>
-            <TooltipProvider>
+      <QueryClientProvider client={queryClient}>
+        <LanguageProvider>
+          <TooltipProvider>
+            <BrowserRouter>
               <div className="min-h-screen flex flex-col">
                 <Toaster />
                 <Sonner />
                 <AppRoutes />
               </div>
-            </TooltipProvider>
-          </LanguageProvider>
-        </QueryClientProvider>
-      </BrowserRouter>
+            </BrowserRouter>
+          </TooltipProvider>
+        </LanguageProvider>
+      </QueryClientProvider>
     </StrictMode>
   );
 };
