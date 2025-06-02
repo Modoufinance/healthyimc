@@ -14,17 +14,17 @@ const App = () => {
   return (
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <LanguageProvider>
-          <TooltipProvider>
-            <BrowserRouter>
+        <BrowserRouter>
+          <LanguageProvider>
+            <TooltipProvider>
               <div className="min-h-screen flex flex-col">
                 <Toaster />
                 <Sonner />
                 <AppRoutes />
               </div>
-            </BrowserRouter>
-          </TooltipProvider>
-        </LanguageProvider>
+            </TooltipProvider>
+          </LanguageProvider>
+        </BrowserRouter>
       </QueryClientProvider>
     </StrictMode>
   );
