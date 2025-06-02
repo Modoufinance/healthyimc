@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import FitnessPlanCard from "@/components/fitness/FitnessPlanCard";
 import SubscriptionPlans from "@/components/fitness/SubscriptionPlans";
 import WorkoutCalendar from "@/components/fitness/WorkoutCalendar";
+import { supabase } from "@/integrations/supabase/client";
 
 const AIFitnessProgram = () => {
   const [userProfile, setUserProfile] = useState({
@@ -27,7 +27,61 @@ const AIFitnessProgram = () => {
   });
   const [currentStep, setCurrentStep] = useState<"profile" | "plans" | "program">("profile");
   const [subscription, setSubscription] = useState<"free" | "premium" | null>(null);
+  const [subscriptionData, setSubscriptionData] = useState<any>(null);
   const { toast } = useToast();
+
+  // Check subscription status on component mount and URL changes
+  useEffect(() => {
+    const checkSubscriptionStatus = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return;
+
+        const { data, error } = await supabase.functions.invoke('check-subscription', {
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+        });
+
+        if (error) {
+          console.error("Error checking subscription:", error);
+          return;
+        }
+
+        console.log("Subscription data:", data);
+        setSubscriptionData(data);
+        
+        if (data.subscribed) {
+          setSubscription("premium");
+        }
+      } catch (error) {
+        console.error("Error in checkSubscriptionStatus:", error);
+      }
+    };
+
+    checkSubscriptionStatus();
+
+    // Check URL parameters for success/cancel
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+      toast({
+        title: "Paiement réussi !",
+        description: "Votre abonnement Premium est maintenant actif.",
+      });
+      // Remove URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+      // Recheck subscription after successful payment
+      setTimeout(checkSubscriptionStatus, 2000);
+    } else if (urlParams.get('canceled') === 'true') {
+      toast({
+        title: "Paiement annulé",
+        description: "Votre paiement a été annulé.",
+        variant: "destructive",
+      });
+      // Remove URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, [toast]);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -79,22 +133,49 @@ const AIFitnessProgram = () => {
         title: "Programme généré",
         description: "Votre programme d'entraînement gratuit a été généré.",
       });
-    } else {
-      // For premium, we would typically redirect to a payment page
-      // Simulating successful payment for demo purposes
-      toast({
-        title: "Redirection vers le paiement",
-        description: "Vous allez être redirigé vers notre page de paiement sécurisé.",
-      });
+    }
+    // For premium, the subscription process is handled in SubscriptionPlans component
+  };
+
+  const handleManageSubscription = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
       
-      // Simulate payment processing
-      setTimeout(() => {
-        setCurrentStep("program");
+      if (!session) {
         toast({
-          title: "Paiement confirmé",
-          description: "Votre abonnement premium est actif. Votre programme personnalisé est prêt!",
+          title: "Connexion requise",
+          description: "Vous devez être connecté pour gérer votre abonnement.",
+          variant: "destructive",
         });
-      }, 2000);
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('customer-portal', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (error) {
+        console.error("Error accessing customer portal:", error);
+        toast({
+          title: "Erreur",
+          description: "Impossible d'accéder au portail de gestion.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Rediriger vers le portail client Stripe
+      window.open(data.url, '_blank');
+      
+    } catch (error) {
+      console.error("Error in handleManageSubscription:", error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'accès au portail.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -242,9 +323,21 @@ const AIFitnessProgram = () => {
               <div className="animate-fade-in">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-2xl font-bold text-white">Votre Programme Personnalisé</h2>
-                  <Badge variant={subscription === "premium" ? "default" : "secondary"} className="px-3 py-1">
-                    {subscription === "premium" ? "Premium" : "Gratuit"}
-                  </Badge>
+                  <div className="flex items-center gap-4">
+                    <Badge variant={subscription === "premium" ? "default" : "secondary"} className="px-3 py-1">
+                      {subscription === "premium" ? "Premium" : "Gratuit"}
+                    </Badge>
+                    {subscriptionData?.subscribed && (
+                      <Button 
+                        onClick={handleManageSubscription}
+                        variant="outline"
+                        className="bg-white/20 text-white border-white/30 hover:bg-white/30"
+                        size="sm"
+                      >
+                        Gérer l'abonnement
+                      </Button>
+                    )}
+                  </div>
                 </div>
 
                 <Tabs defaultValue="program" className="w-full">

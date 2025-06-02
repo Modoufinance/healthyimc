@@ -1,14 +1,61 @@
-
 import React from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, X } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface SubscriptionPlansProps {
   onSelectPlan: (plan: "free" | "premium") => void;
 }
 
 const SubscriptionPlans = ({ onSelectPlan }: SubscriptionPlansProps) => {
+  const { toast } = useToast();
+
+  const handlePremiumSubscription = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        toast({
+          title: "Connexion requise",
+          description: "Vous devez être connecté pour vous abonner au Premium.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      console.log("Creating checkout session...");
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (error) {
+        console.error("Error creating checkout session:", error);
+        toast({
+          title: "Erreur",
+          description: "Impossible de créer la session de paiement.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      console.log("Redirecting to Stripe checkout:", data.url);
+      // Rediriger vers Stripe Checkout dans un nouvel onglet
+      window.open(data.url, '_blank');
+      
+    } catch (error) {
+      console.error("Error in handlePremiumSubscription:", error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de la création de l'abonnement.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div className="text-center">
@@ -121,7 +168,7 @@ const SubscriptionPlans = ({ onSelectPlan }: SubscriptionPlansProps) => {
             </ul>
 
             <Button 
-              onClick={() => onSelectPlan("premium")}
+              onClick={handlePremiumSubscription}
               className="w-full mt-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:opacity-90 shadow-lg hover:shadow-xl font-semibold text-base py-6"
               size="lg"
             >
