@@ -1,5 +1,4 @@
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -40,6 +39,16 @@
       width: 133.33%; /* 100% / 0.75 to compensate for the scale */
       height: 133.33%;
     }
+  }
+
+  /* Masquer la scrollbar horizontale */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
 
