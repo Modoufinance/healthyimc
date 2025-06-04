@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,11 +36,11 @@
   background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
 }
 
-/* Animations */
+/* Enhanced Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -47,14 +48,10 @@
   }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(-20px);
+    transform: translateX(-30px);
   }
   to {
     opacity: 1;
@@ -62,8 +59,98 @@
   }
 }
 
+@keyframes floatingAnimation {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-5px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(-15px) translateX(8px) rotate(2deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(-50px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-10px);
+  }
+  70% {
+    transform: scale(0.9) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
 .animate-slide-in {
-  animation: slideIn 0.3s ease-out forwards;
+  animation: slideIn 0.6s ease-out forwards;
+}
+
+.floating-element {
+  animation: floatingAnimation 6s ease-in-out infinite;
+}
+
+.animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+/* Glassmorphism Effects */
+.glassmorphism-card {
+  @apply bg-white/20 backdrop-blur-lg p-6 rounded-xl shadow-lg border border-white/30;
+  @apply transition-all duration-300 ease-out;
+}
+
+.glassmorphism-card:hover {
+  @apply bg-white/25 shadow-xl border-white/40;
+  transform: translateY(-5px);
+}
+
+/* Icon Container */
+.icon-container {
+  @apply p-4 rounded-full transition-all duration-300;
+}
+
+/* Hover Effects */
+.hover-lift {
+  @apply transition-all duration-300 ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  @apply shadow-2xl;
 }
 
 /* Card styles */
@@ -108,4 +195,54 @@
 
 .nav-link.active {
   @apply bg-primary/10 text-primary font-medium;
+}
+
+/* Loading Animation */
+.spinner {
+  @apply animate-spin rounded-full h-8 w-8 border-b-2 border-white;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Focus States */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
 }
