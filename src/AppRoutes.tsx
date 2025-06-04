@@ -1,7 +1,7 @@
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useLocaleDetection } from "./hooks/useLocaleDetection";
-import Navigation from "./components/Navigation";
+import EnhancedNavigation from "./components/enhanced-navigation";
 import Home from "./pages/Home";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -91,7 +91,7 @@ const AppRoutes = () => {
 
   return (
     <>
-      <Navigation />
+      <EnhancedNavigation />
       <main className="flex-1" dir={language === 'ar' ? 'rtl' : 'ltr'}>
         <Routes>
           {/* Routes en français (par défaut) */}
