@@ -95,6 +95,9 @@ const AppRoutes = () => {
       <EnhancedNavigation />
       <main className="flex-1" dir={language === 'ar' ? 'rtl' : 'ltr'}>
         <Routes>
+          {/* Route d'administration CMS */}
+          <Route path="/admin/cms" element={<CMSAdmin />} />
+          
           {/* Routes en français (par défaut) */}
           {getOptimizedRoutes()}
           

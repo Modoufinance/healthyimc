@@ -1,10 +1,11 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
 import { 
   FileText, 
   HelpCircle, 
@@ -20,12 +21,60 @@ import CMSArticleEditor from "@/components/cms/CMSArticleEditor";
 import CMSFAQEditor from "@/components/cms/CMSFAQEditor";
 import CMSTestimonialEditor from "@/components/cms/CMSTestimonialEditor";
 import CMSContentEditor from "@/components/cms/CMSContentEditor";
+import { CMSService } from "@/services/cmsService";
+import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
 
 const CMSAdmin = () => {
   const [activeTab, setActiveTab] = useState("articles");
   const [searchTerm, setSearchTerm] = useState("");
   const [showEditor, setShowEditor] = useState(false);
-  const [editingItem, setEditingItem] = useState(null);
+  const [editingItem, setEditingItem] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  // Data states
+  const [articles, setArticles] = useState<CMSArticle[]>([]);
+  const [faqs, setFAQs] = useState<CMSFAQ[]>([]);
+  const [testimonials, setTestimonials] = useState<CMSTestimonial[]>([]);
+  const [content, setContent] = useState<CMSContent[]>([]);
+
+  // Load data based on active tab
+  useEffect(() => {
+    loadData();
+  }, [activeTab]);
+
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      switch (activeTab) {
+        case "articles":
+          const articleData = await CMSService.getArticles();
+          setArticles(articleData);
+          break;
+        case "faq":
+          const faqData = await CMSService.getFAQs();
+          setFAQs(faqData);
+          break;
+        case "testimonials":
+          const testimonialData = await CMSService.getTestimonials();
+          setTestimonials(testimonialData);
+          break;
+        case "content":
+          const contentData = await CMSService.getContent();
+          setContent(contentData);
+          break;
+      }
+    } catch (error) {
+      console.error("Error loading data:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de charger les données",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleNewItem = () => {
     setEditingItem(null);
@@ -40,6 +89,62 @@ const CMSAdmin = () => {
   const handleCloseEditor = () => {
     setShowEditor(false);
     setEditingItem(null);
+    loadData(); // Reload data after editing
+  };
+
+  const handleDeleteItem = async (id: string) => {
+    if (!window.confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) {
+      return;
+    }
+
+    try {
+      let success = false;
+      switch (activeTab) {
+        case "articles":
+          success = await CMSService.deleteArticle(id);
+          break;
+        case "faq":
+          success = await CMSService.deleteFAQ(id);
+          break;
+        case "testimonials":
+          success = await CMSService.deleteTestimonial(id);
+          break;
+        case "content":
+          success = await CMSService.deleteContent(id);
+          break;
+      }
+
+      if (success) {
+        toast({
+          title: "Succès",
+          description: "Élément supprimé avec succès",
+        });
+        loadData();
+      } else {
+        throw new Error("Échec de la suppression");
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de supprimer l'élément",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const filterItems = (items: any[]) => {
+    if (!searchTerm) return items;
+    return items.filter(item => 
+      item.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.question?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.key?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('fr-FR');
   };
 
   return (
@@ -119,45 +224,57 @@ const CMSAdmin = () => {
             </div>
 
             <TabsContent value="articles">
-              <div className="grid gap-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Articles de Blog</CardTitle>
-                    <CardDescription>
-                      Gérez les articles de votre blog santé et IMC
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Articles de Blog</CardTitle>
+                  <CardDescription>
+                    Gérez les articles de votre blog santé et IMC
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {loading ? (
+                    <div className="text-center py-4">Chargement...</div>
+                  ) : (
                     <div className="space-y-4">
-                      {/* Exemple d'articles */}
-                      <div className="flex items-center justify-between p-4 border rounded-lg">
-                        <div className="flex-1">
-                          <h3 className="font-semibold">Comment calculer son IMC efficacement</h3>
-                          <p className="text-sm text-gray-600 mt-1">
-                            Guide complet pour comprendre et calculer votre indice de masse corporelle...
-                          </p>
-                          <div className="flex items-center gap-2 mt-2">
-                            <Badge variant="secondary">Santé</Badge>
-                            <Badge variant="outline">Publié</Badge>
-                            <span className="text-xs text-gray-500">12 Jan 2024</span>
+                      {filterItems(articles).map((article) => (
+                        <div key={article.id} className="flex items-center justify-between p-4 border rounded-lg">
+                          <div className="flex-1">
+                            <h3 className="font-semibold">{article.title}</h3>
+                            <p className="text-sm text-gray-600 mt-1">
+                              {article.excerpt || "Pas d'extrait disponible"}
+                            </p>
+                            <div className="flex items-center gap-2 mt-2">
+                              <Badge variant="secondary">{article.category}</Badge>
+                              <Badge variant={article.published ? "default" : "outline"}>
+                                {article.published ? "Publié" : "Brouillon"}
+                              </Badge>
+                              <span className="text-xs text-gray-500">
+                                {formatDate(article.created_at)}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button variant="ghost" size="sm">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => handleEditItem(article)}>
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => handleDeleteItem(article.id)}>
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="sm">
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button variant="ghost" size="sm" onClick={() => handleEditItem({})}>
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button variant="ghost" size="sm">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                      ))}
+                      {filterItems(articles).length === 0 && (
+                        <div className="text-center py-8 text-gray-500">
+                          Aucun article trouvé
                         </div>
-                      </div>
+                      )}
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+                  )}
+                </CardContent>
+              </Card>
             </TabsContent>
 
             <TabsContent value="faq">
@@ -169,31 +286,47 @@ const CMSAdmin = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex-1">
-                        <h3 className="font-semibold">Comment calculer son IMC ?</h3>
-                        <p className="text-sm text-gray-600 mt-1">
-                          L'IMC se calcule en divisant votre poids...
-                        </p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <Badge variant="secondary">Calcul</Badge>
-                          <Badge variant="outline">Publié</Badge>
+                  {loading ? (
+                    <div className="text-center py-4">Chargement...</div>
+                  ) : (
+                    <div className="space-y-4">
+                      {filterItems(faqs).map((faq) => (
+                        <div key={faq.id} className="flex items-center justify-between p-4 border rounded-lg">
+                          <div className="flex-1">
+                            <h3 className="font-semibold">{faq.question}</h3>
+                            <p className="text-sm text-gray-600 mt-1">
+                              {faq.answer.substring(0, 100)}...
+                            </p>
+                            <div className="flex items-center gap-2 mt-2">
+                              <Badge variant="secondary">{faq.category}</Badge>
+                              <Badge variant={faq.published ? "default" : "outline"}>
+                                {faq.published ? "Publié" : "Brouillon"}
+                              </Badge>
+                              <span className="text-xs text-gray-500">
+                                Ordre: {faq.order}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button variant="ghost" size="sm">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => handleEditItem(faq)}>
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => handleDeleteItem(faq.id)}>
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="sm">
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleEditItem({})}>
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
+                      ))}
+                      {filterItems(faqs).length === 0 && (
+                        <div className="text-center py-8 text-gray-500">
+                          Aucune FAQ trouvée
+                        </div>
+                      )}
                     </div>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>
@@ -207,31 +340,49 @@ const CMSAdmin = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex-1">
-                        <h3 className="font-semibold">Marie L.</h3>
-                        <p className="text-sm text-gray-600 mt-1">
-                          "Grâce à ce calculateur d'IMC, j'ai pu suivre..."
-                        </p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <Badge variant="secondary">5 étoiles</Badge>
-                          <Badge variant="outline">Publié</Badge>
+                  {loading ? (
+                    <div className="text-center py-4">Chargement...</div>
+                  ) : (
+                    <div className="space-y-4">
+                      {filterItems(testimonials).map((testimonial) => (
+                        <div key={testimonial.id} className="flex items-center justify-between p-4 border rounded-lg">
+                          <div className="flex-1">
+                            <h3 className="font-semibold">{testimonial.name}</h3>
+                            <p className="text-sm text-gray-600 mt-1">
+                              {testimonial.text.substring(0, 100)}...
+                            </p>
+                            <div className="flex items-center gap-2 mt-2">
+                              <Badge variant="secondary">{testimonial.rating} étoiles</Badge>
+                              <Badge variant={testimonial.published ? "default" : "outline"}>
+                                {testimonial.published ? "Publié" : "Brouillon"}
+                              </Badge>
+                              {testimonial.before_weight && testimonial.after_weight && (
+                                <span className="text-xs text-gray-500">
+                                  {testimonial.before_weight} → {testimonial.after_weight}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button variant="ghost" size="sm">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => handleEditItem(testimonial)}>
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => handleDeleteItem(testimonial.id)}>
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="sm">
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleEditItem({})}>
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
+                      ))}
+                      {filterItems(testimonials).length === 0 && (
+                        <div className="text-center py-8 text-gray-500">
+                          Aucun témoignage trouvé
+                        </div>
+                      )}
                     </div>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>
@@ -245,28 +396,45 @@ const CMSAdmin = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex-1">
-                        <h3 className="font-semibold">Titre page d'accueil</h3>
-                        <p className="text-sm text-gray-600 mt-1">
-                          Calculateur IMC Gratuit en Ligne
-                        </p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <Badge variant="secondary">Homepage</Badge>
-                          <Badge variant="outline">Actif</Badge>
+                  {loading ? (
+                    <div className="text-center py-4">Chargement...</div>
+                  ) : (
+                    <div className="space-y-4">
+                      {filterItems(content).map((contentItem) => (
+                        <div key={contentItem.id} className="flex items-center justify-between p-4 border rounded-lg">
+                          <div className="flex-1">
+                            <h3 className="font-semibold">{contentItem.title}</h3>
+                            <p className="text-sm text-gray-600 mt-1">
+                              Clé: {contentItem.key}
+                            </p>
+                            <div className="flex items-center gap-2 mt-2">
+                              <Badge variant="secondary">{contentItem.category}</Badge>
+                              <Badge variant="outline">{contentItem.type}</Badge>
+                              <Badge variant={contentItem.published ? "default" : "outline"}>
+                                {contentItem.published ? "Actif" : "Inactif"}
+                              </Badge>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button variant="ghost" size="sm">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => handleEditItem(contentItem)}>
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => handleDeleteItem(contentItem.id)}>
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="sm">
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleEditItem({})}>
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                      </div>
+                      ))}
+                      {filterItems(content).length === 0 && (
+                        <div className="text-center py-8 text-gray-500">
+                          Aucun contenu trouvé
+                        </div>
+                      )}
                     </div>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>

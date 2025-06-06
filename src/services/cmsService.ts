@@ -1,160 +1,433 @@
 
-import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
-
-// Simulation d'une base de données locale pour la démonstration
-// En production, ces données viendraient de Supabase ou d'une autre base de données
-
-const mockArticles: CMSArticle[] = [
-  {
-    id: "1",
-    title: "Comment calculer son IMC efficacement",
-    slug: "comment-calculer-imc-efficacement",
-    content: "<p>L'IMC (Indice de Masse Corporelle) est un indicateur simple...</p>",
-    excerpt: "Guide complet pour comprendre et calculer votre indice de masse corporelle avec précision.",
-    author: "Dr. Martin",
-    category: "Santé",
-    tags: ["IMC", "santé", "calcul", "poids"],
-    published: true,
-    published_at: "2024-01-12T10:00:00Z",
-    created_at: "2024-01-10T10:00:00Z",
-    updated_at: "2024-01-12T10:00:00Z",
-    meta_title: "Comment Calculer son IMC - Guide Complet 2024",
-    meta_description: "Découvrez comment calculer votre IMC facilement avec notre guide complet. Formule, interprétation et conseils personnalisés."
-  }
-];
-
-const mockFAQs: CMSFAQ[] = [
-  {
-    id: "1",
-    question: "Comment calculer son IMC ?",
-    answer: "L'IMC se calcule en divisant votre poids (en kg) par le carré de votre taille (en mètres). La formule exacte est: IMC = Poids(kg) / Taille²(m).",
-    category: "Calcul",
-    order: 1,
-    published: true,
-    created_at: "2024-01-10T10:00:00Z",
-    updated_at: "2024-01-10T10:00:00Z"
-  }
-];
-
-const mockTestimonials: CMSTestimonial[] = [
-  {
-    id: "1",
-    name: "Marie L.",
-    text: "Grâce à ce calculateur d'IMC, j'ai pu suivre mon indice de masse corporelle et atteindre mes objectifs de poids santé.",
-    rating: 5,
-    before_weight: "85kg",
-    after_weight: "68kg",
-    duration: "6 mois",
-    published: true,
-    created_at: "2024-01-10T10:00:00Z",
-    updated_at: "2024-01-10T10:00:00Z"
-  }
-];
-
-const mockContent: CMSContent[] = [
-  {
-    id: "1",
-    key: "homepage_title",
-    title: "Titre page d'accueil",
-    content: "Calculateur IMC Gratuit en Ligne",
-    type: "text",
-    category: "Homepage",
-    published: true,
-    created_at: "2024-01-10T10:00:00Z",
-    updated_at: "2024-01-10T10:00:00Z"
-  }
-];
+import { supabase } from "@/integrations/supabase/client";
+import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent, CMSCategory } from "@/types/cms";
 
 export class CMSService {
   // Articles
   static async getArticles(): Promise<CMSArticle[]> {
-    return mockArticles;
+    const { data, error } = await supabase
+      .from('cms_articles')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      console.error('Error fetching articles:', error);
+      return [];
+    }
+    
+    return data.map(article => ({
+      ...article,
+      order: article.order_number || 0
+    })) || [];
+  }
+
+  static async getPublishedArticles(): Promise<CMSArticle[]> {
+    const { data, error } = await supabase
+      .from('cms_articles')
+      .select('*')
+      .eq('published', true)
+      .order('published_at', { ascending: false });
+    
+    if (error) {
+      console.error('Error fetching published articles:', error);
+      return [];
+    }
+    
+    return data || [];
   }
 
   static async getArticle(id: string): Promise<CMSArticle | null> {
-    return mockArticles.find(article => article.id === id) || null;
+    const { data, error } = await supabase
+      .from('cms_articles')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) {
+      console.error('Error fetching article:', error);
+      return null;
+    }
+    
+    return data;
   }
 
-  static async createArticle(article: Omit<CMSArticle, 'id' | 'created_at' | 'updated_at'>): Promise<CMSArticle> {
-    const newArticle: CMSArticle = {
-      ...article,
-      id: Date.now().toString(),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    };
-    mockArticles.push(newArticle);
-    return newArticle;
+  static async getArticleBySlug(slug: string): Promise<CMSArticle | null> {
+    const { data, error } = await supabase
+      .from('cms_articles')
+      .select('*')
+      .eq('slug', slug)
+      .eq('published', true)
+      .single();
+    
+    if (error) {
+      console.error('Error fetching article by slug:', error);
+      return null;
+    }
+    
+    return data;
+  }
+
+  static async createArticle(article: Omit<CMSArticle, 'id' | 'created_at' | 'updated_at'>): Promise<CMSArticle | null> {
+    const { data, error } = await supabase
+      .from('cms_articles')
+      .insert({
+        title: article.title,
+        slug: article.slug,
+        content: article.content,
+        excerpt: article.excerpt,
+        author: article.author,
+        category: article.category,
+        tags: article.tags,
+        featured_image: article.featured_image,
+        meta_title: article.meta_title,
+        meta_description: article.meta_description,
+        published: article.published,
+        published_at: article.published ? new Date().toISOString() : null
+      })
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error creating article:', error);
+      return null;
+    }
+    
+    return data;
   }
 
   static async updateArticle(id: string, updates: Partial<CMSArticle>): Promise<CMSArticle | null> {
-    const index = mockArticles.findIndex(article => article.id === id);
-    if (index === -1) return null;
+    const updateData: any = { ...updates };
     
-    mockArticles[index] = {
-      ...mockArticles[index],
-      ...updates,
-      updated_at: new Date().toISOString()
-    };
-    return mockArticles[index];
+    // If publishing for the first time, set published_at
+    if (updates.published && !updates.published_at) {
+      updateData.published_at = new Date().toISOString();
+    }
+    
+    delete updateData.id;
+    delete updateData.created_at;
+    updateData.updated_at = new Date().toISOString();
+    
+    const { data, error } = await supabase
+      .from('cms_articles')
+      .update(updateData)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error updating article:', error);
+      return null;
+    }
+    
+    return data;
   }
 
   static async deleteArticle(id: string): Promise<boolean> {
-    const index = mockArticles.findIndex(article => article.id === id);
-    if (index === -1) return false;
+    const { error } = await supabase
+      .from('cms_articles')
+      .delete()
+      .eq('id', id);
     
-    mockArticles.splice(index, 1);
+    if (error) {
+      console.error('Error deleting article:', error);
+      return false;
+    }
+    
     return true;
   }
 
   // FAQ
   static async getFAQs(): Promise<CMSFAQ[]> {
-    return mockFAQs.sort((a, b) => a.order - b.order);
+    const { data, error } = await supabase
+      .from('cms_faqs')
+      .select('*')
+      .order('order_number', { ascending: true });
+    
+    if (error) {
+      console.error('Error fetching FAQs:', error);
+      return [];
+    }
+    
+    return data.map(faq => ({
+      ...faq,
+      order: faq.order_number
+    })) || [];
   }
 
-  static async createFAQ(faq: Omit<CMSFAQ, 'id' | 'created_at' | 'updated_at'>): Promise<CMSFAQ> {
-    const newFAQ: CMSFAQ = {
+  static async getPublishedFAQs(): Promise<CMSFAQ[]> {
+    const { data, error } = await supabase
+      .from('cms_faqs')
+      .select('*')
+      .eq('published', true)
+      .order('order_number', { ascending: true });
+    
+    if (error) {
+      console.error('Error fetching published FAQs:', error);
+      return [];
+    }
+    
+    return data.map(faq => ({
       ...faq,
-      id: Date.now().toString(),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      order: faq.order_number
+    })) || [];
+  }
+
+  static async createFAQ(faq: Omit<CMSFAQ, 'id' | 'created_at' | 'updated_at'>): Promise<CMSFAQ | null> {
+    const { data, error } = await supabase
+      .from('cms_faqs')
+      .insert({
+        question: faq.question,
+        answer: faq.answer,
+        category: faq.category,
+        order_number: faq.order,
+        published: faq.published
+      })
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error creating FAQ:', error);
+      return null;
+    }
+    
+    return {
+      ...data,
+      order: data.order_number
     };
-    mockFAQs.push(newFAQ);
-    return newFAQ;
+  }
+
+  static async updateFAQ(id: string, updates: Partial<CMSFAQ>): Promise<CMSFAQ | null> {
+    const updateData: any = { ...updates };
+    delete updateData.id;
+    delete updateData.created_at;
+    updateData.updated_at = new Date().toISOString();
+    
+    if (updateData.order !== undefined) {
+      updateData.order_number = updateData.order;
+      delete updateData.order;
+    }
+    
+    const { data, error } = await supabase
+      .from('cms_faqs')
+      .update(updateData)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error updating FAQ:', error);
+      return null;
+    }
+    
+    return {
+      ...data,
+      order: data.order_number
+    };
+  }
+
+  static async deleteFAQ(id: string): Promise<boolean> {
+    const { error } = await supabase
+      .from('cms_faqs')
+      .delete()
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Error deleting FAQ:', error);
+      return false;
+    }
+    
+    return true;
   }
 
   // Testimonials
   static async getTestimonials(): Promise<CMSTestimonial[]> {
-    return mockTestimonials;
+    const { data, error } = await supabase
+      .from('cms_testimonials')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      console.error('Error fetching testimonials:', error);
+      return [];
+    }
+    
+    return data || [];
   }
 
-  static async createTestimonial(testimonial: Omit<CMSTestimonial, 'id' | 'created_at' | 'updated_at'>): Promise<CMSTestimonial> {
-    const newTestimonial: CMSTestimonial = {
-      ...testimonial,
-      id: Date.now().toString(),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    };
-    mockTestimonials.push(newTestimonial);
-    return newTestimonial;
+  static async getPublishedTestimonials(): Promise<CMSTestimonial[]> {
+    const { data, error } = await supabase
+      .from('cms_testimonials')
+      .select('*')
+      .eq('published', true)
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      console.error('Error fetching published testimonials:', error);
+      return [];
+    }
+    
+    return data || [];
+  }
+
+  static async createTestimonial(testimonial: Omit<CMSTestimonial, 'id' | 'created_at' | 'updated_at'>): Promise<CMSTestimonial | null> {
+    const { data, error } = await supabase
+      .from('cms_testimonials')
+      .insert({
+        name: testimonial.name,
+        text: testimonial.text,
+        rating: testimonial.rating,
+        before_weight: testimonial.before_weight,
+        after_weight: testimonial.after_weight,
+        duration: testimonial.duration,
+        image: testimonial.image,
+        published: testimonial.published
+      })
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error creating testimonial:', error);
+      return null;
+    }
+    
+    return data;
+  }
+
+  static async updateTestimonial(id: string, updates: Partial<CMSTestimonial>): Promise<CMSTestimonial | null> {
+    const updateData: any = { ...updates };
+    delete updateData.id;
+    delete updateData.created_at;
+    updateData.updated_at = new Date().toISOString();
+    
+    const { data, error } = await supabase
+      .from('cms_testimonials')
+      .update(updateData)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error updating testimonial:', error);
+      return null;
+    }
+    
+    return data;
+  }
+
+  static async deleteTestimonial(id: string): Promise<boolean> {
+    const { error } = await supabase
+      .from('cms_testimonials')
+      .delete()
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Error deleting testimonial:', error);
+      return false;
+    }
+    
+    return true;
   }
 
   // Content
   static async getContent(): Promise<CMSContent[]> {
-    return mockContent;
+    const { data, error } = await supabase
+      .from('cms_content')
+      .select('*')
+      .order('category', { ascending: true });
+    
+    if (error) {
+      console.error('Error fetching content:', error);
+      return [];
+    }
+    
+    return data || [];
   }
 
   static async getContentByKey(key: string): Promise<CMSContent | null> {
-    return mockContent.find(content => content.key === key && content.published) || null;
+    const { data, error } = await supabase
+      .from('cms_content')
+      .select('*')
+      .eq('key', key)
+      .eq('published', true)
+      .single();
+    
+    if (error) {
+      console.error('Error fetching content by key:', error);
+      return null;
+    }
+    
+    return data;
   }
 
-  static async createContent(content: Omit<CMSContent, 'id' | 'created_at' | 'updated_at'>): Promise<CMSContent> {
-    const newContent: CMSContent = {
-      ...content,
-      id: Date.now().toString(),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    };
-    mockContent.push(newContent);
-    return newContent;
+  static async createContent(content: Omit<CMSContent, 'id' | 'created_at' | 'updated_at'>): Promise<CMSContent | null> {
+    const { data, error } = await supabase
+      .from('cms_content')
+      .insert({
+        key: content.key,
+        title: content.title,
+        content: content.content,
+        type: content.type,
+        category: content.category,
+        published: content.published
+      })
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error creating content:', error);
+      return null;
+    }
+    
+    return data;
+  }
+
+  static async updateContent(id: string, updates: Partial<CMSContent>): Promise<CMSContent | null> {
+    const updateData: any = { ...updates };
+    delete updateData.id;
+    delete updateData.created_at;
+    updateData.updated_at = new Date().toISOString();
+    
+    const { data, error } = await supabase
+      .from('cms_content')
+      .update(updateData)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error updating content:', error);
+      return null;
+    }
+    
+    return data;
+  }
+
+  static async deleteContent(id: string): Promise<boolean> {
+    const { error } = await supabase
+      .from('cms_content')
+      .delete()
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Error deleting content:', error);
+      return false;
+    }
+    
+    return true;
+  }
+
+  // Categories
+  static async getCategories(): Promise<CMSCategory[]> {
+    const { data, error } = await supabase
+      .from('cms_categories')
+      .select('*')
+      .order('name', { ascending: true });
+    
+    if (error) {
+      console.error('Error fetching categories:', error);
+      return [];
+    }
+    
+    return data || [];
   }
 }

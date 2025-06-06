@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { X, Save, Eye, Upload } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import { CMSArticle } from "@/types/cms";
+import { CMSService } from "@/services/cmsService";
 
 interface CMSArticleEditorProps {
   article?: CMSArticle | null;
@@ -28,6 +31,8 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
     meta_description: article?.meta_description || "",
     published: article?.published || false,
   });
+  const [saving, setSaving] = useState(false);
+  const { toast } = useToast();
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({
@@ -36,10 +41,57 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
     }));
   };
 
-  const handleSave = () => {
-    console.log("Saving article:", formData);
-    // Ici, vous ajouteriez la logique de sauvegarde
-    onClose();
+  const handleSave = async () => {
+    if (!formData.title.trim() || !formData.author.trim() || !formData.category.trim()) {
+      toast({
+        title: "Erreur",
+        description: "Veuillez remplir tous les champs obligatoires",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const articleData = {
+        title: formData.title,
+        slug: formData.slug,
+        content: formData.content,
+        excerpt: formData.excerpt,
+        author: formData.author,
+        category: formData.category,
+        tags: formData.tags ? formData.tags.split(",").map(tag => tag.trim()).filter(Boolean) : [],
+        meta_title: formData.meta_title,
+        meta_description: formData.meta_description,
+        published: formData.published,
+      };
+
+      let result;
+      if (article) {
+        result = await CMSService.updateArticle(article.id, articleData);
+      } else {
+        result = await CMSService.createArticle(articleData);
+      }
+
+      if (result) {
+        toast({
+          title: "Succès",
+          description: article ? "Article mis à jour avec succès" : "Article créé avec succès",
+        });
+        onClose();
+      } else {
+        throw new Error("Échec de la sauvegarde");
+      }
+    } catch (error) {
+      console.error("Error saving article:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de sauvegarder l'article",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const generateSlug = () => {
@@ -70,9 +122,9 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
             <Eye className="h-4 w-4 mr-2" />
             Prévisualiser
           </Button>
-          <Button onClick={handleSave} size="sm">
+          <Button onClick={handleSave} size="sm" disabled={saving}>
             <Save className="h-4 w-4 mr-2" />
-            Sauvegarder
+            {saving ? "Sauvegarde..." : "Sauvegarder"}
           </Button>
           <Button variant="ghost" size="sm" onClick={onClose}>
             <X className="h-4 w-4" />
@@ -89,7 +141,7 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
 
           <TabsContent value="content" className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="title">Titre de l'article</Label>
+              <Label htmlFor="title">Titre de l'article *</Label>
               <Input
                 id="title"
                 value={formData.title}
@@ -99,7 +151,7 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="slug">URL (slug)</Label>
+              <Label htmlFor="slug">URL (slug) *</Label>
               <div className="flex gap-2">
                 <Input
                   id="slug"
@@ -143,7 +195,7 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
           <TabsContent value="settings" className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="author">Auteur</Label>
+                <Label htmlFor="author">Auteur *</Label>
                 <Input
                   id="author"
                   value={formData.author}
@@ -153,7 +205,7 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="category">Catégorie</Label>
+                <Label htmlFor="category">Catégorie *</Label>
                 <Input
                   id="category"
                   value={formData.category}

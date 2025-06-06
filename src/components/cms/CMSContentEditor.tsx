@@ -8,7 +8,9 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { X, Save } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import { CMSContent } from "@/types/cms";
+import { CMSService } from "@/services/cmsService";
 
 interface CMSContentEditorProps {
   content?: CMSContent | null;
@@ -20,10 +22,12 @@ const CMSContentEditor = ({ content, onClose }: CMSContentEditorProps) => {
     key: content?.key || "",
     title: content?.title || "",
     content: content?.content || "",
-    type: content?.type || "text",
+    type: content?.type || "text" as 'text' | 'html' | 'json',
     category: content?.category || "",
     published: content?.published || false,
   });
+  const [saving, setSaving] = useState(false);
+  const { toast } = useToast();
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({
@@ -32,9 +36,44 @@ const CMSContentEditor = ({ content, onClose }: CMSContentEditorProps) => {
     }));
   };
 
-  const handleSave = () => {
-    console.log("Saving content:", formData);
-    onClose();
+  const handleSave = async () => {
+    if (!formData.key.trim() || !formData.title.trim() || !formData.content.trim() || !formData.category.trim()) {
+      toast({
+        title: "Erreur",
+        description: "Veuillez remplir tous les champs obligatoires",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSaving(true);
+    try {
+      let result;
+      if (content) {
+        result = await CMSService.updateContent(content.id, formData);
+      } else {
+        result = await CMSService.createContent(formData);
+      }
+
+      if (result) {
+        toast({
+          title: "Succès",
+          description: content ? "Contenu mis à jour avec succès" : "Contenu créé avec succès",
+        });
+        onClose();
+      } else {
+        throw new Error("Échec de la sauvegarde");
+      }
+    } catch (error) {
+      console.error("Error saving content:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de sauvegarder le contenu",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -44,9 +83,9 @@ const CMSContentEditor = ({ content, onClose }: CMSContentEditorProps) => {
           {content ? "Modifier le contenu" : "Nouveau contenu"}
         </CardTitle>
         <div className="flex items-center gap-2">
-          <Button onClick={handleSave} size="sm">
+          <Button onClick={handleSave} size="sm" disabled={saving}>
             <Save className="h-4 w-4 mr-2" />
-            Sauvegarder
+            {saving ? "Sauvegarde..." : "Sauvegarder"}
           </Button>
           <Button variant="ghost" size="sm" onClick={onClose}>
             <X className="h-4 w-4" />
@@ -56,17 +95,18 @@ const CMSContentEditor = ({ content, onClose }: CMSContentEditorProps) => {
       <CardContent className="space-y-6">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="key">Clé unique</Label>
+            <Label htmlFor="key">Clé unique *</Label>
             <Input
               id="key"
               value={formData.key}
               onChange={(e) => handleInputChange("key", e.target.value)}
               placeholder="homepage_title, about_description..."
+              disabled={!!content} // Can't change key when editing
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category">Catégorie</Label>
+            <Label htmlFor="category">Catégorie *</Label>
             <Input
               id="category"
               value={formData.category}
@@ -77,7 +117,7 @@ const CMSContentEditor = ({ content, onClose }: CMSContentEditorProps) => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="title">Titre</Label>
+          <Label htmlFor="title">Titre *</Label>
           <Input
             id="title"
             value={formData.title}
@@ -101,7 +141,7 @@ const CMSContentEditor = ({ content, onClose }: CMSContentEditorProps) => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="content">Contenu</Label>
+          <Label htmlFor="content">Contenu *</Label>
           <Textarea
             id="content"
             value={formData.content}

@@ -9,6 +9,195 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      cms_articles: {
+        Row: {
+          author: string
+          category: string
+          content: string | null
+          created_at: string
+          excerpt: string | null
+          featured_image: string | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          published: boolean
+          published_at: string | null
+          slug: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author: string
+          category: string
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published?: boolean
+          published_at?: string | null
+          slug: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          category?: string
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published?: boolean
+          published_at?: string | null
+          slug?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cms_categories: {
+        Row: {
+          color: string | null
+          description: string | null
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          color?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          color?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      cms_content: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          id: string
+          key: string
+          published: boolean
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          content: string
+          created_at?: string
+          id?: string
+          key: string
+          published?: boolean
+          title: string
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          key?: string
+          published?: boolean
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cms_faqs: {
+        Row: {
+          answer: string
+          category: string
+          created_at: string
+          id: string
+          order_number: number
+          published: boolean
+          question: string
+          updated_at: string
+        }
+        Insert: {
+          answer: string
+          category: string
+          created_at?: string
+          id?: string
+          order_number?: number
+          published?: boolean
+          question: string
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          category?: string
+          created_at?: string
+          id?: string
+          order_number?: number
+          published?: boolean
+          question?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cms_testimonials: {
+        Row: {
+          after_weight: string | null
+          before_weight: string | null
+          created_at: string
+          duration: string | null
+          id: string
+          image: string | null
+          name: string
+          published: boolean
+          rating: number
+          text: string
+          updated_at: string
+        }
+        Insert: {
+          after_weight?: string | null
+          before_weight?: string | null
+          created_at?: string
+          duration?: string | null
+          id?: string
+          image?: string | null
+          name: string
+          published?: boolean
+          rating?: number
+          text: string
+          updated_at?: string
+        }
+        Update: {
+          after_weight?: string | null
+          before_weight?: string | null
+          created_at?: string
+          duration?: string | null
+          id?: string
+          image?: string | null
+          name?: string
+          published?: boolean
+          rating?: number
+          text?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contacts: {
         Row: {
           created_at: string

@@ -7,7 +7,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { X, Save } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import { CMSFAQ } from "@/types/cms";
+import { CMSService } from "@/services/cmsService";
 
 interface CMSFAQEditorProps {
   faq?: CMSFAQ | null;
@@ -19,9 +21,11 @@ const CMSFAQEditor = ({ faq, onClose }: CMSFAQEditorProps) => {
     question: faq?.question || "",
     answer: faq?.answer || "",
     category: faq?.category || "",
-    order: faq?.order || 0,
+    order: faq?.order || 1,
     published: faq?.published || false,
   });
+  const [saving, setSaving] = useState(false);
+  const { toast } = useToast();
 
   const handleInputChange = (field: string, value: string | boolean | number) => {
     setFormData(prev => ({
@@ -30,9 +34,44 @@ const CMSFAQEditor = ({ faq, onClose }: CMSFAQEditorProps) => {
     }));
   };
 
-  const handleSave = () => {
-    console.log("Saving FAQ:", formData);
-    onClose();
+  const handleSave = async () => {
+    if (!formData.question.trim() || !formData.answer.trim() || !formData.category.trim()) {
+      toast({
+        title: "Erreur",
+        description: "Veuillez remplir tous les champs obligatoires",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSaving(true);
+    try {
+      let result;
+      if (faq) {
+        result = await CMSService.updateFAQ(faq.id, formData);
+      } else {
+        result = await CMSService.createFAQ(formData);
+      }
+
+      if (result) {
+        toast({
+          title: "Succès",
+          description: faq ? "FAQ mise à jour avec succès" : "FAQ créée avec succès",
+        });
+        onClose();
+      } else {
+        throw new Error("Échec de la sauvegarde");
+      }
+    } catch (error) {
+      console.error("Error saving FAQ:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de sauvegarder la FAQ",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -42,9 +81,9 @@ const CMSFAQEditor = ({ faq, onClose }: CMSFAQEditorProps) => {
           {faq ? "Modifier la FAQ" : "Nouvelle FAQ"}
         </CardTitle>
         <div className="flex items-center gap-2">
-          <Button onClick={handleSave} size="sm">
+          <Button onClick={handleSave} size="sm" disabled={saving}>
             <Save className="h-4 w-4 mr-2" />
-            Sauvegarder
+            {saving ? "Sauvegarde..." : "Sauvegarder"}
           </Button>
           <Button variant="ghost" size="sm" onClick={onClose}>
             <X className="h-4 w-4" />
@@ -53,7 +92,7 @@ const CMSFAQEditor = ({ faq, onClose }: CMSFAQEditorProps) => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="question">Question</Label>
+          <Label htmlFor="question">Question *</Label>
           <Input
             id="question"
             value={formData.question}
@@ -63,7 +102,7 @@ const CMSFAQEditor = ({ faq, onClose }: CMSFAQEditorProps) => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="answer">Réponse</Label>
+          <Label htmlFor="answer">Réponse *</Label>
           <Textarea
             id="answer"
             value={formData.answer}
@@ -75,7 +114,7 @@ const CMSFAQEditor = ({ faq, onClose }: CMSFAQEditorProps) => {
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="category">Catégorie</Label>
+            <Label htmlFor="category">Catégorie *</Label>
             <Input
               id="category"
               value={formData.category}
@@ -90,7 +129,7 @@ const CMSFAQEditor = ({ faq, onClose }: CMSFAQEditorProps) => {
               id="order"
               type="number"
               value={formData.order}
-              onChange={(e) => handleInputChange("order", parseInt(e.target.value) || 0)}
+              onChange={(e) => handleInputChange("order", parseInt(e.target.value) || 1)}
               placeholder="1, 2, 3..."
             />
           </div>

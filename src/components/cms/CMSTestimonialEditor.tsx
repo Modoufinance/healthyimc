@@ -7,7 +7,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { X, Save, Star } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import { CMSTestimonial } from "@/types/cms";
+import { CMSService } from "@/services/cmsService";
 
 interface CMSTestimonialEditorProps {
   testimonial?: CMSTestimonial | null;
@@ -24,6 +26,8 @@ const CMSTestimonialEditor = ({ testimonial, onClose }: CMSTestimonialEditorProp
     duration: testimonial?.duration || "",
     published: testimonial?.published || false,
   });
+  const [saving, setSaving] = useState(false);
+  const { toast } = useToast();
 
   const handleInputChange = (field: string, value: string | boolean | number) => {
     setFormData(prev => ({
@@ -32,9 +36,54 @@ const CMSTestimonialEditor = ({ testimonial, onClose }: CMSTestimonialEditorProp
     }));
   };
 
-  const handleSave = () => {
-    console.log("Saving testimonial:", formData);
-    onClose();
+  const handleSave = async () => {
+    if (!formData.name.trim() || !formData.text.trim()) {
+      toast({
+        title: "Erreur",
+        description: "Veuillez remplir tous les champs obligatoires",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const testimonialData = {
+        name: formData.name,
+        text: formData.text,
+        rating: formData.rating,
+        before_weight: formData.before_weight || null,
+        after_weight: formData.after_weight || null,
+        duration: formData.duration || null,
+        published: formData.published,
+      };
+
+      let result;
+      if (testimonial) {
+        result = await CMSService.updateTestimonial(testimonial.id, testimonialData);
+      } else {
+        result = await CMSService.createTestimonial(testimonialData);
+      }
+
+      if (result) {
+        toast({
+          title: "Succès",
+          description: testimonial ? "Témoignage mis à jour avec succès" : "Témoignage créé avec succès",
+        });
+        onClose();
+      } else {
+        throw new Error("Échec de la sauvegarde");
+      }
+    } catch (error) {
+      console.error("Error saving testimonial:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de sauvegarder le témoignage",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -44,9 +93,9 @@ const CMSTestimonialEditor = ({ testimonial, onClose }: CMSTestimonialEditorProp
           {testimonial ? "Modifier le témoignage" : "Nouveau témoignage"}
         </CardTitle>
         <div className="flex items-center gap-2">
-          <Button onClick={handleSave} size="sm">
+          <Button onClick={handleSave} size="sm" disabled={saving}>
             <Save className="h-4 w-4 mr-2" />
-            Sauvegarder
+            {saving ? "Sauvegarde..." : "Sauvegarder"}
           </Button>
           <Button variant="ghost" size="sm" onClick={onClose}>
             <X className="h-4 w-4" />
@@ -55,7 +104,7 @@ const CMSTestimonialEditor = ({ testimonial, onClose }: CMSTestimonialEditorProp
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="name">Nom du client</Label>
+          <Label htmlFor="name">Nom du client *</Label>
           <Input
             id="name"
             value={formData.name}
@@ -65,7 +114,7 @@ const CMSTestimonialEditor = ({ testimonial, onClose }: CMSTestimonialEditorProp
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="text">Témoignage</Label>
+          <Label htmlFor="text">Témoignage *</Label>
           <Textarea
             id="text"
             value={formData.text}
