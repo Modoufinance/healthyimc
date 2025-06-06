@@ -15,6 +15,7 @@ import ChildrenBMICalculator from "./components/ChildrenBMICalculator";
 import SymptomAnalyzer from "./pages/SymptomAnalyzer";
 import AIFitnessProgram from "./pages/AIFitnessProgram";
 import Blog from "./pages/Blog";
+import CMSAdmin from "./pages/CMSAdmin";
 import { useEffect } from "react";
 import { useLanguage } from "./contexts/LanguageContext";
 import { useLocation, useNavigate } from "react-router-dom";
