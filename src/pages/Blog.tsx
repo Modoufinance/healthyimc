@@ -1,6 +1,6 @@
 
 import SEO from "@/components/SEO";
-import AIBlog from "./AIBlog";
+import BlogContent from "@/components/blog/BlogContent";
 
 const Blog = () => {
   const structuredData = {
@@ -20,7 +20,7 @@ const Blog = () => {
         canonicalUrl="https://healthyimc.com/blog"
         structuredData={structuredData}
       />
-      <AIBlog />
+      <BlogContent />
     </>
   );
 };
