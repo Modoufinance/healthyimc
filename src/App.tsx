@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import AppRoutes from "./AppRoutes";
+import EnhancedNavigation from "./components/enhanced-navigation";
 
 const queryClient = new QueryClient();
 
@@ -20,7 +21,10 @@ const App = () => {
               <div className="min-h-screen flex flex-col">
                 <Toaster />
                 <Sonner />
-                <AppRoutes />
+                <EnhancedNavigation />
+                <main className="flex-1">
+                  <AppRoutes />
+                </main>
               </div>
             </TooltipProvider>
           </LanguageProvider>

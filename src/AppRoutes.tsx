@@ -1,7 +1,6 @@
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useLocaleDetection } from "./hooks/useLocaleDetection";
-import EnhancedNavigation from "./components/enhanced-navigation";
 import Home from "./pages/Home";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -91,32 +90,29 @@ const AppRoutes = () => {
   };
 
   return (
-    <>
-      <EnhancedNavigation />
-      <main className="flex-1" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-        <Routes>
-          {/* Route d'administration CMS */}
-          <Route path="/admin/cms" element={<CMSAdmin />} />
-          
-          {/* Routes en français (par défaut) */}
-          {getOptimizedRoutes()}
-          
-          {/* Routes pour chaque langue supportée */}
-          {getOptimizedRoutes('en')}
-          {getOptimizedRoutes('zh')}
-          {getOptimizedRoutes('es')}
-          {getOptimizedRoutes('ar')}
-          {getOptimizedRoutes('hi')}
-          {getOptimizedRoutes('pt')}
-          {getOptimizedRoutes('bn')}
-          {getOptimizedRoutes('ru')}
-          {getOptimizedRoutes('ja')}
-          
-          {/* Redirection par défaut */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
-    </>
+    <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      <Routes>
+        {/* Route d'administration CMS */}
+        <Route path="/admin/cms" element={<CMSAdmin />} />
+        
+        {/* Routes en français (par défaut) */}
+        {getOptimizedRoutes()}
+        
+        {/* Routes pour chaque langue supportée */}
+        {getOptimizedRoutes('en')}
+        {getOptimizedRoutes('zh')}
+        {getOptimizedRoutes('es')}
+        {getOptimizedRoutes('ar')}
+        {getOptimizedRoutes('hi')}
+        {getOptimizedRoutes('pt')}
+        {getOptimizedRoutes('bn')}
+        {getOptimizedRoutes('ru')}
+        {getOptimizedRoutes('ja')}
+        
+        {/* Redirection par défaut */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </div>
   );
 };
 
