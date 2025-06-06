@@ -78,8 +78,14 @@ const Index = () => {
     }
   };
 
+  // Breadcrumb items for BreadcrumbsSEO component
   const breadcrumbItems = [
     { label: "Accueil", href: "/", current: true }
+  ];
+
+  // Breadcrumb items for EnhancedSEO component (different structure)
+  const seoOreadcrumbItems = [
+    { name: "Accueil", url: "https://healthyimc.com/" }
   ];
 
   const scrollToCalculator = () => {
@@ -97,7 +103,7 @@ const Index = () => {
         structuredData={homeStructuredData}
         hasFAQ={true}
         faqItems={faqItems}
-        breadcrumbItems={breadcrumbItems}
+        breadcrumbItems={seoOreadcrumbItems}
         type="website"
       />
       
