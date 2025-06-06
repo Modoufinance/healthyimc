@@ -1,4 +1,3 @@
-
 import QuickBMICalculator from "@/components/home/QuickBMICalculator";
 import HomeSEO from "@/components/home/HomeSEO";
 import { Link } from "react-router-dom";
@@ -80,7 +79,7 @@ const Index = () => {
   };
 
   const breadcrumbItems = [
-    { name: "Accueil", url: "https://healthyimc.com/" }
+    { label: "Accueil", href: "/", current: true }
   ];
 
   const scrollToCalculator = () => {
