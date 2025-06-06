@@ -15,10 +15,7 @@ export class CMSService {
       return [];
     }
     
-    return data.map(article => ({
-      ...article,
-      order: article.order_number || 0
-    })) || [];
+    return data || [];
   }
 
   static async getPublishedArticles(): Promise<CMSArticle[]> {
@@ -340,7 +337,10 @@ export class CMSService {
       return [];
     }
     
-    return data || [];
+    return data.map(item => ({
+      ...item,
+      type: item.type as 'text' | 'html' | 'json'
+    })) || [];
   }
 
   static async getContentByKey(key: string): Promise<CMSContent | null> {
@@ -356,7 +356,10 @@ export class CMSService {
       return null;
     }
     
-    return data;
+    return {
+      ...data,
+      type: data.type as 'text' | 'html' | 'json'
+    };
   }
 
   static async createContent(content: Omit<CMSContent, 'id' | 'created_at' | 'updated_at'>): Promise<CMSContent | null> {
@@ -378,7 +381,10 @@ export class CMSService {
       return null;
     }
     
-    return data;
+    return {
+      ...data,
+      type: data.type as 'text' | 'html' | 'json'
+    };
   }
 
   static async updateContent(id: string, updates: Partial<CMSContent>): Promise<CMSContent | null> {
@@ -399,7 +405,10 @@ export class CMSService {
       return null;
     }
     
-    return data;
+    return {
+      ...data,
+      type: data.type as 'text' | 'html' | 'json'
+    };
   }
 
   static async deleteContent(id: string): Promise<boolean> {
