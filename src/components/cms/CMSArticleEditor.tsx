@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { X, Save, Eye, Upload } from "lucide-react";
+import { X, Save, Eye, Upload, Code, Monitor } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { CMSArticle } from "@/types/cms";
 import { CMSService } from "@/services/cmsService";
@@ -31,6 +30,8 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
     meta_description: article?.meta_description || "",
     published: article?.published || false,
   });
+  const [htmlContent, setHtmlContent] = useState(article?.content || "");
+  const [previewMode, setPreviewMode] = useState<"code" | "preview">("code");
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
 
@@ -39,6 +40,11 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
       ...prev,
       [field]: value
     }));
+  };
+
+  const handleHtmlChange = (value: string) => {
+    setHtmlContent(value);
+    handleInputChange("content", value);
   };
 
   const handleSave = async () => {
@@ -56,7 +62,7 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
       const articleData = {
         title: formData.title,
         slug: formData.slug,
-        content: formData.content,
+        content: htmlContent,
         excerpt: formData.excerpt,
         author: formData.author,
         category: formData.category,
@@ -106,9 +112,80 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
-      .replace(/^-+|-+$/g, ''); // Remove leading and trailing dashes
+      .replace(/^-+|-+$/g, '');
     
     handleInputChange("slug", slug);
+  };
+
+  const insertHtmlTemplate = (template: string) => {
+    const templates = {
+      table: `
+<div class="overflow-x-auto my-6">
+  <table class="w-full border-collapse border border-gray-300">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border border-gray-300 px-4 py-2 text-left">En-tête 1</th>
+        <th class="border border-gray-300 px-4 py-2 text-left">En-tête 2</th>
+        <th class="border border-gray-300 px-4 py-2 text-left">En-tête 3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border border-gray-300 px-4 py-2">Cellule 1</td>
+        <td class="border border-gray-300 px-4 py-2">Cellule 2</td>
+        <td class="border border-gray-300 px-4 py-2">Cellule 3</td>
+      </tr>
+    </tbody>
+  </table>
+</div>`,
+      callout: `
+<div class="bg-blue-50 border-l-4 border-blue-400 p-4 my-6">
+  <div class="flex">
+    <div class="flex-shrink-0">
+      <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+      </svg>
+    </div>
+    <div class="ml-3">
+      <h3 class="text-sm font-medium text-blue-800">Information importante</h3>
+      <div class="mt-2 text-sm text-blue-700">
+        <p>Votre contenu d'information ici...</p>
+      </div>
+    </div>
+  </div>
+</div>`,
+      iframe: `
+<div class="my-6">
+  <iframe 
+    src="https://example.com" 
+    width="100%" 
+    height="400" 
+    frameborder="0" 
+    class="rounded-lg shadow-lg">
+  </iframe>
+</div>`,
+      grid: `
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h3 class="text-lg font-semibold mb-2">Titre 1</h3>
+    <p class="text-gray-600">Votre contenu ici...</p>
+  </div>
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h3 class="text-lg font-semibold mb-2">Titre 2</h3>
+    <p class="text-gray-600">Votre contenu ici...</p>
+  </div>
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h3 class="text-lg font-semibold mb-2">Titre 3</h3>
+    <p class="text-gray-600">Votre contenu ici...</p>
+  </div>
+</div>`
+    };
+    
+    const templateContent = templates[template as keyof typeof templates];
+    if (templateContent) {
+      setHtmlContent(prev => prev + templateContent);
+      handleInputChange("content", htmlContent + templateContent);
+    }
   };
 
   return (
@@ -133,8 +210,9 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="content" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="content">Contenu</TabsTrigger>
+            <TabsTrigger value="html">HTML Personnalisé</TabsTrigger>
             <TabsTrigger value="settings">Paramètres</TabsTrigger>
             <TabsTrigger value="seo">SEO</TabsTrigger>
           </TabsList>
@@ -187,8 +265,107 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
                 className="font-mono"
               />
               <p className="text-xs text-gray-500">
-                Vous pouvez utiliser du HTML pour la mise en forme
+                Vous pouvez utiliser du HTML pour la mise en forme. Pour plus d'options, utilisez l'onglet "HTML Personnalisé".
               </p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="html" className="space-y-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-lg font-semibold">Éditeur HTML Avancé</Label>
+                  <p className="text-sm text-gray-500">
+                    Ajoutez ici votre contenu HTML personnalisé. Ce champ permet de rédiger ou coller directement du code HTML pour un contrôle total sur la mise en forme de vos articles.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant={previewMode === "code" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setPreviewMode("code")}
+                  >
+                    <Code className="h-4 w-4 mr-2" />
+                    Code
+                  </Button>
+                  <Button
+                    variant={previewMode === "preview" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setPreviewMode("preview")}
+                  >
+                    <Monitor className="h-4 w-4 mr-2" />
+                    Aperçu
+                  </Button>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Modèles HTML prêts à utiliser</Label>
+                <div className="flex flex-wrap gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => insertHtmlTemplate("table")}
+                  >
+                    Tableau
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => insertHtmlTemplate("callout")}
+                  >
+                    Encadré Info
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => insertHtmlTemplate("iframe")}
+                  >
+                    iFrame
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => insertHtmlTemplate("grid")}
+                  >
+                    Grille 3 colonnes
+                  </Button>
+                </div>
+              </div>
+
+              {previewMode === "code" ? (
+                <div className="space-y-2">
+                  <Label htmlFor="htmlContent">Code HTML</Label>
+                  <Textarea
+                    id="htmlContent"
+                    value={htmlContent}
+                    onChange={(e) => handleHtmlChange(e.target.value)}
+                    placeholder="<div class='my-custom-content'>
+  <h2>Mon titre personnalisé</h2>
+  <p>Mon contenu avec <strong>mise en forme</strong> avancée.</p>
+  <div class='bg-blue-100 p-4 rounded'>
+    Bloc stylisé personnalisé
+  </div>
+</div>"
+                    rows={20}
+                    className="font-mono text-sm"
+                  />
+                  <p className="text-xs text-gray-500">
+                    Idéal pour intégrer des éléments avancés comme des tableaux, iframes, ou blocs stylisés. Utilisez les classes Tailwind CSS pour le style.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <Label>Aperçu du rendu HTML</Label>
+                  <div 
+                    className="border rounded-lg p-4 bg-white min-h-[400px] prose prose-sm max-w-none"
+                    dangerouslySetInnerHTML={{ __html: htmlContent }}
+                  />
+                  <p className="text-xs text-gray-500">
+                    Ceci est un aperçu de votre contenu HTML. Basculez vers "Code" pour modifier.
+                  </p>
+                </div>
+              )}
             </div>
           </TabsContent>
 
