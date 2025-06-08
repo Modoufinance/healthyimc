@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,12 +14,14 @@ import {
   Edit,
   Trash2,
   Eye,
-  Search
+  Search,
+  Wand2
 } from "lucide-react";
 import CMSArticleEditor from "@/components/cms/CMSArticleEditor";
 import CMSFAQEditor from "@/components/cms/CMSFAQEditor";
 import CMSTestimonialEditor from "@/components/cms/CMSTestimonialEditor";
 import CMSContentEditor from "@/components/cms/CMSContentEditor";
+import AIContentGenerator from "@/components/cms/AIContentGenerator";
 import { CMSService } from "@/services/cmsService";
 import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
 
@@ -28,6 +29,7 @@ const CMSAdmin = () => {
   const [activeTab, setActiveTab] = useState("articles");
   const [searchTerm, setSearchTerm] = useState("");
   const [showEditor, setShowEditor] = useState(false);
+  const [showAIGenerator, setShowAIGenerator] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -79,15 +81,24 @@ const CMSAdmin = () => {
   const handleNewItem = () => {
     setEditingItem(null);
     setShowEditor(true);
+    setShowAIGenerator(false);
+  };
+
+  const handleAIGenerate = () => {
+    setShowAIGenerator(true);
+    setShowEditor(false);
+    setEditingItem(null);
   };
 
   const handleEditItem = (item: any) => {
     setEditingItem(item);
     setShowEditor(true);
+    setShowAIGenerator(false);
   };
 
   const handleCloseEditor = () => {
     setShowEditor(false);
+    setShowAIGenerator(false);
     setEditingItem(null);
     loadData(); // Reload data after editing
   };
@@ -155,7 +166,7 @@ const CMSAdmin = () => {
             Administration CMS - HealthyIMC
           </h1>
           <p className="text-gray-600">
-            Gérez le contenu de votre site calculateur IMC
+            Gérez le contenu de votre site calculateur IMC avec l'IA
           </p>
         </div>
 
@@ -185,6 +196,13 @@ const CMSAdmin = () => {
                 onClose={handleCloseEditor}
               />
             )}
+          </div>
+        ) : showAIGenerator ? (
+          <div className="mb-6">
+            <AIContentGenerator 
+              onArticleGenerated={() => loadData()}
+              onClose={handleCloseEditor}
+            />
           </div>
         ) : (
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -217,10 +235,18 @@ const CMSAdmin = () => {
                   className="pl-10 w-64"
                 />
               </div>
-              <Button onClick={handleNewItem} className="flex items-center gap-2">
-                <Plus className="h-4 w-4" />
-                Nouveau
-              </Button>
+              <div className="flex gap-2">
+                {activeTab === "articles" && (
+                  <Button onClick={handleAIGenerate} className="flex items-center gap-2" variant="secondary">
+                    <Wand2 className="h-4 w-4" />
+                    Générateur IA
+                  </Button>
+                )}
+                <Button onClick={handleNewItem} className="flex items-center gap-2">
+                  <Plus className="h-4 w-4" />
+                  Nouveau
+                </Button>
+              </div>
             </div>
 
             <TabsContent value="articles">

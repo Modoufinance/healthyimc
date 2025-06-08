@@ -1,4 +1,7 @@
+
 import { toast } from "@/hooks/use-toast";
+import { AIContentService } from "./aiContentService";
+import { CMSService } from "./cmsService";
 
 interface BlogPost {
   title: string;
@@ -52,4 +55,84 @@ export const generateBlogPost = async (apiKey: string): Promise<BlogPost | null>
     });
     return null;
   }
+};
+
+// Nouvelles fonctions pour l'intégration IA
+export const generateArticleWithAI = async (topic: string, category: string) => {
+  try {
+    const articleData = await AIContentService.generateFullArticle(topic, category);
+    const createdArticle = await CMSService.createArticle(articleData as any);
+    
+    if (createdArticle) {
+      toast({
+        title: "Article généré !",
+        description: `L'article "${topic}" a été créé avec succès.`,
+      });
+      return createdArticle;
+    }
+    return null;
+  } catch (error) {
+    console.error('Erreur génération article IA:', error);
+    toast({
+      title: "Erreur",
+      description: "Impossible de générer l'article avec l'IA.",
+      variant: "destructive",
+    });
+    return null;
+  }
+};
+
+export const optimizeArticleWithAI = async (articleId: string) => {
+  try {
+    const article = await CMSService.getArticle(articleId);
+    if (!article) {
+      throw new Error('Article non trouvé');
+    }
+
+    const optimizations = await AIContentService.optimizeExistingArticle(article);
+    const updatedArticle = await CMSService.updateArticle(articleId, optimizations);
+    
+    if (updatedArticle) {
+      toast({
+        title: "Article optimisé !",
+        description: "L'article a été optimisé pour le SEO avec succès.",
+      });
+      return updatedArticle;
+    }
+    return null;
+  } catch (error) {
+    console.error('Erreur optimisation article IA:', error);
+    toast({
+      title: "Erreur",
+      description: "Impossible d'optimiser l'article avec l'IA.",
+      variant: "destructive",
+    });
+    return null;
+  }
+};
+
+// Génération automatique de contenu par lot
+export const generateBatchArticles = async (topics: string[], category: string) => {
+  const results = [];
+  
+  for (const topic of topics) {
+    try {
+      const article = await generateArticleWithAI(topic, category);
+      if (article) {
+        results.push(article);
+      }
+      
+      // Délai pour éviter de surcharger l'API
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    } catch (error) {
+      console.error(`Erreur pour le sujet ${topic}:`, error);
+    }
+  }
+  
+  toast({
+    title: "Génération terminée",
+    description: `${results.length} article(s) généré(s) sur ${topics.length} demandé(s).`,
+  });
+  
+  return results;
 };
