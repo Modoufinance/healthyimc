@@ -14,6 +14,7 @@ import ChildrenBMICalculator from "./components/ChildrenBMICalculator";
 import SymptomAnalyzer from "./pages/SymptomAnalyzer";
 import AIFitnessProgram from "./pages/AIFitnessProgram";
 import Blog from "./pages/Blog";
+import BlogArticle from "./pages/BlogArticle";
 import CMSAdmin from "./pages/CMSAdmin";
 import { useEffect } from "react";
 import { useLanguage } from "./contexts/LanguageContext";
@@ -79,8 +80,9 @@ const AppRoutes = () => {
         <Route path={`${prefix}/bien-etre`} element={<WellnessCompanion />} />
         <Route path={`${prefix}/programme-fitness-ia`} element={<AIFitnessProgram />} />
         
-        {/* Nouvelle route pour le blog */}
+        {/* Routes blog */}
         <Route path={`${prefix}/blog`} element={<Blog />} />
+        <Route path={`${prefix}/blog/:slug`} element={<BlogArticle />} />
         
         {/* Pages légales et informatives */}
         <Route path={`${prefix}/a-propos`} element={<About />} />

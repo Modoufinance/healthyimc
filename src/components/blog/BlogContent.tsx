@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -122,7 +123,7 @@ const BlogContent = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredArticles.map((article) => (
-              <Card key={article.id} className="overflow-hidden bg-white/95 backdrop-blur hover:shadow-lg transition-shadow">
+              <Card key={article.id} className="overflow-hidden bg-white/95 backdrop-blur hover:shadow-lg transition-all duration-300 hover:scale-105">
                 {article.featured_image && (
                   <div className="h-48 overflow-hidden">
                     <img
@@ -164,7 +165,7 @@ const BlogContent = () => {
                 </CardHeader>
                 
                 <CardContent>
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
                     {article.excerpt 
                       ? truncateText(article.excerpt, 120)
                       : article.content 
@@ -172,17 +173,20 @@ const BlogContent = () => {
                         : "Aucun extrait disponible"}
                   </p>
                   
-                  <div className="flex items-center justify-between mt-4">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1 text-xs text-gray-400">
                       <Clock className="w-3 h-3" />
                       <span>5 min de lecture</span>
                     </div>
                     
                     <Button 
+                      asChild
                       size="sm" 
                       className="bg-[#4facfe] hover:bg-[#00f2fe] transition-colors"
                     >
-                      Lire l'article
+                      <Link to={`/blog/${article.slug}`}>
+                        Lire l'article
+                      </Link>
                     </Button>
                   </div>
                 </CardContent>
