@@ -16,6 +16,10 @@ import AIFitnessProgram from "./pages/AIFitnessProgram";
 import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
 import CMSAdmin from "./pages/CMSAdmin";
+import BMIWomen from "./pages/BMIWomen";
+import BMIMen from "./pages/BMIMen";
+import IdealWeight from "./pages/IdealWeight";
+import BMIEducation from "./pages/BMIEducation";
 import { useEffect } from "react";
 import { useLanguage } from "./contexts/LanguageContext";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -66,13 +70,13 @@ const AppRoutes = () => {
         <Route path={`${prefix}/calculateur-calories`} element={<CalorieCalculator />} />
         
         {/* Routes spécifiques pour le SEO */}
-        <Route path={`${prefix}/calcul-imc-femme`} element={<BMICalculator />} />
-        <Route path={`${prefix}/calcul-imc-homme`} element={<BMICalculator />} />
-        <Route path={`${prefix}/poids-ideal-calcul`} element={<BMICalculator />} />
-        <Route path={`${prefix}/indice-masse-corporelle`} element={<BMICalculator />} />
-        <Route path={`${prefix}/imc-normal`} element={<BMICalculator />} />
-        <Route path={`${prefix}/imc-surpoids`} element={<BMICalculator />} />
-        <Route path={`${prefix}/imc-obesite`} element={<BMICalculator />} />
+        <Route path={`${prefix}/calcul-imc-femme`} element={<BMIWomen />} />
+        <Route path={`${prefix}/calcul-imc-homme`} element={<BMIMen />} />
+        <Route path={`${prefix}/poids-ideal-calcul`} element={<IdealWeight />} />
+        <Route path={`${prefix}/indice-masse-corporelle`} element={<BMIEducation />} />
+        <Route path={`${prefix}/imc-normal`} element={<BMINormal />} />
+        <Route path={`${prefix}/imc-surpoids`} element={<BMIOverweight />} />
+        <Route path={`${prefix}/imc-obesite`} element={<BMIObesity />} />
         
         {/* Routes assistants et outils */}
         <Route path={`${prefix}/analyseur-symptomes`} element={<SymptomAnalyzer />} />
