@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { CMSArticle } from "@/types/cms";
 import { CMSService } from "@/services/cmsService";
 import HTMLImporter from "./HTMLImporter";
+import ImageUploader from "./ImageUploader";
 
 interface CMSArticleEditorProps {
   article?: CMSArticle | null;
@@ -29,6 +30,7 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
     tags: article?.tags?.join(", ") || "",
     meta_title: article?.meta_title || "",
     meta_description: article?.meta_description || "",
+    featured_image: article?.featured_image || "",
     published: article?.published || false,
   });
   const [htmlContent, setHtmlContent] = useState(article?.content || "");
@@ -42,6 +44,10 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
       ...prev,
       [field]: value
     }));
+  };
+
+  const handleImageChange = (imageUrl: string | null) => {
+    handleInputChange("featured_image", imageUrl || "");
   };
 
   const handleHtmlChange = (value: string) => {
@@ -71,6 +77,7 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
         tags: formData.tags ? formData.tags.split(",").map(tag => tag.trim()).filter(Boolean) : [],
         meta_title: formData.meta_title,
         meta_description: formData.meta_description,
+        featured_image: formData.featured_image,
         published: formData.published,
       };
 
@@ -469,20 +476,10 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label>Image mise en avant</Label>
-                  <p className="text-sm text-gray-500">
-                    Image principale de l'article
-                  </p>
-                </div>
-                <Button variant="outline" size="sm">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Télécharger
-                </Button>
-              </div>
-            </div>
+            <ImageUploader
+              currentImage={formData.featured_image}
+              onImageChange={handleImageChange}
+            />
 
             <div className="flex items-center justify-between">
               <div>
