@@ -7,10 +7,11 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { X, Save, Eye, Upload, Code, Monitor } from "lucide-react";
+import { X, Save, Eye, Upload, Code, Monitor, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { CMSArticle } from "@/types/cms";
 import { CMSService } from "@/services/cmsService";
+import HTMLImporter from "./HTMLImporter";
 
 interface CMSArticleEditorProps {
   article?: CMSArticle | null;
@@ -32,6 +33,7 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
   });
   const [htmlContent, setHtmlContent] = useState(article?.content || "");
   const [previewMode, setPreviewMode] = useState<"code" | "preview">("code");
+  const [showHTMLImporter, setShowHTMLImporter] = useState(false);
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
 
@@ -188,6 +190,56 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
     }
   };
 
+  const handleHTMLImport = (importedData: {
+    title: string;
+    content: string;
+    excerpt?: string;
+  }) => {
+    // Remplir automatiquement les champs avec les données importées
+    setFormData(prev => ({
+      ...prev,
+      title: importedData.title || prev.title,
+      excerpt: importedData.excerpt || prev.excerpt,
+      content: importedData.content,
+    }));
+    
+    setHtmlContent(importedData.content);
+    
+    // Générer automatiquement le slug si un titre a été importé
+    if (importedData.title && !formData.slug) {
+      const slug = importedData.title
+        .toLowerCase()
+        .replace(/[àáâãäå]/g, 'a')
+        .replace(/[èéêë]/g, 'e')
+        .replace(/[ìíîï]/g, 'i')
+        .replace(/[òóôõö]/g, 'o')
+        .replace(/[ùúûü]/g, 'u')
+        .replace(/[ç]/g, 'c')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      
+      setFormData(prev => ({ ...prev, slug }));
+    }
+    
+    setShowHTMLImporter(false);
+    
+    toast({
+      title: "Import réussi",
+      description: "L'article HTML a été importé. Vérifiez les informations avant de sauvegarder.",
+    });
+  };
+
+  if (showHTMLImporter) {
+    return (
+      <HTMLImporter
+        onImport={handleHTMLImport}
+        onClose={() => setShowHTMLImporter(false)}
+      />
+    );
+  }
+
   return (
     <Card className="w-full">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -195,6 +247,14 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
           {article ? "Modifier l'article" : "Nouvel article"}
         </CardTitle>
         <div className="flex items-center gap-2">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => setShowHTMLImporter(true)}
+          >
+            <FileText className="h-4 w-4 mr-2" />
+            Importer HTML
+          </Button>
           <Button variant="outline" size="sm">
             <Eye className="h-4 w-4 mr-2" />
             Prévisualiser
