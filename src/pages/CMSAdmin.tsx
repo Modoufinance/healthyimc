@@ -28,7 +28,7 @@ import { CMSService } from "@/services/cmsService";
 import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
 
 const CMSAdmin = () => {
-  const { adminUser, logout, loading } = useAdminAuth();
+  const { adminUser, logout, loading: authLoading } = useAdminAuth();
   const [activeTab, setActiveTab] = useState("articles");
   const [searchTerm, setSearchTerm] = useState("");
   const [showEditor, setShowEditor] = useState(false);
@@ -161,7 +161,7 @@ const CMSAdmin = () => {
     return new Date(dateString).toLocaleDateString('fr-FR');
   };
 
-  if (loading) {
+  if (authLoading) {
     return <div className="min-h-screen flex items-center justify-center">Chargement...</div>;
   }
 
