@@ -16,6 +16,8 @@ import AIFitnessProgram from "./pages/AIFitnessProgram";
 import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
 import CMSAdmin from "./pages/CMSAdmin";
+import AdminLogin from "./pages/AdminLogin";
+import { AdminAuthProvider } from "./contexts/AdminAuthContext";
 import BMIWomen from "./pages/BMIWomen";
 import BMIMen from "./pages/BMIMen";
 import IdealWeight from "./pages/IdealWeight";
@@ -100,8 +102,10 @@ const AppRoutes = () => {
 
   return (
     <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
-      <Routes>
-        {/* Route d'administration CMS */}
+      <AdminAuthProvider>
+        <Routes>
+        {/* Routes d'administration */}
+        <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/cms" element={<CMSAdmin />} />
         
         {/* Routes en français (par défaut) */}
@@ -121,6 +125,7 @@ const AppRoutes = () => {
         {/* Redirection par défaut */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      </AdminAuthProvider>
     </div>
   );
 };

@@ -9,6 +9,116 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admin_login_attempts: {
+        Row: {
+          blocked_by_captcha: boolean | null
+          created_at: string | null
+          id: string
+          ip_address: unknown
+          successful: boolean | null
+          username: string | null
+        }
+        Insert: {
+          blocked_by_captcha?: boolean | null
+          created_at?: string | null
+          id?: string
+          ip_address: unknown
+          successful?: boolean | null
+          username?: string | null
+        }
+        Update: {
+          blocked_by_captcha?: boolean | null
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown
+          successful?: boolean | null
+          username?: string | null
+        }
+        Relationships: []
+      }
+      admin_sessions: {
+        Row: {
+          admin_user_id: string | null
+          created_at: string | null
+          expires_at: string
+          id: string
+          ip_address: unknown | null
+          session_token: string
+          user_agent: string | null
+        }
+        Insert: {
+          admin_user_id?: string | null
+          created_at?: string | null
+          expires_at: string
+          id?: string
+          ip_address?: unknown | null
+          session_token: string
+          user_agent?: string | null
+        }
+        Update: {
+          admin_user_id?: string | null
+          created_at?: string | null
+          expires_at?: string
+          id?: string
+          ip_address?: unknown | null
+          session_token?: string
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_sessions_admin_user_id_fkey"
+            columns: ["admin_user_id"]
+            isOneToOne: false
+            referencedRelation: "admin_users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      admin_users: {
+        Row: {
+          created_at: string | null
+          email: string
+          failed_login_attempts: number | null
+          id: string
+          is_active: boolean | null
+          last_login: string | null
+          locked_until: string | null
+          password_hash: string
+          two_factor_enabled: boolean | null
+          two_factor_secret: string | null
+          updated_at: string | null
+          username: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          failed_login_attempts?: number | null
+          id?: string
+          is_active?: boolean | null
+          last_login?: string | null
+          locked_until?: string | null
+          password_hash: string
+          two_factor_enabled?: boolean | null
+          two_factor_secret?: string | null
+          updated_at?: string | null
+          username: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          failed_login_attempts?: number | null
+          id?: string
+          is_active?: boolean | null
+          last_login?: string | null
+          locked_until?: string | null
+          password_hash?: string
+          two_factor_enabled?: boolean | null
+          two_factor_secret?: string | null
+          updated_at?: string | null
+          username?: string
+        }
+        Relationships: []
+      }
       cms_articles: {
         Row: {
           author: string
@@ -263,7 +373,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      cleanup_expired_admin_sessions: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

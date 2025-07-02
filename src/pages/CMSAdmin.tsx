@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAdminAuth } from "@/contexts/AdminAuthContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +28,7 @@ import { CMSService } from "@/services/cmsService";
 import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
 
 const CMSAdmin = () => {
+  const { adminUser, logout, loading } = useAdminAuth();
   const [activeTab, setActiveTab] = useState("articles");
   const [searchTerm, setSearchTerm] = useState("");
   const [showEditor, setShowEditor] = useState(false);
@@ -157,6 +160,14 @@ const CMSAdmin = () => {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('fr-FR');
   };
+
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Chargement...</div>;
+  }
+
+  if (!adminUser) {
+    return <Navigate to="/admin/login" replace />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
