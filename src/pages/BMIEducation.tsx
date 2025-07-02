@@ -182,13 +182,13 @@ const BMIEducation = () => {
               <div>
                 <h3 className="text-xl font-semibold text-white mb-3">Tour de Taille</h3>
                 <p className="text-white/90 text-sm">
-                  Mesure la graisse abdominale. Risque élevé : >102 cm (homme), >88 cm (femme).
+                  Mesure la graisse abdominale. Risque élevé : {'>'}102 cm (homme), {'>'}88 cm (femme).
                 </p>
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-white mb-3">Rapport Taille/Hanches</h3>
                 <p className="text-white/90 text-sm">
-                  Évalue la répartition des graisses. Risque élevé : >1,0 (homme), >0,85 (femme).
+                  Évalue la répartition des graisses. Risque élevé : {'>'}1,0 (homme), {'>'}0,85 (femme).
                 </p>
               </div>
               <div>
