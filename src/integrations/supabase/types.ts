@@ -13,24 +13,24 @@ export type Database = {
         Row: {
           blocked_by_captcha: boolean | null
           created_at: string | null
-          id: string
           ip_address: unknown
+          Modou: string
           successful: boolean | null
           username: string | null
         }
         Insert: {
           blocked_by_captcha?: boolean | null
           created_at?: string | null
-          id?: string
           ip_address: unknown
+          Modou?: string
           successful?: boolean | null
           username?: string | null
         }
         Update: {
           blocked_by_captcha?: boolean | null
           created_at?: string | null
-          id?: string
           ip_address?: unknown
+          Modou?: string
           successful?: boolean | null
           username?: string | null
         }
