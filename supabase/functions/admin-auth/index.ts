@@ -2,6 +2,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts"
 
+console.log('Admin auth function loaded successfully');
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -108,14 +110,18 @@ async function handleLogin(req: Request, supabase: any, clientIP: string) {
   }
 
   // Get admin user
-  const { data: adminUser } = await supabase
+  console.log('Looking for user:', username);
+  const { data: adminUser, error: userError } = await supabase
     .from('admin_users')
     .select('*')
     .eq('username', username)
     .eq('is_active', true)
-    .single()
+    .maybeSingle()
 
-  if (!adminUser) {
+  console.log('User query result:', { adminUser, userError });
+
+  if (!adminUser || userError) {
+    console.log('User not found or error:', userError);
     await logLoginAttempt(supabase, clientIP, username, false, false)
     return new Response(JSON.stringify({ error: 'Identifiants invalides' }), {
       status: 401,
