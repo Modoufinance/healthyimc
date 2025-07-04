@@ -65,6 +65,7 @@ serve(async (req) => {
 })
 
 async function handleLogin(req: Request, supabase: any, clientIP: string) {
+  console.log('Admin login attempt started');
   const { username, password, totpCode, recaptchaToken }: LoginRequest = await req.json()
 
   // Check rate limiting
