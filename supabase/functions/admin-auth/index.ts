@@ -1,8 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts"
-
-console.log('Admin auth function loaded successfully');
+import { generateTOTPSecret, generateTOTP, verifyTOTP } from "https://deno.land/x/otp@v1.0.0/mod.ts"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -23,34 +22,23 @@ interface CreateAdminRequest {
 }
 
 serve(async (req) => {
-  console.log('Request received:', req.method, req.url);
-  
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
-    // Vérifier les variables d'environnement
-    const supabaseUrl = Deno.env.get('SUPABASE_URL');
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-    
-    if (!supabaseUrl || !supabaseServiceKey) {
-      console.error('Missing environment variables:', { supabaseUrl: !!supabaseUrl, supabaseServiceKey: !!supabaseServiceKey });
-      throw new Error('Missing required environment variables');
-    }
-
-    const supabaseClient = createClient(supabaseUrl, supabaseServiceKey)
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    )
 
     const url = new URL(req.url)
     const action = url.pathname.split('/').pop()
     
-    console.log('Action requested:', action);
-    
-    // Get client IP (take first IP if multiple are present)
-    const forwardedFor = req.headers.get('x-forwarded-for');
-    const clientIP = forwardedFor 
-      ? forwardedFor.split(',')[0].trim() 
-      : req.headers.get('x-real-ip') || 'unknown';
+    // Get client IP
+    const clientIP = req.headers.get('x-forwarded-for') || 
+                    req.headers.get('x-real-ip') || 
+                    'unknown'
 
     switch (action) {
       case 'login':
@@ -66,23 +54,11 @@ serve(async (req) => {
       case 'verify-2fa':
         return await handleVerify2FA(req, supabaseClient)
       default:
-        console.log('Unknown action:', action);
-        return new Response(JSON.stringify({ error: 'Unknown action' }), { 
-          status: 404, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        })
+        return new Response('Not found', { status: 404, headers: corsHeaders })
     }
   } catch (error) {
-    console.error('Critical error in admin-auth function:', error)
-    console.error('Error details:', {
-      message: error.message,
-      stack: error.stack,
-      name: error.name
-    });
-    return new Response(JSON.stringify({ 
-      error: 'Internal server error',
-      details: error.message 
-    }), {
+    console.error('Error:', error)
+    return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
@@ -90,7 +66,6 @@ serve(async (req) => {
 })
 
 async function handleLogin(req: Request, supabase: any, clientIP: string) {
-  console.log('Admin login attempt started');
   const { username, password, totpCode, recaptchaToken }: LoginRequest = await req.json()
 
   // Check rate limiting
@@ -133,18 +108,14 @@ async function handleLogin(req: Request, supabase: any, clientIP: string) {
   }
 
   // Get admin user
-  console.log('Looking for user:', username);
-  const { data: adminUser, error: userError } = await supabase
+  const { data: adminUser } = await supabase
     .from('admin_users')
     .select('*')
     .eq('username', username)
     .eq('is_active', true)
-    .maybeSingle()
+    .single()
 
-  console.log('User query result:', { adminUser, userError });
-
-  if (!adminUser || userError) {
-    console.log('User not found or error:', userError);
+  if (!adminUser) {
     await logLoginAttempt(supabase, clientIP, username, false, false)
     return new Response(JSON.stringify({ error: 'Identifiants invalides' }), {
       status: 401,
@@ -187,8 +158,27 @@ async function handleLogin(req: Request, supabase: any, clientIP: string) {
     })
   }
 
-  // Skip 2FA for now (simplified authentication)
-  // TODO: Implement 2FA with a different library
+  // Check 2FA if enabled
+  if (adminUser.two_factor_enabled) {
+    if (!totpCode) {
+      return new Response(JSON.stringify({ 
+        error: 'Code 2FA requis',
+        requires2FA: true 
+      }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
+    const totpValid = verifyTOTP(totpCode, adminUser.two_factor_secret)
+    if (!totpValid) {
+      await logLoginAttempt(supabase, clientIP, username, false, false)
+      return new Response(JSON.stringify({ error: 'Code 2FA invalide' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+  }
 
   // Create session
   const sessionToken = crypto.randomUUID()
@@ -255,7 +245,7 @@ async function handleVerifySession(req: Request, supabase: any) {
     `)
     .eq('session_token', sessionToken)
     .gt('expires_at', new Date().toISOString())
-    .maybeSingle()
+    .single()
 
   if (!session) {
     return new Response(JSON.stringify({ error: 'Session invalide' }), {
@@ -339,15 +329,95 @@ async function handleCreateAdmin(req: Request, supabase: any) {
 }
 
 async function handleSetup2FA(req: Request, supabase: any) {
-  return new Response(JSON.stringify({ error: '2FA temporairement désactivé' }), {
-    status: 501,
+  const authHeader = req.headers.get('Authorization')
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return new Response(JSON.stringify({ error: 'Non autorisé' }), {
+      status: 401,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+
+  const sessionToken = authHeader.substring(7)
+  
+  const { data: session } = await supabase
+    .from('admin_sessions')
+    .select('admin_user_id')
+    .eq('session_token', sessionToken)
+    .gt('expires_at', new Date().toISOString())
+    .single()
+
+  if (!session) {
+    return new Response(JSON.stringify({ error: 'Session invalide' }), {
+      status: 401,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+
+  const secret = generateTOTPSecret()
+  
+  await supabase
+    .from('admin_users')
+    .update({ two_factor_secret: secret })
+    .eq('id', session.admin_user_id)
+
+  return new Response(JSON.stringify({ 
+    success: true,
+    secret,
+    qrCode: `otpauth://totp/HealthyIMC%20Admin?secret=${secret}&issuer=HealthyIMC`
+  }), {
+    status: 200,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   })
 }
 
 async function handleVerify2FA(req: Request, supabase: any) {
-  return new Response(JSON.stringify({ error: '2FA temporairement désactivé' }), {
-    status: 501,
+  const { totpCode } = await req.json()
+  const authHeader = req.headers.get('Authorization')
+  
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return new Response(JSON.stringify({ error: 'Non autorisé' }), {
+      status: 401,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+
+  const sessionToken = authHeader.substring(7)
+  
+  const { data: session } = await supabase
+    .from('admin_sessions')
+    .select(`
+      admin_user_id,
+      admin_users (
+        two_factor_secret
+      )
+    `)
+    .eq('session_token', sessionToken)
+    .gt('expires_at', new Date().toISOString())
+    .single()
+
+  if (!session) {
+    return new Response(JSON.stringify({ error: 'Session invalide' }), {
+      status: 401,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+
+  const totpValid = verifyTOTP(totpCode, session.admin_users.two_factor_secret)
+  
+  if (!totpValid) {
+    return new Response(JSON.stringify({ error: 'Code invalide' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+
+  await supabase
+    .from('admin_users')
+    .update({ two_factor_enabled: true })
+    .eq('id', session.admin_user_id)
+
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   })
 }

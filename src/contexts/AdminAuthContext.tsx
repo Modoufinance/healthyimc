@@ -34,7 +34,7 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
 
     try {
-      const response = await fetch('https://rzqkytriimmwfsnjirwf.supabase.co/functions/v1/admin-auth/verify-session', {
+      const response = await fetch('/functions/v1/admin-auth/verify-session', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -56,7 +56,7 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const login = async (username: string, password: string, totpCode?: string, recaptchaToken?: string) => {
     try {
-      const response = await fetch('https://rzqkytriimmwfsnjirwf.supabase.co/functions/v1/admin-auth/login', {
+      const response = await fetch('/functions/v1/admin-auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const token = localStorage.getItem('admin_session_token');
     if (token) {
       try {
-        await fetch('https://rzqkytriimmwfsnjirwf.supabase.co/functions/v1/admin-auth/logout', {
+        await fetch('/functions/v1/admin-auth/logout', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -112,7 +112,7 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const token = localStorage.getItem('admin_session_token');
     if (!token) throw new Error('Non autorisé');
 
-    const response = await fetch('https://rzqkytriimmwfsnjirwf.supabase.co/functions/v1/admin-auth/setup-2fa', {
+    const response = await fetch('/functions/v1/admin-auth/setup-2fa', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -132,7 +132,7 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     if (!token) return false;
 
     try {
-      const response = await fetch('https://rzqkytriimmwfsnjirwf.supabase.co/functions/v1/admin-auth/verify-2fa', {
+      const response = await fetch('/functions/v1/admin-auth/verify-2fa', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
