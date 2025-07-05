@@ -23,18 +23,28 @@ interface CreateAdminRequest {
 }
 
 serve(async (req) => {
+  console.log('Request received:', req.method, req.url);
+  
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    )
+    // Vérifier les variables d'environnement
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    
+    if (!supabaseUrl || !supabaseServiceKey) {
+      console.error('Missing environment variables:', { supabaseUrl: !!supabaseUrl, supabaseServiceKey: !!supabaseServiceKey });
+      throw new Error('Missing required environment variables');
+    }
+
+    const supabaseClient = createClient(supabaseUrl, supabaseServiceKey)
 
     const url = new URL(req.url)
     const action = url.pathname.split('/').pop()
+    
+    console.log('Action requested:', action);
     
     // Get client IP
     const clientIP = req.headers.get('x-forwarded-for') || 
@@ -55,11 +65,23 @@ serve(async (req) => {
       case 'verify-2fa':
         return await handleVerify2FA(req, supabaseClient)
       default:
-        return new Response('Not found', { status: 404, headers: corsHeaders })
+        console.log('Unknown action:', action);
+        return new Response(JSON.stringify({ error: 'Unknown action' }), { 
+          status: 404, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        })
     }
   } catch (error) {
-    console.error('Error:', error)
-    return new Response(JSON.stringify({ error: 'Internal server error' }), {
+    console.error('Critical error in admin-auth function:', error)
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
+    return new Response(JSON.stringify({ 
+      error: 'Internal server error',
+      details: error.message 
+    }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
@@ -232,7 +254,7 @@ async function handleVerifySession(req: Request, supabase: any) {
     `)
     .eq('session_token', sessionToken)
     .gt('expires_at', new Date().toISOString())
-    .single()
+    .maybeSingle()
 
   if (!session) {
     return new Response(JSON.stringify({ error: 'Session invalide' }), {
