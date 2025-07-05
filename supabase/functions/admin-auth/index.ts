@@ -46,10 +46,11 @@ serve(async (req) => {
     
     console.log('Action requested:', action);
     
-    // Get client IP
-    const clientIP = req.headers.get('x-forwarded-for') || 
-                    req.headers.get('x-real-ip') || 
-                    'unknown'
+    // Get client IP (take first IP if multiple are present)
+    const forwardedFor = req.headers.get('x-forwarded-for');
+    const clientIP = forwardedFor 
+      ? forwardedFor.split(',')[0].trim() 
+      : req.headers.get('x-real-ip') || 'unknown';
 
     switch (action) {
       case 'login':
