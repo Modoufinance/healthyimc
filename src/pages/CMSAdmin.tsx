@@ -34,7 +34,7 @@ const CMSAdmin = () => {
   const [showEditor, setShowEditor] = useState(false);
   const [showAIGenerator, setShowAIGenerator] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  const [localLoading, setLocalLoading] = useState(false);
   const { toast } = useToast();
 
   // Data states
@@ -49,7 +49,7 @@ const CMSAdmin = () => {
   }, [activeTab]);
 
   const loadData = async () => {
-    setLoading(true);
+    setLocalLoading(true);
     try {
       switch (activeTab) {
         case "articles":
@@ -77,7 +77,7 @@ const CMSAdmin = () => {
         variant: "destructive",
       });
     } finally {
-      setLoading(false);
+      setLocalLoading(false);
     }
   };
 
@@ -269,7 +269,7 @@ const CMSAdmin = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {loading ? (
+                  {localLoading ? (
                     <div className="text-center py-4">Chargement...</div>
                   ) : (
                     <div className="space-y-4">
@@ -323,7 +323,7 @@ const CMSAdmin = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {loading ? (
+                  {localLoading ? (
                     <div className="text-center py-4">Chargement...</div>
                   ) : (
                     <div className="space-y-4">
@@ -377,7 +377,7 @@ const CMSAdmin = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {loading ? (
+                  {localLoading ? (
                     <div className="text-center py-4">Chargement...</div>
                   ) : (
                     <div className="space-y-4">
@@ -433,7 +433,7 @@ const CMSAdmin = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {loading ? (
+                  {localLoading ? (
                     <div className="text-center py-4">Chargement...</div>
                   ) : (
                     <div className="space-y-4">
