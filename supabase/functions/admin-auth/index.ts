@@ -1,7 +1,180 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts"
-import { generateTOTPSecret, generateTOTP, verifyTOTP } from "https://deno.land/x/otp@v1.0.0/mod.ts"
+
+// TOTP functions using Web Crypto API
+function generateTOTPSecret(): string {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+  const bytes = new Uint8Array(20); // 160 bits
+  crypto.getRandomValues(bytes);
+  
+  let result = "";
+  let buffer = 0;
+  let bitsLeft = 0;
+  
+  for (const byte of bytes) {
+    buffer = (buffer << 8) | byte;
+    bitsLeft += 8;
+    
+    while (bitsLeft >= 5) {
+      result += alphabet[(buffer >> (bitsLeft - 5)) & 0x1F];
+      bitsLeft -= 5;
+    }
+  }
+  
+  if (bitsLeft > 0) {
+    result += alphabet[(buffer << (5 - bitsLeft)) & 0x1F];
+  }
+  
+  return result;
+}
+
+async function generateTOTP(base32Secret: string, interval = 30, length = 6, algorithm = "SHA-1"): Promise<string> {
+  // Decode base32 secret
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+  let bits = "";
+  
+  base32Secret = base32Secret.replace(/=+$/, "");
+  
+  for (const char of base32Secret) {
+    const value = alphabet.indexOf(char.toUpperCase());
+    if (value === -1) throw new Error("Invalid Base32 character");
+    bits += value.toString(2).padStart(5, "0");
+  }
+  
+  let bytes = [];
+  for (let i = 0; i < bits.length; i += 8) {
+    if (bits.length - i >= 8) {
+      bytes.push(parseInt(bits.substring(i, i + 8), 2));
+    }
+  }
+  
+  const decodedSecret = new Uint8Array(bytes);
+  
+  // Get time counter
+  const timeStamp = Date.now() / 1000;
+  const timeCounter = Math.floor(timeStamp / interval);
+  const timeHex = timeCounter.toString(16);
+  const paddedHex = timeHex.padStart(16, "0");
+  
+  // Create time buffer
+  const timeBuffer = new ArrayBuffer(8);
+  const timeView = new DataView(timeBuffer);
+  const timeBytes = paddedHex.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16));
+  
+  for (let i = 0; i < 8; i++) {
+    timeView.setUint8(i, timeBytes[i]);
+  }
+  
+  // Generate HMAC
+  const key = await crypto.subtle.importKey(
+    "raw",
+    decodedSecret,
+    { name: "HMAC", hash: algorithm },
+    false,
+    ["sign"]
+  );
+  
+  const signature = await crypto.subtle.sign("HMAC", key, timeBuffer);
+  const hmac = new Uint8Array(signature);
+  
+  // Extract OTP
+  const offset = hmac[hmac.length - 1] & 0x0f;
+  const binaryCode = 
+    ((hmac[offset] & 0x7f) << 24) |
+    ((hmac[offset + 1] & 0xff) << 16) |
+    ((hmac[offset + 2] & 0xff) << 8) |
+    (hmac[offset + 3] & 0xff);
+  
+  const stringOTP = binaryCode.toString();
+  const otp = stringOTP.slice(-length).padStart(length, "0");
+  
+  return otp;
+}
+
+async function verifyTOTP(token: string, secret: string, window = 1): Promise<boolean> {
+  try {
+    // Check current time and time windows (±30 seconds by default)
+    for (let i = -window; i <= window; i++) {
+      const testTime = Math.floor(Date.now() / 1000 / 30) + i;
+      
+      // Create a temporary time-specific secret for this window
+      const timeHex = testTime.toString(16).padStart(16, "0");
+      
+      // Generate expected TOTP for this time window
+      const expectedToken = await generateTOTPForTime(secret, testTime);
+      if (expectedToken === token) {
+        return true;
+      }
+    }
+    
+    return false;
+  } catch (error) {
+    console.error('TOTP verification error:', error);
+    return false;
+  }
+}
+
+async function generateTOTPForTime(base32Secret: string, timeCounter: number, length = 6, algorithm = "SHA-1"): Promise<string> {
+  // Decode base32 secret
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+  let bits = "";
+  
+  base32Secret = base32Secret.replace(/=+$/, "");
+  
+  for (const char of base32Secret) {
+    const value = alphabet.indexOf(char.toUpperCase());
+    if (value === -1) throw new Error("Invalid Base32 character");
+    bits += value.toString(2).padStart(5, "0");
+  }
+  
+  let bytes = [];
+  for (let i = 0; i < bits.length; i += 8) {
+    if (bits.length - i >= 8) {
+      bytes.push(parseInt(bits.substring(i, i + 8), 2));
+    }
+  }
+  
+  const decodedSecret = new Uint8Array(bytes);
+  
+  // Use provided time counter
+  const timeHex = timeCounter.toString(16);
+  const paddedHex = timeHex.padStart(16, "0");
+  
+  // Create time buffer
+  const timeBuffer = new ArrayBuffer(8);
+  const timeView = new DataView(timeBuffer);
+  const timeBytes = paddedHex.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16));
+  
+  for (let i = 0; i < 8; i++) {
+    timeView.setUint8(i, timeBytes[i]);
+  }
+  
+  // Generate HMAC
+  const key = await crypto.subtle.importKey(
+    "raw",
+    decodedSecret,
+    { name: "HMAC", hash: algorithm },
+    false,
+    ["sign"]
+  );
+  
+  const signature = await crypto.subtle.sign("HMAC", key, timeBuffer);
+  const hmac = new Uint8Array(signature);
+  
+  // Extract OTP
+  const offset = hmac[hmac.length - 1] & 0x0f;
+  const binaryCode = 
+    ((hmac[offset] & 0x7f) << 24) |
+    ((hmac[offset + 1] & 0xff) << 16) |
+    ((hmac[offset + 2] & 0xff) << 8) |
+    (hmac[offset + 3] & 0xff);
+  
+  const stringOTP = binaryCode.toString();
+  const otp = stringOTP.slice(-length).padStart(length, "0");
+  
+  return otp;
+}
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -171,7 +344,7 @@ async function handleLogin(req: Request, supabase: any, clientIP: string) {
       })
     }
 
-    const totpValid = verifyTOTP(totpCode, adminUser.two_factor_secret)
+    const totpValid = await verifyTOTP(totpCode, adminUser.two_factor_secret)
     if (!totpValid) {
       await logLoginAttempt(supabase, clientIP, username, false, false)
       return new Response(JSON.stringify({ error: 'Code 2FA invalide' }), {
@@ -403,7 +576,7 @@ async function handleVerify2FA(req: Request, supabase: any) {
     })
   }
 
-  const totpValid = verifyTOTP(totpCode, session.admin_users.two_factor_secret)
+  const totpValid = await verifyTOTP(totpCode, session.admin_users.two_factor_secret)
   
   if (!totpValid) {
     return new Response(JSON.stringify({ error: 'Code invalide' }), {
