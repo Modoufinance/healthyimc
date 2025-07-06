@@ -69,38 +69,6 @@ const AdminLogin = () => {
     });
   };
 
-  const createDefaultAdmin = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch('https://rzqkytriimmwfsnjirwf.supabase.co/functions/v1/admin-auth/create-admin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: 'Modou',
-          email: 'modou@healthyimc.com',
-          password: '7844mn44'
-        })
-      });
-
-      const result = await response.json();
-      
-      if (response.ok) {
-        toast({
-          title: 'Admin créé avec succès',
-          description: 'Vous pouvez maintenant vous connecter',
-        });
-      } else {
-        setError(result.error || 'Erreur lors de la création de l\'admin');
-      }
-    } catch (error) {
-      setError('Erreur de connexion au serveur');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -291,25 +259,6 @@ const AdminLogin = () => {
               )}
             </Button>
           </form>
-
-          <div className="text-center">
-            <Button 
-              type="button" 
-              variant="outline"
-              onClick={createDefaultAdmin}
-              disabled={loading}
-              className="w-full"
-            >
-              {loading ? (
-                <div className="flex items-center gap-2">
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-blue-600/30 border-t-blue-600" />
-                  Création de l'admin...
-                </div>
-              ) : (
-                'Créer l\'admin par défaut (Modou)'
-              )}
-            </Button>
-          </div>
 
           <div className="text-center text-xs text-slate-500 space-y-2">
             <p>Connexion sécurisée avec chiffrement SSL/TLS</p>
