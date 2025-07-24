@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Heart, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ConversionElements from "./ConversionElements";
-import AdBanner from "@/components/ads/AdBanner";
 
 const HeroSection = () => {
   return (
@@ -57,16 +56,6 @@ const HeroSection = () => {
             Nouveau ! Découvrez notre programme fitness basé sur l'IA
           </Link>
         </Button>
-      </div>
-      
-      {/* Publicité banner en bas du hero */}
-      <div className="mt-8">
-        <AdBanner 
-          adSlot="5566778899" 
-          adFormat="horizontal"
-          className="opacity-90"
-          style={{ minHeight: '90px' }}
-        />
       </div>
       
       <ConversionElements />
