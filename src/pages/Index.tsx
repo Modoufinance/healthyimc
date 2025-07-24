@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import { PageTransition, StaggeredContainer } from "@/components/ui/page-transition";
 import { BreadcrumbsSEO } from "@/components/ui/breadcrumbs-seo";
 import EnhancedSEO from "@/components/enhanced-seo";
+import AdBanner from "@/components/ads/AdBanner";
+import AdInContent from "@/components/ads/AdInContent";
+import AdRectangle from "@/components/ads/AdRectangle";
 
 const Index = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -164,6 +167,15 @@ const Index = () => {
             </div>
           </PageTransition>
 
+          {/* Publicité banner après calculateur */}
+          <PageTransition delay={350}>
+            <AdBanner 
+              adSlot="1234567890" 
+              className="my-8"
+              style={{ minHeight: '100px' }}
+            />
+          </PageTransition>
+
           {/* Indicateur de défilement amélioré */}
           <PageTransition delay={400}>
             <div className="flex flex-col items-center mt-8 space-y-2">
@@ -253,6 +265,11 @@ const Index = () => {
             </div>
           </PageTransition>
 
+          {/* Publicité rectangle entre les sections */}
+          <PageTransition delay={550}>
+            <AdRectangle adSlot="9876543210" className="my-8" />
+          </PageTransition>
+
           {/* Section d'information enrichie */}
           <PageTransition delay={600}>
             <div className="mt-12 glassmorphism-card">
@@ -308,6 +325,11 @@ const Index = () => {
                 </div>
               </div>
             </div>
+          </PageTransition>
+
+          {/* Publicité in-content avant FAQ */}
+          <PageTransition delay={650}>
+            <AdInContent adSlot="1122334455" />
           </PageTransition>
 
           {/* FAQ Section enrichie */}

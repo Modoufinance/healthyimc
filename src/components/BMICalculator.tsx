@@ -14,6 +14,9 @@ import { getPersonalizedAdvice, predictBMITrend } from "@/services/aiService";
 import BMIEducation from "./BMIEducation";
 import EnhancedFAQ from "./EnhancedFAQ";
 import VoiceSearch from "./VoiceSearch";
+import AdLayout from "./ads/AdLayout";
+import AdInContent from "./ads/AdInContent";
+import AdRectangle from "./ads/AdRectangle";
 
 export interface BMIData {
   bmi: number;
@@ -217,10 +220,11 @@ const BMICalculator = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="p-6 shadow-lg rounded-lg">
-            <div className="space-y-4 text-center">
+      <AdLayout showSidebar={true} sidebarAdSlot="2233445566">
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="p-6 shadow-lg rounded-lg">
+              <div className="space-y-4 text-center">
               <div className="flex items-center justify-center gap-2">
                 <Scale className="h-8 w-8 text-[#4facfe]" aria-hidden="true" />
                 <h1 className="text-2xl font-bold tracking-tight text-[#4facfe]">
@@ -279,16 +283,20 @@ const BMICalculator = () => {
                 </div>
               </div>
             )}
-          </Card>
+            </Card>
 
-          <UserDataForm 
-            onSubmit={handleUserDataSubmit} 
-            age={userData.age}
-            gender={userData.gender}
-            activityLevel={userData.activityLevel}
-            targetBMI={userData.targetBMI}
-          />
-        </div>
+            <UserDataForm 
+              onSubmit={handleUserDataSubmit} 
+              age={userData.age}
+              gender={userData.gender}
+              activityLevel={userData.activityLevel}
+              targetBMI={userData.targetBMI}
+            />
+          </div>
+
+
+          {/* Publicité après le formulaire */}
+          <AdInContent adSlot="3344556677" />
 
         {bmiData && (
           <div className="animate-slide-up space-y-6">
@@ -322,6 +330,9 @@ const BMICalculator = () => {
           </Card>
         )}
 
+        {/* Publicité avant FAQ */}
+        <AdRectangle adSlot="4455667788" />
+
         <EnhancedFAQ 
           title="Questions fréquentes sur l'IMC" 
           description="Trouvez les réponses aux questions les plus courantes sur l'Indice de Masse Corporelle"
@@ -330,7 +341,11 @@ const BMICalculator = () => {
         />
 
         <BMIEducation />
-      </div>
+        
+          {/* Publicité en fin de page */}
+          <AdInContent adSlot="5566778899" />
+        </div>
+      </AdLayout>
     </div>
   );
 };

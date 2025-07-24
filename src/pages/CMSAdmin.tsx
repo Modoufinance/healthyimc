@@ -28,13 +28,13 @@ import { CMSService } from "@/services/cmsService";
 import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
 
 const CMSAdmin = () => {
-  const { adminUser, logout, loading } = useAdminAuth();
+  const { adminUser, logout, loading: authLoading } = useAdminAuth();
   const [activeTab, setActiveTab] = useState("articles");
   const [searchTerm, setSearchTerm] = useState("");
   const [showEditor, setShowEditor] = useState(false);
   const [showAIGenerator, setShowAIGenerator] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
-  const [localLoading, setLocalLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   // Data states
@@ -49,7 +49,7 @@ const CMSAdmin = () => {
   }, [activeTab]);
 
   const loadData = async () => {
-    setLocalLoading(true);
+    setLoading(true);
     try {
       switch (activeTab) {
         case "articles":
@@ -77,7 +77,7 @@ const CMSAdmin = () => {
         variant: "destructive",
       });
     } finally {
-      setLocalLoading(false);
+      setLoading(false);
     }
   };
 
@@ -161,7 +161,7 @@ const CMSAdmin = () => {
     return new Date(dateString).toLocaleDateString('fr-FR');
   };
 
-  if (loading) {
+  if (authLoading) {
     return <div className="min-h-screen flex items-center justify-center">Chargement...</div>;
   }
 
@@ -269,7 +269,7 @@ const CMSAdmin = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {localLoading ? (
+                  {loading ? (
                     <div className="text-center py-4">Chargement...</div>
                   ) : (
                     <div className="space-y-4">
@@ -323,7 +323,7 @@ const CMSAdmin = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {localLoading ? (
+                  {loading ? (
                     <div className="text-center py-4">Chargement...</div>
                   ) : (
                     <div className="space-y-4">
@@ -377,7 +377,7 @@ const CMSAdmin = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {localLoading ? (
+                  {loading ? (
                     <div className="text-center py-4">Chargement...</div>
                   ) : (
                     <div className="space-y-4">
@@ -433,7 +433,7 @@ const CMSAdmin = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {localLoading ? (
+                  {loading ? (
                     <div className="text-center py-4">Chargement...</div>
                   ) : (
                     <div className="space-y-4">
