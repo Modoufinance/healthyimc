@@ -1,5 +1,6 @@
 import QuickBMICalculator from "@/components/home/QuickBMICalculator";
 import HomeSEO from "@/components/home/HomeSEO";
+import AdSense from "@/components/AdSense";
 import { Link } from "react-router-dom";
 import { Scale, Percent, Flame, Baby, Dumbbell, ChevronDown, TrendingUp, Users, Clock, Award, Star } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -164,6 +165,18 @@ const Index = () => {
             </div>
           </PageTransition>
 
+          {/* Annonce AdSense après le calculateur */}
+          <PageTransition delay={350}>
+            <div className="mb-8 flex justify-center">
+              <AdSense 
+                adSlot="1234567890"
+                adFormat="auto"
+                className="max-w-2xl"
+                style={{ minHeight: '200px' }}
+              />
+            </div>
+          </PageTransition>
+
           {/* Indicateur de défilement amélioré */}
           <PageTransition delay={400}>
             <div className="flex flex-col items-center mt-8 space-y-2">
@@ -307,6 +320,18 @@ const Index = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </PageTransition>
+
+          {/* Annonce AdSense avant la FAQ */}
+          <PageTransition delay={650}>
+            <div className="mt-8 flex justify-center">
+              <AdSense 
+                adSlot="9876543210"
+                adFormat="horizontal"
+                className="max-w-4xl"
+                style={{ minHeight: '100px' }}
+              />
             </div>
           </PageTransition>
 

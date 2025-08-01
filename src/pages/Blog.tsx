@@ -1,5 +1,6 @@
 
 import SEO from "@/components/SEO";
+import AdSense from "@/components/AdSense";
 import BlogContent from "@/components/blog/BlogContent";
 
 const Blog = () => {
@@ -20,7 +21,29 @@ const Blog = () => {
         canonicalUrl="https://healthyimc.com/blog"
         structuredData={structuredData}
       />
-      <BlogContent />
+      <div className="container mx-auto px-4 py-8">
+        {/* Annonce AdSense en haut du blog */}
+        <div className="mb-8 flex justify-center">
+          <AdSense 
+            adSlot="1111111111"
+            adFormat="horizontal"
+            className="max-w-4xl"
+            style={{ minHeight: '100px' }}
+          />
+        </div>
+        
+        <BlogContent />
+        
+        {/* Annonce AdSense en bas du blog */}
+        <div className="mt-8 flex justify-center">
+          <AdSense 
+            adSlot="2222222222"
+            adFormat="auto"
+            className="max-w-2xl"
+            style={{ minHeight: '200px' }}
+          />
+        </div>
+      </div>
     </>
   );
 };

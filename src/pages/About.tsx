@@ -1,5 +1,6 @@
 
 import SEO from "@/components/SEO";
+import AdSense from "@/components/AdSense";
 import AboutHero from "@/components/about/AboutHero";
 import MissionSection from "@/components/about/MissionSection";
 import ContactForm from "@/components/about/ContactForm";
@@ -27,6 +28,18 @@ const About = () => {
         <AboutHero />
         
         <MissionSection />
+        
+        {/* Annonce AdSense entre sections */}
+        <div className="py-8 bg-gray-50">
+          <div className="container mx-auto px-4 flex justify-center">
+            <AdSense 
+              adSlot="3333333333"
+              adFormat="horizontal"
+              className="max-w-4xl"
+              style={{ minHeight: '100px' }}
+            />
+          </div>
+        </div>
         
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
