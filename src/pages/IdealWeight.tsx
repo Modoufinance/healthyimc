@@ -1,5 +1,6 @@
 
 import SEO from "@/components/SEO";
+import AdSense from "@/components/AdSense";
 import BMICalculator from "@/components/BMICalculator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Target, Scale, TrendingUp } from "lucide-react";
@@ -59,6 +60,16 @@ const IdealWeight = () => {
           {/* Calculateur */}
           <div className="mb-16">
             <BMICalculator />
+          </div>
+
+          {/* Annonce AdSense après le calculateur */}
+          <div className="mb-16 flex justify-center">
+            <AdSense 
+              adSlot="6666666666"
+              adFormat="horizontal"
+              className="max-w-4xl"
+              style={{ minHeight: '100px' }}
+            />
           </div>
 
           {/* Formules de calcul */}

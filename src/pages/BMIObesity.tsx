@@ -1,5 +1,6 @@
 
 import SEO from "@/components/SEO";
+import AdSense from "@/components/AdSense";
 import BMICalculator from "@/components/BMICalculator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertCircle, Heart, Users } from "lucide-react";
@@ -56,6 +57,16 @@ const BMIObesity = () => {
 
           <div className="mb-16">
             <BMICalculator />
+          </div>
+
+          {/* Annonce AdSense après le calculateur */}
+          <div className="mb-16 flex justify-center">
+            <AdSense 
+              adSlot="5555555555"
+              adFormat="horizontal"
+              className="max-w-4xl"
+              style={{ minHeight: '100px' }}
+            />
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">

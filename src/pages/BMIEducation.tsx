@@ -1,5 +1,6 @@
 
 import SEO from "@/components/SEO";
+import AdSense from "@/components/AdSense";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Info, Calculator, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -85,6 +86,16 @@ const BMIEducation = () => {
                 en établissant un rapport entre le poids et la taille.
               </p>
             </div>
+          </div>
+
+          {/* Annonce AdSense après la définition */}
+          <div className="mb-12 flex justify-center">
+            <AdSense 
+              adSlot="7777777777"
+              adFormat="auto"
+              className="max-w-2xl"
+              style={{ minHeight: '200px' }}
+            />
           </div>
 
           {/* Formule de calcul */}
