@@ -88,6 +88,7 @@ export type Database = {
           is_active: boolean | null
           last_login: string | null
           locked_until: string | null
+          password_hash: string | null
           two_factor_enabled: boolean | null
           two_factor_secret: string | null
           updated_at: string | null
@@ -101,6 +102,7 @@ export type Database = {
           is_active?: boolean | null
           last_login?: string | null
           locked_until?: string | null
+          password_hash?: string | null
           two_factor_enabled?: boolean | null
           two_factor_secret?: string | null
           updated_at?: string | null
@@ -114,6 +116,7 @@ export type Database = {
           is_active?: boolean | null
           last_login?: string | null
           locked_until?: string | null
+          password_hash?: string | null
           two_factor_enabled?: boolean | null
           two_factor_secret?: string | null
           updated_at?: string | null
