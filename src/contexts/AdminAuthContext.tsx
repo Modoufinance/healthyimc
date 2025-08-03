@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface AdminUser {
   id: string;
@@ -34,14 +35,13 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
 
     try {
-      const response = await fetch('/functions/v1/admin-auth/verify-session', {
+      const { data, error } = await supabase.functions.invoke('admin-auth/verify-session', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      if (!error && data?.success) {
         setAdminUser(data.user);
       } else {
         localStorage.removeItem('admin_session_token');
@@ -56,31 +56,25 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const login = async (username: string, password: string, totpCode?: string, recaptchaToken?: string) => {
     try {
-      const response = await fetch('/functions/v1/admin-auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const { data, error } = await supabase.functions.invoke('admin-auth/login', {
+        body: {
           username,
           password,
           totpCode,
           recaptchaToken,
-        }),
+        },
       });
 
-      const data = await response.json();
-
-      if (data.success) {
+      if (!error && data?.success) {
         localStorage.setItem('admin_session_token', data.sessionToken);
         setAdminUser(data.user);
         return { success: true };
       } else {
         return { 
           success: false, 
-          error: data.error,
-          requires2FA: data.requires2FA,
-          requiresCaptcha: data.requiresCaptcha
+          error: data?.error || 'Erreur de connexion',
+          requires2FA: data?.requires2FA,
+          requiresCaptcha: data?.requiresCaptcha
         };
       }
     } catch (error) {
@@ -93,8 +87,7 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const token = localStorage.getItem('admin_session_token');
     if (token) {
       try {
-        await fetch('/functions/v1/admin-auth/logout', {
-          method: 'POST',
+        await supabase.functions.invoke('admin-auth/logout', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -112,18 +105,16 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const token = localStorage.getItem('admin_session_token');
     if (!token) throw new Error('Non autorisé');
 
-    const response = await fetch('/functions/v1/admin-auth/setup-2fa', {
-      method: 'POST',
+    const { data, error } = await supabase.functions.invoke('admin-auth/setup-2fa', {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
     });
 
-    if (!response.ok) {
+    if (error) {
       throw new Error('Erreur lors de la configuration 2FA');
     }
 
-    const data = await response.json();
     return { secret: data.secret, qrCode: data.qrCode };
   };
 
@@ -132,16 +123,14 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     if (!token) return false;
 
     try {
-      const response = await fetch('/functions/v1/admin-auth/verify-2fa', {
-        method: 'POST',
+      const { data, error } = await supabase.functions.invoke('admin-auth/verify-2fa', {
+        body: { totpCode },
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ totpCode }),
       });
 
-      if (response.ok) {
+      if (!error && data?.success) {
         // Update user state to reflect 2FA is now enabled
         if (adminUser) {
           setAdminUser({ ...adminUser, twoFactorEnabled: true });
