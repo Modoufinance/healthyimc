@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
 import PWAInstallButton from "./PWAInstallButton";
 import { Button } from "./ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +20,7 @@ import {
 
 const EnhancedNavigation = () => {
   const location = useLocation();
+  const { t } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -31,27 +33,27 @@ const EnhancedNavigation = () => {
   }, []);
 
   const mainLinks = [
-    { to: "/accueil", label: "Accueil", icon: <Home className="w-4 h-4" /> },
+    { to: "/accueil", label: t.navigation.home, icon: <Home className="w-4 h-4" /> },
   ];
   
   const additionalMainLinks = [
-    { to: "/bien-etre", label: "Bien-être", icon: <Heart className="w-4 h-4" /> },
-    { to: "/programme-fitness-ia", label: "Coach Fitness IA", icon: <Dumbbell className="w-4 h-4" /> },
-    { to: "/blog", label: "Blog", icon: <BookOpen className="w-4 h-4" /> },
-    { to: "/a-propos", label: "À propos", icon: <Info className="w-4 h-4" /> },
+    { to: "/bien-etre", label: t.navigation.wellness, icon: <Heart className="w-4 h-4" /> },
+    { to: "/programme-fitness-ia", label: t.navigation.fitnessCoach, icon: <Dumbbell className="w-4 h-4" /> },
+    { to: "/blog", label: t.navigation.blog, icon: <BookOpen className="w-4 h-4" /> },
+    { to: "/a-propos", label: t.navigation.about, icon: <Info className="w-4 h-4" /> },
   ];
 
   const healthLinks = [
-    { to: "/assistant-sante-ia", label: "Assistant Santé", icon: <Bot className="w-4 h-4" /> },
-    { to: "/confidentialite", label: "Confidentialité", icon: <Shield className="w-4 h-4" /> },
+    { to: "/assistant-sante-ia", label: t.navigation.healthAssistant, icon: <Bot className="w-4 h-4" /> },
+    { to: "/confidentialite", label: t.navigation.privacy, icon: <Shield className="w-4 h-4" /> },
   ];
 
   const calculatorLinks = [
-    { to: "/calculateur-imc", label: "Calculatrice d'IMC", icon: <Scale className="w-4 h-4" /> },
-    { to: "/calculateur-imc-enfants", label: "IMC Enfants", icon: <Baby className="w-4 h-4" /> },
-    { to: "/calculateur-graisse-corporelle", label: "Graisse Corporelle", icon: <Percent className="w-4 h-4" /> },
-    { to: "/calculateur-calories", label: "Calories", icon: <Flame className="w-4 h-4" /> },
-    { to: "/analyseur-symptomes", label: "Analyseur Symptômes", icon: <Hospital className="w-4 h-4" /> },
+    { to: "/calculateur-imc", label: t.navigation.bmiCalculator, icon: <Scale className="w-4 h-4" /> },
+    { to: "/calculateur-imc-enfants", label: t.navigation.childrenBMI, icon: <Baby className="w-4 h-4" /> },
+    { to: "/calculateur-graisse-corporelle", label: t.navigation.bodyFat, icon: <Percent className="w-4 h-4" /> },
+    { to: "/calculateur-calories", label: t.navigation.calories, icon: <Flame className="w-4 h-4" /> },
+    { to: "/analyseur-symptomes", label: t.navigation.symptomAnalyzer, icon: <Hospital className="w-4 h-4" /> },
   ];
 
   const isHealthActive = healthLinks.some(link => location.pathname === link.to);
@@ -70,8 +72,8 @@ const EnhancedNavigation = () => {
               <Heart className="w-5 h-5" />
             </div>
             <div className="flex flex-col items-start">
-              <span className="text-lg font-bold text-blue-600 leading-none">Healthy</span>
-              <span className="text-lg font-bold text-gray-700 leading-none">IMC</span>
+              <span className="text-lg font-bold text-blue-600 leading-none">{t.navigation.brandName.split(' ')[0]}</span>
+              <span className="text-lg font-bold text-gray-700 leading-none">{t.navigation.brandName.split(' ')[1]}</span>
             </div>
           </Link>
 
@@ -109,7 +111,7 @@ const EnhancedNavigation = () => {
                 >
                   <span className="flex items-center gap-2">
                     <Scale className="w-4 h-4" />
-                    Calculatrices
+                    {t.navigation.calculators}
                     <ChevronDown className="w-4 h-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                   </span>
                 </Button>
@@ -164,7 +166,7 @@ const EnhancedNavigation = () => {
                 >
                   <span className="flex items-center gap-2">
                     <Activity className="w-4 h-4" />
-                    Santé
+                    {t.navigation.health}
                     <ChevronDown className="w-4 h-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                   </span>
                 </Button>

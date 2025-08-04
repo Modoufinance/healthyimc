@@ -72,6 +72,30 @@ export interface Education {
   sections: EducationSection[];
 }
 
+// Navigation et interface commune
+export interface NavigationTranslations {
+  home: string;
+  calculators: string;
+  bmiCalculator: string;
+  childrenBMI: string;
+  bodyFat: string;
+  calories: string;
+  symptomAnalyzer: string;
+  wellness: string;
+  fitnessCoach: string;
+  blog: string;
+  about: string;
+  health: string;
+  healthAssistant: string;
+  privacy: string;
+  brandName: string;
+  result: string;
+  calculate: string;
+  quickResult: string;
+  newProgram: string;
+  discoverFitness: string;
+}
+
 export interface TranslationType {
   title: string;
   subtitle: string;
@@ -87,5 +111,16 @@ export interface TranslationType {
   advice: Advice;
   faq: FAQ;
   education: Education;
-  language: string; // Ajout du nom de la langue dans la langue native
+  language: string;
+  navigation: NavigationTranslations;
+  hero: {
+    title: string;
+    subtitle: string;
+    ctaButton: string;
+    resultTime: string;
+    newFitnessProgram: string;
+  };
+  breadcrumbs: {
+    home: string;
+  };
 }

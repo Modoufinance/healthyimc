@@ -13,8 +13,11 @@ import UserProfiles from "@/components/home/UserProfiles";
 import ComparaisonTable from "@/components/home/ComparaisonTable";
 import VideoExplication from "@/components/home/VideoExplication";
 import StickyHeader from "@/components/StickyHeader";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Home = () => {
+  const { t } = useLanguage();
+  
   // FAQ items for structured data
   const faqItems = [
     {
@@ -53,7 +56,7 @@ const Home = () => {
           <Breadcrumb className="text-white/90">
             <BreadcrumbItem>
               <BreadcrumbLink href="/" className="hover:text-white transition-colors">
-                Accueil
+                {t.breadcrumbs.home}
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
