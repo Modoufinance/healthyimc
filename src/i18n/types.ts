@@ -96,6 +96,68 @@ export interface NavigationTranslations {
   discoverFitness: string;
 }
 
+export interface BMICalculatorTranslations {
+  title: string;
+  subtitle: string;
+  voiceSearchPlaceholder: string;
+  exportPDF: string;
+  sendEmail: string;
+  saveResult: string;
+  calculationSuccess: string;
+  calculationDescription: string;
+  profileUpdated: string;
+  profileDescription: string;
+  exportSuccess: string;
+  exportDescription: string;
+  emailPrepared: string;
+  emailDescription: string;
+  resultSaved: string;
+  saveDescription: string;
+  history: string;
+  searchPerformed: string;
+  searchDescription: string;
+  error: string;
+  invalidValues: string;
+}
+
+export interface EnhancedFAQTranslations {
+  title: string;
+  searchPlaceholder: string;
+  noResults: string;
+  noResultsDescription: string;
+  resultsFound: string;
+  resultsFoundDescription: string;
+  tryOtherTerms: string;
+}
+
+export interface BMIFormTranslations {
+  error: string;
+  invalidValues: string;
+}
+
+export interface BMIEducationTranslations {
+  title: string;
+  subtitle: string;
+  calculateMyBMI: string;
+  whatIsIMC: string;
+  definition: string;
+  calculationFormula: string;
+  omsClassification: string;
+  underweight: string;
+  normalWeight: string;
+  overweight: string;
+  obesity: string;
+  imcUtility: string;
+  imcLimitations: string;
+  complementaryIndicators: string;
+  waistCircumference: string;
+  waistHipRatio: string;
+  bodyComposition: string;
+  recommendations: string;
+  correctInterpretation: string;
+  recommendedActions: string;
+}
+
 export interface TranslationType {
   title: string;
   subtitle: string;
@@ -123,4 +185,8 @@ export interface TranslationType {
   breadcrumbs: {
     home: string;
   };
+  bmiCalculator: BMICalculatorTranslations;
+  enhancedFAQ: EnhancedFAQTranslations;
+  bmiForm: BMIFormTranslations;
+  bmiEducation: BMIEducationTranslations;
 }

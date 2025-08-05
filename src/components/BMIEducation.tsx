@@ -2,8 +2,10 @@
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Info, BookOpen, HeartPulse } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const BMIEducation = () => {
+  const { t } = useLanguage();
   const educationSections = [
     {
       icon: <BookOpen className="h-6 w-6 text-blue-500" aria-hidden="true" />,

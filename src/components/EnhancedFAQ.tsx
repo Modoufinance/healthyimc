@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/card";
 import { HelpCircle, Search } from "lucide-react";
 import VoiceSearch from './VoiceSearch';
 import { useToast } from '@/components/ui/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface FAQItem {
   question: string;
@@ -26,7 +27,7 @@ interface EnhancedFAQProps {
 }
 
 const EnhancedFAQ = ({ 
-  title = "Questions fréquentes", 
+  title, 
   description,
   faqItems,
   className = ""
@@ -34,6 +35,9 @@ const EnhancedFAQ = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState<FAQItem[]>(faqItems);
   const { toast } = useToast();
+  const { t } = useLanguage();
+  
+  const finalTitle = title || t.enhancedFAQ.title;
 
   const handleSearch = (query: string) => {
     const normalizedQuery = query.toLowerCase().trim();
@@ -72,13 +76,13 @@ const EnhancedFAQ = ({
     
     if (filtered.length === 0) {
       toast({
-        title: "Aucun résultat",
-        description: `Aucune question ne correspond à "${query}". Essayez une autre recherche.`,
+        title: t.enhancedFAQ.noResults,
+        description: `${t.enhancedFAQ.noResultsDescription} "${query}".`,
       });
     } else {
       toast({
-        title: `${filtered.length} résultat(s) trouvé(s)`,
-        description: `Votre recherche "${query}" a retourné ${filtered.length} résultat(s).`,
+        title: `${filtered.length} ${t.enhancedFAQ.resultsFound}`,
+        description: `${t.enhancedFAQ.resultsFoundDescription} "${query}" ${filtered.length} ${t.enhancedFAQ.resultsFound}.`,
       });
     }
   };
@@ -88,7 +92,7 @@ const EnhancedFAQ = ({
       <div className="flex items-center gap-3 mb-6">
         <HelpCircle className="h-8 w-8 text-primary" />
         <div>
-          <h2 className="text-2xl font-bold">{title}</h2>
+          <h2 className="text-2xl font-bold">{finalTitle}</h2>
           {description && (
             <p className="text-muted-foreground">{description}</p>
           )}
@@ -98,7 +102,7 @@ const EnhancedFAQ = ({
       <div className="mb-6">
         <VoiceSearch 
           onSearch={handleSearch} 
-          placeholder="Rechercher une question ou un mot-clé..."
+          placeholder={t.enhancedFAQ.searchPlaceholder}
         />
       </div>
       
@@ -136,9 +140,9 @@ const EnhancedFAQ = ({
       ) : (
         <div className="text-center py-8">
           <Search className="mx-auto h-12 w-12 text-muted-foreground opacity-50" />
-          <h3 className="mt-4 text-lg font-medium">Aucun résultat trouvé</h3>
+          <h3 className="mt-4 text-lg font-medium">{t.enhancedFAQ.noResults}</h3>
           <p className="text-muted-foreground">
-            Essayez d'autres termes de recherche ou consultez toutes les questions.
+            {t.enhancedFAQ.tryOtherTerms}
           </p>
         </div>
       )}

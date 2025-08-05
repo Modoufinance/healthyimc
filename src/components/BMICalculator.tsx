@@ -97,11 +97,11 @@ const BMICalculator = () => {
     localStorage.setItem('savedBmiResults', JSON.stringify(newSavedResults));
 
     toast({
-      title: "Calcul effectué",
+      title: t.bmiCalculator.calculationSuccess,
       description: (
         <div className="flex items-center gap-2">
           <CheckCircle className="h-5 w-5 text-green-500" />
-          <span>Votre IMC a été calculé avec succès</span>
+          <span>{t.bmiCalculator.calculationDescription}</span>
         </div>
       ),
     });
@@ -111,8 +111,8 @@ const BMICalculator = () => {
     setUserData(data);
     localStorage.setItem('userBmiData', JSON.stringify(data));
     toast({
-      title: "Profil mis à jour",
-      description: "Vos informations ont été enregistrées avec succès",
+      title: t.bmiCalculator.profileUpdated,
+      description: t.bmiCalculator.profileDescription,
     });
   };
 
@@ -140,8 +140,8 @@ const BMICalculator = () => {
     a.click();
     
     toast({
-      title: "Export réussi",
-      description: "Votre rapport a été téléchargé au format PDF",
+      title: t.bmiCalculator.exportSuccess,
+      description: t.bmiCalculator.exportDescription,
     });
   };
 
@@ -156,8 +156,8 @@ const BMICalculator = () => {
     window.location.href = mailtoLink;
     
     toast({
-      title: "Email préparé",
-      description: "Votre client mail va s'ouvrir avec le rapport",
+      title: t.bmiCalculator.emailPrepared,
+      description: t.bmiCalculator.emailDescription,
     });
   };
   
@@ -208,8 +208,8 @@ const BMICalculator = () => {
   // Fonction de recherche pour l'IMC
   const handleBMISearch = (query: string) => {
     toast({
-      title: "Recherche vocale effectuée",
-      description: `Recherche: "${query}" - Consultez les résultats dans la FAQ ci-dessous`,
+      title: t.bmiCalculator.searchPerformed,
+      description: `${t.bmiCalculator.searchDescription.replace('{}', query)}`,
     });
     
     // La recherche sera gérée par le composant EnhancedFAQ
@@ -233,7 +233,7 @@ const BMICalculator = () => {
             </div>
 
             <div className="my-4">
-              <VoiceSearch onSearch={handleBMISearch} placeholder="Posez une question sur l'IMC..." />
+              <VoiceSearch onSearch={handleBMISearch} placeholder={t.bmiCalculator.voiceSearchPlaceholder} />
             </div>
 
             <DeviceConnect onDataReceived={handleDeviceData} />
@@ -250,7 +250,7 @@ const BMICalculator = () => {
                     aria-label="Exporter en PDF"
                   >
                     <Download className="h-4 w-4" aria-hidden="true" />
-                    Exporter en PDF
+                    {t.bmiCalculator.exportPDF}
                   </button>
                   
                   <button
@@ -259,22 +259,22 @@ const BMICalculator = () => {
                     aria-label="Envoyer par email"
                   >
                     <Mail className="h-4 w-4" aria-hidden="true" />
-                    Envoyer par email
+                    {t.bmiCalculator.sendEmail}
                   </button>
                   
                   <button
                     onClick={() => {
                       localStorage.setItem('bookmarkedResult', JSON.stringify(bmiData));
                       toast({
-                        title: "Résultat sauvegardé",
-                        description: "Vous pourrez retrouver ce résultat plus tard",
+                        title: t.bmiCalculator.resultSaved,
+                        description: t.bmiCalculator.saveDescription,
                       });
                     }}
                     className="flex items-center gap-2 px-4 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors"
                     aria-label="Sauvegarder ce résultat"
                   >
                     <Bookmark className="h-4 w-4" aria-hidden="true" />
-                    Sauvegarder
+                    {t.bmiCalculator.saveResult}
                   </button>
                 </div>
               </div>
@@ -304,7 +304,7 @@ const BMICalculator = () => {
           <Card className="p-6 shadow-lg rounded-lg">
             <div className="flex items-center gap-2 mb-4">
               <History className="h-6 w-6 text-[#4facfe]" aria-hidden="true" />
-              <h2 className="text-xl font-semibold">Historique des calculs</h2>
+              <h2 className="text-xl font-semibold">{t.bmiCalculator.history}</h2>
             </div>
             <div className="space-y-2">
               {savedResults.slice(-5).map((result, index) => (

@@ -42,10 +42,8 @@ const BMIForm = ({ onCalculate, savedData }: BMIFormProps) => {
 
     if (!weightNum || !heightNum || !ageNum || heightNum <= 0 || ageNum <= 0) {
       toast({
-        title: language === 'fr' ? "Erreur" : "Error",
-        description: language === 'fr' 
-          ? "Veuillez entrer des valeurs valides." 
-          : "Please enter valid values.",
+        title: t.bmiForm.error,
+        description: t.bmiForm.invalidValues,
         variant: "destructive",
       });
       return;

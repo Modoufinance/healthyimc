@@ -1,6 +1,7 @@
 import type { TranslationType } from "./types";
+import { getCompleteTranslations } from "./completeTranslations";
 
-export const translations: Record<string, TranslationType> = {
+const baseTranslations: Record<string, Partial<TranslationType>> = {
   fr: {
     title: "Calculatrice IMC Gratuite",
     subtitle: "Calculez votre indice de masse corporelle rapidement",
@@ -1142,3 +1143,5 @@ export const translations: Record<string, TranslationType> = {
     }
   }
 };
+
+export const translations: Record<string, TranslationType> = getCompleteTranslations(baseTranslations);

@@ -1,5 +1,6 @@
 import { TranslationType } from './types';
 import { navigationTranslations } from './navigationTranslations';
+import { bmiCalculatorTranslations, enhancedFAQTranslations, bmiFormTranslations, bmiEducationTranslations } from './bmiTranslations';
 
 const heroTranslations = {
   fr: {
@@ -95,7 +96,11 @@ export function getCompleteTranslations(baseTranslations: Record<string, Partial
       ...baseTranslations[lang],
       navigation: navigationTranslations[lang],
       hero: heroTranslations[lang as keyof typeof heroTranslations],
-      breadcrumbs: breadcrumbTranslations[lang as keyof typeof breadcrumbTranslations]
+      breadcrumbs: breadcrumbTranslations[lang as keyof typeof breadcrumbTranslations],
+      bmiCalculator: bmiCalculatorTranslations[lang],
+      enhancedFAQ: enhancedFAQTranslations[lang],
+      bmiForm: bmiFormTranslations[lang],
+      bmiEducation: bmiEducationTranslations[lang]
     } as TranslationType;
   });
   
