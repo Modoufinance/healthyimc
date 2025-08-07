@@ -15,7 +15,7 @@ import SymptomAnalyzer from "./pages/SymptomAnalyzer";
 import AIFitnessProgram from "./pages/AIFitnessProgram";
 import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
-import CMSAdmin from "./pages/CMSAdmin";
+import ModernCMSAdmin from "./pages/ModernCMSAdmin";
 import AdminLogin from "./pages/AdminLogin";
 import { AdminAuthProvider } from "./contexts/AdminAuthContext";
 import BMIWomen from "./pages/BMIWomen";
@@ -106,7 +106,7 @@ const AppRoutes = () => {
         <Routes>
         {/* Routes d'administration */}
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/cms" element={<CMSAdmin />} />
+        <Route path="/admin/cms" element={<ModernCMSAdmin />} />
         
         {/* Routes en français (par défaut) */}
         {getOptimizedRoutes()}
