@@ -17,7 +17,6 @@ import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
 import CMSAdmin from "./pages/CMSAdmin";
 import AdminLogin from "./pages/AdminLogin";
-import ModernAdminDashboard from "./pages/ModernAdminDashboard";
 import { AdminAuthProvider } from "./contexts/AdminAuthContext";
 import BMIWomen from "./pages/BMIWomen";
 import BMIMen from "./pages/BMIMen";
@@ -108,7 +107,6 @@ const AppRoutes = () => {
         {/* Routes d'administration */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/cms" element={<CMSAdmin />} />
-        <Route path="/admin/dashboard" element={<ModernAdminDashboard />} />
         
         {/* Routes en français (par défaut) */}
         {getOptimizedRoutes()}
