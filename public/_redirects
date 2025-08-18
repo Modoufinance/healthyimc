@@ -1,2 +1,50 @@
 
-/* /index.html 200
+# Exception pour permettre l'accès direct aux fichiers techniques essentiels
+/sitemap.xml              /sitemap.xml                  200
+/robots.txt               /robots.txt                   200
+
+# Redirection permanente pour les URLs optimisées SEO
+/calcul-imc/*              /calculateur-imc              301
+/imc/*                     /calculateur-imc              301
+/poids-ideal/*             /calculateur-imc              301
+/masse-corporelle/*        /calculateur-imc              301
+/imc-adulte/*              /calculateur-imc              301
+/imc-calcul/*              /calculateur-imc              301
+
+# Redirection des variantes d'URL vers les URL canoniques
+/calcul-imc                /calculateur-imc              301
+/calculer-imc              /calculateur-imc              301
+/imc-calculateur           /calculateur-imc              301
+/imc-en-ligne              /calculateur-imc              301
+/poids-ideal               /calculateur-imc              301
+/imc-gratuit               /calculateur-imc              301
+
+# Redirections pour le blog
+/articles                  /blog                         301
+/sante-blog                /blog                         301
+/conseils-sante            /blog                         301
+
+# Redirection des URL avec paramètres vers les URL propres
+/calculateur?*             /calculateur-imc              301
+/imc?*                     /calculateur-imc              301
+
+# Redirection pour les langues (préservation des paramètres)
+/en/*                      /en/:splat                    200
+/zh/*                      /zh/:splat                    200
+/es/*                      /es/:splat                    200
+/ar/*                      /ar/:splat                    200
+/hi/*                      /hi/:splat                    200
+/pt/*                      /pt/:splat                    200
+/bn/*                      /bn/:splat                    200
+/ru/*                      /ru/:splat                    200
+/ja/*                      /ja/:splat                    200
+
+# Gestion des anciennes URLs (pour éviter les 404)
+/index.html                /                             301
+/home                      /                             301
+/accueil                   /                             301
+/imc.html                  /calculateur-imc              301
+/calculateur.html          /calculateur-imc              301
+
+# Redirection par défaut pour SPA
+/*                         /index.html                   200

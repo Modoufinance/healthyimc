@@ -1,67 +1,257 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- Page d'accueil -->
   <url>
-    <loc>https://santeimc.fr/</loc>
-    <lastmod>2024-03-14</lastmod>
+    <loc>https://healthyimc.com/</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://santeimc.fr/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://santeimc.fr/en/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://santeimc.fr/ar/" />
-    <xhtml:link rel="alternate" hreflang="hi" href="https://santeimc.fr/hi/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthyimc.com/ar/" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthyimc.com/hi/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthyimc.com/zh/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthyimc.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="bn" href="https://healthyimc.com/bn/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthyimc.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthyimc.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthyimc.com/" />
     <image:image>
-      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Calculateur IMC</image:title>
-      <image:caption>Calculez votre IMC gratuitement</image:caption>
+      <image:loc>https://healthyimc.com/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
+      <image:title>Calculateur IMC en ligne gratuit</image:title>
+      <image:caption>Calculez votre IMC gratuitement - Indice de Masse Corporelle</image:caption>
     </image:image>
   </url>
+  
+  <!-- Calculateur IMC (page principale) -->
   <url>
-    <loc>https://santeimc.fr/calculateur-imc</loc>
-    <lastmod>2024-03-14</lastmod>
+    <loc>https://healthyimc.com/calculateur-imc</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/calculateur-imc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/calculateur-imc" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthyimc.com/ar/calculateur-imc" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthyimc.com/hi/calculateur-imc" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthyimc.com/zh/calculateur-imc" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/calculateur-imc" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthyimc.com/pt/calculateur-imc" />
+    <xhtml:link rel="alternate" hreflang="bn" href="https://healthyimc.com/bn/calculateur-imc" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthyimc.com/ru/calculateur-imc" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthyimc.com/ja/calculateur-imc" />
     <image:image>
-      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Calculateur IMC en ligne</image:title>
-      <image:caption>Outil gratuit de calcul d'IMC</image:caption>
+      <image:loc>https://healthyimc.com/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
+      <image:title>Calculateur IMC en ligne gratuit - Indice de Masse Corporelle</image:title>
+      <image:caption>Outil gratuit et précis pour calculer votre indice de masse corporelle selon l'OMS</image:caption>
     </image:image>
   </url>
+  
+  <!-- Blog Santé -->
   <url>
-    <loc>https://santeimc.fr/assistant-sante-ia</loc>
-    <lastmod>2024-03-14</lastmod>
+    <loc>https://healthyimc.com/blog</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/blog" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/blog" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/blog" />
     <image:image>
-      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Assistant Santé IA</image:title>
-      <image:caption>Conseils santé personnalisés par IA</image:caption>
+      <image:loc>https://healthyimc.com/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
+      <image:title>Blog Santé et IMC</image:title>
+      <image:caption>Articles et conseils sur la santé et l'IMC</image:caption>
     </image:image>
   </url>
+  
+  <!-- URLs optimisées pour le SEO (avec traductions) -->
   <url>
-    <loc>https://santeimc.fr/bien-etre</loc>
-    <lastmod>2024-03-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://santeimc.fr/lovable-uploads/adeae93a-fc4a-48fc-9f9e-24e8017f5df7.png</image:loc>
-      <image:title>Bien-être et Santé</image:title>
-      <image:caption>Conseils pour votre bien-être</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://santeimc.fr/a-propos</loc>
-    <lastmod>2024-03-14</lastmod>
+    <loc>https://healthyimc.com/calcul-imc-femme</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/calcul-imc-femme" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/calcul-imc-femme" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/calcul-imc-femme" />
   </url>
+  
   <url>
-    <loc>https://santeimc.fr/confidentialite</loc>
-    <lastmod>2024-03-14</lastmod>
+    <loc>https://healthyimc.com/calcul-imc-homme</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/calcul-imc-homme" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/calcul-imc-homme" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/calcul-imc-homme" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/poids-ideal-calcul</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/poids-ideal-calcul" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/poids-ideal-calcul" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/poids-ideal-calcul" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/indice-masse-corporelle</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/indice-masse-corporelle" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/indice-masse-corporelle" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/indice-masse-corporelle" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/imc-normal</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/imc-normal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/imc-normal" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/imc-normal" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/imc-surpoids</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/imc-surpoids" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/imc-surpoids" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/imc-surpoids" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/imc-obesite</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/imc-obesite" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/imc-obesite" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/imc-obesite" />
+  </url>
+  
+  <!-- Autres pages importantes avec traductions -->
+  <url>
+    <loc>https://healthyimc.com/calculateur-imc-enfants</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/calculateur-imc-enfants" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/calculateur-imc-enfants" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/calculateur-imc-enfants" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthyimc.com/ar/calculateur-imc-enfants" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/calculateur-graisse-corporelle</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/calculateur-graisse-corporelle" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/calculateur-graisse-corporelle" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/calculateur-graisse-corporelle" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/calculateur-calories</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/calculateur-calories" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/calculateur-calories" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/calculateur-calories" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/programme-fitness-ia</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/programme-fitness-ia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/programme-fitness-ia" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/programme-fitness-ia" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/assistant-sante-ia</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/assistant-sante-ia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/assistant-sante-ia" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/assistant-sante-ia" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/bien-etre</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/bien-etre" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/bien-etre" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/bien-etre" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/a-propos</loc>
+    <lastmod>2024-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/fr/calculateur-imc"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/bmi-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthyimc.com/ar/bmi-calculator"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthyimc.com/hi/bmi-calculator"/>
+  </url>
+
+  <!-- Blog Santé -->
+  <url>
+    <loc>https://healthyimc.com/blog-sante</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Assistant Santé IA -->
+  <url>
+    <loc>https://healthyimc.com/assistant-sante-ia</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Bien-être -->
+  <url>
+    <loc>https://healthyimc.com/bien-etre</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog IA -->
+  <url>
+    <loc>https://healthyimc.com/blog-ia</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/a-propos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/a-propos" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/a-propos" />
+  </url>
+  
+  <url>
+    <loc>https://healthyimc.com/confidentialite</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthyimc.com/confidentialite" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthyimc.com/en/confidentialite" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthyimc.com/es/confidentialite" />
   </url>
 </urlset>

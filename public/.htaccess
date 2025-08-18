@@ -1,3 +1,4 @@
+
 # Activation de la réécriture d'URL
 RewriteEngine On
 
@@ -8,6 +9,15 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # Redirection www vers non-www
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+# Règle spécifique pour sitemap.xml - assurez-vous qu'il est accessible directement
+RewriteRule ^sitemap\.xml$ - [L]
+
+# Règle spécifique pour robots.txt - assurez-vous qu'il est accessible directement
+RewriteRule ^robots\.txt$ - [L]
+
+# Règle spécifique pour blog - ne pas appliquer la réécriture SPA
+RewriteRule ^blog/?$ - [L]
 
 # Redirection des URLs avec trailing slash
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -45,21 +55,58 @@ RewriteRule ^(.*)/$ /$1 [L,R=301]
 
 # Protection contre le hotlinking des images
 RewriteCond %{HTTP_REFERER} !^$
-RewriteCond %{HTTP_REFERER} !^https?://(www\.)?santeimc\.fr [NC]
+RewriteCond %{HTTP_REFERER} !^https?://(www\.)?healthyimc\.com [NC]
 RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
 
-# Gestion des erreurs
+# Redirections HTTPS
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Redirection HTTP vers HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Redirection www vers non-www (ou l'inverse selon préférence)
+    RewriteCond %{HTTP_HOST} ^www\.healthyimc\.com [NC]
+    RewriteRule ^(.*)$ https://healthyimc.com/$1 [L,R=301]
+    
+    # Routes pour SPA React
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.html [L]
+</IfModule>
+
+# En-têtes de sécurité et performance
+<IfModule mod_headers.c>
+    # Sécurité
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    
+    # Cache control
+    <FilesMatch "\.(css|js|png|jpg|jpeg|gif|webp|svg|woff|woff2|ttf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=3600"
+    </FilesMatch>
+    
+    # Preload pour les ressources critiques
+    Header add Link "</lovable-uploads/fa3d23e1-be06-4b8f-812a-691e5c14a6ee.png>; rel=preload; as=image"
+</IfModule>
+
+# Pages d'erreur personnalisées
 ErrorDocument 404 /404.html
 ErrorDocument 500 /500.html
 
-# Headers de sécurité
-<IfModule mod_headers.c>
-    Header set X-Content-Type-Options "nosniff"
-    Header set X-XSS-Protection "1; mode=block"
-    Header set X-Frame-Options "SAMEORIGIN"
-    Header set Referrer-Policy "strict-origin-when-cross-origin"
-    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-</IfModule>
+# Protection des fichiers sensibles
+<Files ~ "^.*\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
+    Order allow,deny
+    Deny from all
+</Files>
 
 # Amélioration des performances
 <IfModule mod_headers.c>

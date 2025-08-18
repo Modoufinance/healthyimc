@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://healthyimc.com/</loc>
+    <image:image>
+      <image:loc>https://healthyimc.com/lovable-uploads/fa3d23e1-be06-4b8f-812a-691e5c14a6ee.png</image:loc>
+      <image:title>Calculateur IMC HealthyIMC - Interface principale</image:title>
+      <image:caption>Interface du calculateur d'IMC en ligne gratuit avec graphiques et conseils personnalisés</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://healthyimc.com/lovable-uploads/dba49e63-b060-48ba-af66-496f4579fc82.png</image:loc>
+      <image:title>Logo HealthyIMC - Application mobile</image:title>
+      <image:caption>Icône de l'application HealthyIMC pour le calcul d'IMC sur mobile</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://healthyimc.com/calculateur-imc</loc>
+    <image:image>
+      <image:loc>https://healthyimc.com/lovable-uploads/fa3d23e1-be06-4b8f-812a-691e5c14a6ee.png</image:loc>
+      <image:title>Calculateur IMC en ligne - Outil de calcul</image:title>
+      <image:caption>Outil de calcul d'IMC personnalisé avec recommandations santé adaptées</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://healthyimc.com/tableau-imc</loc>
+    <image:image>
+      <image:loc>https://healthyimc.com/images/tableau-imc-categories.png</image:loc>
+      <image:title>Tableau des catégories IMC</image:title>
+      <image:caption>Tableau complet des catégories d'IMC selon l'OMS avec interprétation détaillée</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://healthyimc.com/imc-femme</loc>
+    <image:image>
+      <image:loc>https://healthyimc.com/images/imc-femme-graphique.png</image:loc>
+      <image:title>Graphique IMC spécifique aux femmes</image:title>
+      <image:caption>Courbes d'IMC adaptées pour les femmes selon l'âge et la morphologie</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://healthyimc.com/imc-homme</loc>
+    <image:image>
+      <image:loc>https://healthyimc.com/images/imc-homme-graphique.png</image:loc>
+      <image:title>Graphique IMC spécifique aux hommes</image:title>
+      <image:caption>Courbes d'IMC adaptées pour les hommes selon l'âge et la morphologie</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://healthyimc.com/imc-enfant</loc>
+    <image:image>
+      <image:loc>https://healthyimc.com/images/courbe-imc-enfants.png</image:loc>
+      <image:title>Courbes de croissance IMC enfants</image:title>
+      <image:caption>Courbes de croissance et d'IMC pour enfants et adolescents selon les standards pédiatriques</image:caption>
+    </image:image>
+  </url>
+
+</urlset>

@@ -1,18 +1,67 @@
 {
-  "name": "HealthyIMC - Online BMI Calculator",
+  "name": "HealthyIMC - Calculateur IMC en ligne",
   "short_name": "HealthyIMC",
-  "description": "Calculate your BMI and get personalized health advice",
+  "description": "Calculateur d'IMC gratuit avec suivi personnalisé et conseils santé adaptés à votre profil",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4facfe",
   "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "fr",
+  "categories": ["health", "fitness", "medical", "utilities"],
   "icons": [
+    {
+      "src": "/lovable-uploads/dba49e63-b060-48ba-af66-496f4579fc82.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
     {
       "src": "/lovable-uploads/dba49e63-b060-48ba-af66-496f4579fc82.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "/lovable-uploads/fa3d23e1-be06-4b8f-812a-691e5c14a6ee.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "label": "Interface principale du calculateur IMC"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Calculer mon IMC",
+      "short_name": "IMC",
+      "description": "Accès rapide au calculateur d'IMC",
+      "url": "/calculateur-imc",
+      "icons": [
+        {
+          "src": "/lovable-uploads/dba49e63-b060-48ba-af66-496f4579fc82.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Blog Santé",
+      "short_name": "Blog",
+      "description": "Articles et conseils santé",
+      "url": "/blog-sante",
+      "icons": [
+        {
+          "src": "/lovable-uploads/dba49e63-b060-48ba-af66-496f4579fc82.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "dir": "ltr",
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7"
 }

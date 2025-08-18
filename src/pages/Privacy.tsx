@@ -1,3 +1,4 @@
+
 import SEO from "@/components/SEO";
 
 const Privacy = () => {
@@ -28,31 +29,31 @@ const Privacy = () => {
                 Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}
               </p>
 
-              <h2 className="text-xl font-semibold text-gray-900 mt-8">1. Collecte des Informations</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mt-8">1. Collecte des Informations</h2>
               <p className="text-gray-600">
                 Nous collectons uniquement les informations nécessaires au calcul de votre IMC (poids et taille). 
                 Ces données ne sont pas stockées sur nos serveurs et sont uniquement utilisées pour le calcul instantané.
               </p>
 
-              <h2 className="text-xl font-semibold text-gray-900 mt-6">2. Utilisation des Cookies</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mt-6">2. Utilisation des Cookies</h2>
               <p className="text-gray-600">
                 Notre site utilise des cookies essentiels pour assurer son bon fonctionnement. 
                 Nous utilisons également Google Analytics pour comprendre comment notre site est utilisé.
               </p>
 
-              <h2 className="text-xl font-semibold text-gray-900 mt-6">3. Protection des Données</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mt-6">3. Protection des Données</h2>
               <p className="text-gray-600">
                 Nous prenons la protection de vos données très au sérieux. Aucune information personnelle 
                 n'est partagée avec des tiers sans votre consentement explicite.
               </p>
 
-              <h2 className="text-xl font-semibold text-gray-900 mt-6">4. Vos Droits</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mt-6">4. Vos Droits</h2>
               <p className="text-gray-600">
                 Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression 
                 de vos données. Pour exercer ces droits, contactez-nous via notre page de contact.
               </p>
 
-              <h2 className="text-xl font-semibold text-gray-900 mt-6">5. Publicité</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mt-6">5. Publicité</h2>
               <p className="text-gray-600">
                 Nous utilisons Google AdSense pour afficher des publicités. Ces annonces peuvent utiliser 
                 des cookies pour personnaliser le contenu en fonction de vos centres d'intérêt.

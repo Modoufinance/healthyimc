@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,11 +36,11 @@
   background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
 }
 
-/* Animations */
+/* Enhanced Animations - Optimisées pour la performance */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -47,14 +48,10 @@
   }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(-20px);
+    transform: translateX(-30px);
   }
   to {
     opacity: 1;
@@ -62,13 +59,175 @@
   }
 }
 
-.animate-slide-in {
-  animation: slideIn 0.3s ease-out forwards;
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-/* Card styles */
+@keyframes floatingAnimation {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-5px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(-15px) translateX(8px) rotate(2deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(-50px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-10px);
+  }
+  70% {
+    transform: scale(0.9) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes scaleHover {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+/* Classes d'animation */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.6s ease-out forwards;
+}
+
+.floating-element {
+  animation: floatingAnimation 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  background-size: 200px 100%;
+}
+
+.animation-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+/* Glassmorphism Effects - Améliorés */
+.glassmorphism-card {
+  @apply bg-white/20 backdrop-blur-lg p-6 rounded-xl shadow-lg border border-white/30;
+  @apply transition-all duration-300 ease-out;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glassmorphism-card:hover {
+  @apply bg-white/25 shadow-xl border-white/40;
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon Container - Amélioré */
+.icon-container {
+  @apply p-4 rounded-full transition-all duration-300;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.icon-container:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Hover Effects - Optimisés */
+.hover-lift {
+  @apply transition-all duration-300 ease-out;
+  will-change: transform, box-shadow;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  @apply shadow-2xl;
+}
+
+/* Card styles - Performance optimisée */
 .card-hover {
-  @apply transition-transform duration-300 hover:scale-105;
+  @apply transition-transform duration-300;
+  will-change: transform;
+}
+
+.card-hover:hover {
+  transform: scale(1.05);
 }
 
 /* Modern shadows */
@@ -86,26 +245,171 @@
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 
-/* Modern button styles */
+/* Modern button styles - Améliorés */
 .btn-modern {
   @apply px-6 py-3 rounded-lg font-medium transition-all duration-300;
   @apply bg-gradient-to-r from-primary to-blue-500 text-white;
   @apply hover:shadow-lg hover:scale-105;
+  will-change: transform, box-shadow;
 }
 
-/* Form styles */
+.btn-modern:hover {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+/* Form styles - UX améliorée */
 .input-modern {
   @apply w-full px-4 py-3 rounded-lg border border-gray-300;
   @apply focus:ring-2 focus:ring-primary focus:border-transparent;
   @apply transition-all duration-300;
 }
 
-/* Navigation styles */
+.input-modern:focus {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+}
+
+/* Navigation styles - Améliorées */
 .nav-link {
-  @apply px-4 py-2 rounded-lg transition-colors duration-300;
+  @apply px-4 py-2 rounded-lg transition-all duration-300;
   @apply hover:bg-gray-100 hover:text-primary;
+  will-change: transform, background-color;
+}
+
+.nav-link:hover {
+  transform: translateY(-1px);
 }
 
 .nav-link.active {
   @apply bg-primary/10 text-primary font-medium;
+}
+
+/* Loading Animation - Optimisée */
+.spinner {
+  @apply animate-spin rounded-full h-8 w-8 border-b-2 border-white;
+}
+
+/* Loading shimmer effect */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar - Améliorée */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.6), rgba(0, 242, 254, 0.6));
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.8), rgba(0, 242, 254, 0.8));
+}
+
+/* Focus States - Améliorés pour l'accessibilité */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+}
+
+.focus-visible {
+  @apply focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2;
+}
+
+/* Micro-interactions */
+.micro-bounce {
+  transition: transform 0.2s ease;
+}
+
+.micro-bounce:active {
+  transform: scale(0.95);
+}
+
+/* Text animations */
+.text-reveal {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .floating-element {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .glassmorphism-card {
+    @apply bg-white border-2 border-gray-800;
+    backdrop-filter: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .glassmorphism-card {
+    @apply bg-white border border-gray-300;
+    backdrop-filter: none;
+  }
+}
+
+/* Performance optimizations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .auto-dark {
+    @apply bg-gray-900 text-white;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .glassmorphism-card {
+    @apply p-4;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .hover-lift:hover {
+    transform: none;
+  }
+  
+  .card-hover:hover {
+    transform: none;
+  }
 }

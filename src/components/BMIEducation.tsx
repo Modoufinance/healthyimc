@@ -1,76 +1,56 @@
 
-import { useLanguage } from "@/contexts/LanguageContext";
+import React from 'react';
 import { Card } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { InfoIcon } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Info, BookOpen, HeartPulse } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const BMIEducation = () => {
   const { t } = useLanguage();
+  const educationSections = [
+    {
+      icon: <BookOpen className="h-6 w-6 text-blue-500" aria-hidden="true" />,
+      title: "Comprendre l'IMC",
+      description: "L'Indice de Masse Corporelle (IMC) est un indicateur simple qui permet d'estimer la corpulence d'une personne en fonction de sa taille et de son poids. Il aide à évaluer les risques potentiels liés au poids sur la santé."
+    },
+    {
+      icon: <HeartPulse className="h-6 w-6 text-green-500" aria-hidden="true" />,
+      title: "Santé et Bien-être",
+      description: "Un IMC équilibré est généralement associé à un meilleur état de santé global, avec moins de risques de maladies cardiovasculaires, de diabète de type 2 et d'autres problèmes de santé liés au poids."
+    },
+    {
+      icon: <Info className="h-6 w-6 text-orange-500" aria-hidden="true" />,
+      title: "Limites de l'IMC",
+      description: "L'IMC ne tient pas compte de la répartition de la masse grasse et de la masse musculaire, ni des différences liées à l'âge, au sexe et à l'origine ethnique. Un avis médical reste indispensable pour une évaluation complète."
+    }
+  ];
 
   return (
-    <div className="space-y-8">
-      {/* Avertissement médical */}
-      <Alert className="bg-yellow-50 border-yellow-200">
-        <InfoIcon className="h-4 w-4 text-yellow-600" />
-        <AlertDescription className="text-yellow-800">
-          {t.disclaimer}
-        </AlertDescription>
-      </Alert>
-
-      {/* FAQ */}
-      <Card className="p-6">
-        <h2 className="text-2xl font-bold mb-4">{t.faq.title}</h2>
-        <Accordion type="single" collapsible className="space-y-2">
-          {t.faq.items.map((item, index) => (
-            <AccordionItem value={`item-${index}`} key={index}>
-              <AccordionTrigger className="text-left">
-                {item.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                {item.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </Card>
-
-      {/* Contenu éducatif */}
-      <Card className="p-6">
-        <h2 className="text-2xl font-bold mb-4">{t.education.title}</h2>
-        <div className="space-y-6">
-          {t.education.sections.map((section, index) => (
-            <div key={index} className="space-y-2">
-              <h3 className="text-xl font-semibold">{section.title}</h3>
-              <p className="text-muted-foreground">{section.content}</p>
-            </div>
-          ))}
-        </div>
-      </Card>
-
-      {/* Échelle visuelle d'IMC */}
-      <Card className="p-6">
-        <h2 className="text-2xl font-bold mb-4">Échelle d'IMC</h2>
-        <div className="relative h-12 bg-gradient-to-r from-blue-300 via-green-300 via-yellow-300 to-red-300 rounded-lg">
-          <div className="absolute -top-6 left-0 text-sm">16</div>
-          <div className="absolute -top-6 left-1/4 text-sm">18.5</div>
-          <div className="absolute -top-6 left-1/2 text-sm">25</div>
-          <div className="absolute -top-6 left-3/4 text-sm">30</div>
-          <div className="absolute -top-6 right-0 text-sm">40</div>
-        </div>
-        <div className="flex justify-between mt-6 text-sm">
-          <span>Maigreur</span>
-          <span>Normal</span>
-          <span>Surpoids</span>
-          <span>Obésité</span>
-        </div>
-      </Card>
-    </div>
+    <Card className="p-6 shadow-lg rounded-lg bg-white/10 backdrop-blur-lg">
+      <h2 className="text-2xl font-bold text-white mb-6 text-center">
+        Éducation sur l'IMC
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {educationSections.map((section, index) => (
+          <div key={index} className="flex flex-col items-center text-center space-y-4 p-4 bg-white/20 rounded-lg">
+            {section.icon}
+            <h3 className="text-xl font-semibold text-white">{section.title}</h3>
+            <p className="text-white/80">{section.description}</p>
+          </div>
+        ))}
+      </div>
+      
+      <div className="mt-8 p-4 bg-white/30 rounded-lg">
+        <h3 className="text-xl font-semibold text-white mb-4">Ressources pédagogiques</h3>
+        <p className="text-white/90">
+          L'IMC est un outil de référence utilisé par l'Organisation Mondiale de la Santé pour évaluer les risques liés au poids. 
+          Pour des informations complètes sur l'IMC et ses implications pour la santé, consultez les ressources officielles ou 
+          discutez avec un professionnel de santé qualifié.
+        </p>
+        <p className="mt-4 text-white/90 text-sm">
+          Pour des informations médicales précises, consultez toujours un professionnel de santé qualifié.
+        </p>
+      </div>
+    </Card>
   );
 };
 

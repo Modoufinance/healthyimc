@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { Phone, MapPin, Mail } from "lucide-react";
+import { Mail, Lightbulb } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 const ContactForm = () => {
@@ -52,34 +52,31 @@ const ContactForm = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleIntelligence = () => {
+    toast({
+      title: "Assistant intelligent",
+      description: "Notre assistant intelligent analysera votre message pour une réponse plus rapide et personnalisée.",
+      className: "bg-blue-500 text-white"
+    });
+  };
+
   return (
     <div className="grid md:grid-cols-2 gap-12">
       <div className="space-y-8">
-        <h3 className="text-2xl font-semibold mb-6">Nos Coordonnées</h3>
+        <h3 className="text-2xl font-semibold mb-6">Contactez-nous</h3>
         
-        <div className="flex items-center space-x-4">
-          <MapPin className="h-5 w-5 text-primary" />
-          <div>
-            <p className="font-medium">Notre adresse:</p>
-            <p className="text-gray-600">Touba</p>
-            <p className="text-gray-600">Sénégal</p>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-4">
-          <Phone className="h-5 w-5 text-primary" />
-          <div>
-            <p className="font-medium">Téléphone:</p>
-            <p className="text-gray-600">+221 78 448 82 59</p>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 mt-6">
           <Mail className="h-5 w-5 text-primary" />
           <div>
             <p className="font-medium">Email:</p>
-            <p className="text-gray-600">Modoufinance@gmail.com</p>
+            <p className="text-gray-600">contact.Healthyimc@gmail.com</p>
           </div>
+        </div>
+
+        <div className="mt-8 bg-blue-50 p-4 rounded-lg border border-blue-100">
+          <p className="text-sm text-gray-700">
+            Envoyez-nous un message via le formulaire et nous vous répondrons dans les plus brefs délais.
+          </p>
         </div>
       </div>
 
@@ -125,17 +122,27 @@ const ContactForm = () => {
             required
           />
         </div>
-        <Button 
-          type="submit" 
-          className="w-full"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Envoi en cours..." : "Envoyer"}
-        </Button>
+        <div className="flex gap-4">
+          <Button 
+            type="submit" 
+            className="flex-1"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Envoi en cours..." : "Envoyer"}
+          </Button>
+          <Button 
+            type="button" 
+            variant="outline"
+            className="flex items-center gap-2" 
+            onClick={handleIntelligence}
+          >
+            <Lightbulb className="w-4 h-4" />
+            <span>Intelligence</span>
+          </Button>
+        </div>
       </form>
     </div>
   );
 };
 
 export default ContactForm;
-

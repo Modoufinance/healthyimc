@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
-import { Bluetooth, Loader2 } from "lucide-react";
-import { connectToDevice, readDeviceData } from "@/services/deviceService";
+import { Bluetooth, Loader2, AlertCircle } from "lucide-react";
+import { connectToDevice, readDeviceData, isBluetoothSupported } from "@/services/deviceService";
 
 interface DeviceConnectProps {
   onDataReceived: (weight?: number, height?: number) => void;
@@ -11,6 +12,7 @@ interface DeviceConnectProps {
 const DeviceConnect = ({ onDataReceived }: DeviceConnectProps) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectedDevice, setConnectedDevice] = useState<any | null>(null);
+  const bluetoothSupported = isBluetoothSupported();
 
   const handleConnect = async () => {
     setIsConnecting(true);
@@ -38,6 +40,21 @@ const DeviceConnect = ({ onDataReceived }: DeviceConnectProps) => {
       setIsConnecting(false);
     }
   };
+
+  if (!bluetoothSupported) {
+    return (
+      <div className="flex items-center gap-2 mb-4">
+        <Button
+          variant="outline"
+          disabled
+          className="w-full"
+        >
+          <AlertCircle className="h-4 w-4 mr-2" />
+          Bluetooth non supporté par votre navigateur
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center gap-2 mb-4">
