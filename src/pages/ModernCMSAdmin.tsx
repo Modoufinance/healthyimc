@@ -14,6 +14,7 @@ import {
   Users,
   FileText,
   TrendingUp,
+  TrendingDown,
   Bell,
   Settings,
   Download,
@@ -275,58 +276,70 @@ const ModernCMSAdmin = () => {
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <div className="max-w-7xl mx-auto p-6">
-        {/* Header */}
-        <div className="mb-8 flex justify-between items-start">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">
-              Dashboard Admin HealthyIMC
-            </h1>
-            <p className="text-muted-foreground">
-              Analyses prédictives, gestion de contenu et insights temps réel
-            </p>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            {/* Notifications */}
-            <div className="relative">
-              <Button variant="ghost" size="sm">
-                <Bell className="h-5 w-5" />
-                {notifications.length > 0 && (
-                  <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full text-xs"></span>
-                )}
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-4">
+        {/* Header responsive */}
+        <div className="mb-6 lg:mb-8">
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
+            <div className="flex-1">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                Dashboard Admin HealthyIMC
+              </h1>
+              <p className="text-muted-foreground text-sm sm:text-base">
+                Analyses prédictives, gestion de contenu et insights temps réel
+              </p>
+            </div>
+            
+            {/* Actions Header - responsive */}
+            <div className="flex flex-wrap items-center gap-2 lg:gap-4">
+              {/* Notifications */}
+              <div className="relative">
+                <Button variant="ghost" size="sm" className="relative">
+                  <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
+                  {notifications.length > 0 && (
+                    <span className="absolute -top-1 -right-1 h-2 w-2 sm:h-3 sm:w-3 bg-destructive rounded-full animate-pulse"></span>
+                  )}
+                </Button>
+              </div>
+              
+              {/* Mode sombre */}
+              <div className="flex items-center gap-1 sm:gap-2 px-2 py-1 rounded-md bg-background/50 border">
+                <Sun className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
+                <Switch 
+                  checked={darkMode} 
+                  onCheckedChange={setDarkMode}
+                  className="scale-75 sm:scale-100"
+                />
+                <Moon className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
+              </div>
+              
+              {/* Updates temps réel - masqué sur mobile */}
+              <div className="hidden sm:flex items-center gap-2 px-2 py-1 rounded-md bg-background/50 border">
+                <Activity className={`h-4 w-4 ${realTimeUpdates ? 'text-success animate-pulse' : 'text-muted-foreground'}`} />
+                <Switch checked={realTimeUpdates} onCheckedChange={setRealTimeUpdates} />
+                <span className="text-xs lg:text-sm font-medium">Temps réel</span>
+              </div>
+              
+              {/* Export buttons - responsive */}
+              <div className="flex gap-1 sm:gap-2">
+                <Button variant="outline" size="sm" onClick={handleExportPDF} className="hidden sm:flex">
+                  <Download className="h-4 w-4 mr-1 sm:mr-2" />
+                  <span className="hidden lg:inline">PDF</span>
+                </Button>
+                <Button variant="outline" size="sm" onClick={handleExportExcel} className="hidden sm:flex">
+                  <Download className="h-4 w-4 mr-1 sm:mr-2" />
+                  <span className="hidden lg:inline">Excel</span>
+                </Button>
+                {/* Menu mobile pour export */}
+                <Button variant="outline" size="sm" className="sm:hidden">
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              <Button variant="ghost" onClick={logout} size="sm" className="text-xs sm:text-sm">
+                <span className="hidden sm:inline">Déconnexion</span>
+                <span className="sm:hidden">Exit</span>
               </Button>
             </div>
-            
-            {/* Mode sombre */}
-            <div className="flex items-center space-x-2">
-              <Sun className="h-4 w-4" />
-              <Switch checked={darkMode} onCheckedChange={setDarkMode} />
-              <Moon className="h-4 w-4" />
-            </div>
-            
-            {/* Updates temps réel */}
-            <div className="flex items-center space-x-2">
-              <Activity className={`h-4 w-4 ${realTimeUpdates ? 'text-green-500' : 'text-gray-400'}`} />
-              <Switch checked={realTimeUpdates} onCheckedChange={setRealTimeUpdates} />
-              <span className="text-sm">Temps réel</span>
-            </div>
-            
-            {/* Export buttons */}
-            <div className="flex space-x-2">
-              <Button variant="outline" size="sm" onClick={handleExportPDF}>
-                <Download className="h-4 w-4 mr-2" />
-                PDF
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleExportExcel}>
-                <Download className="h-4 w-4 mr-2" />
-                Excel
-              </Button>
-            </div>
-            
-            <Button variant="ghost" onClick={logout}>
-              Déconnexion
-            </Button>
           </div>
         </div>
 
@@ -367,113 +380,212 @@ const ModernCMSAdmin = () => {
           </div>
         ) : (
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-7 mb-6">
-              <TabsTrigger value="dashboard" className="flex items-center gap-2">
-                <BarChart3 className="h-4 w-4" />
-                Dashboard
-              </TabsTrigger>
-              <TabsTrigger value="analytics" className="flex items-center gap-2">
-                <TrendingUp className="h-4 w-4" />
-                Analytics
-              </TabsTrigger>
-              <TabsTrigger value="articles" className="flex items-center gap-2">
-                <FileText className="h-4 w-4" />
-                Articles
-              </TabsTrigger>
-              <TabsTrigger value="faq" className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                FAQ
-              </TabsTrigger>
-              <TabsTrigger value="testimonials" className="flex items-center gap-2">
-                <Target className="h-4 w-4" />
-                Témoignages
-              </TabsTrigger>
-              <TabsTrigger value="content" className="flex items-center gap-2">
-                <Settings className="h-4 w-4" />
-                Contenu
-              </TabsTrigger>
-              <TabsTrigger value="security" className="flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                Sécurité
-              </TabsTrigger>
-            </TabsList>
+            {/* Navigation responsive avec scroll horizontal sur mobile */}
+            <div className="mb-6 overflow-x-auto">
+              <TabsList className="grid w-full min-w-max grid-cols-7 lg:grid-cols-7 gap-1">
+                <TabsTrigger value="dashboard" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                  <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Dashboard</span>
+                  <span className="sm:hidden">Home</span>
+                </TabsTrigger>
+                <TabsTrigger value="analytics" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                  <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Analytics</span>
+                  <span className="sm:hidden">Stats</span>
+                </TabsTrigger>
+                <TabsTrigger value="articles" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                  <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Articles</span>
+                  <span className="sm:hidden">Posts</span>
+                </TabsTrigger>
+                <TabsTrigger value="faq" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                  <Users className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span>FAQ</span>
+                </TabsTrigger>
+                <TabsTrigger value="testimonials" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                  <Target className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Témoignages</span>
+                  <span className="sm:hidden">Reviews</span>
+                </TabsTrigger>
+                <TabsTrigger value="content" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                  <Settings className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Contenu</span>
+                  <span className="sm:hidden">CMS</span>
+                </TabsTrigger>
+                <TabsTrigger value="security" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                  <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Sécurité</span>
+                  <span className="sm:hidden">Sec</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
-            {/* Dashboard Principal */}
+            {/* Dashboard Principal - Grille responsive fluide */}
             <TabsContent value="dashboard">
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
-                {/* KPIs Cards */}
+              {/* KPIs Cards - grille fluide responsive */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
                 {kpiData.map((kpi, index) => (
-                  <Card key={index}>
-                    <CardContent className="p-6">
+                  <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-l-4 animate-fade-in" style={{ borderLeftColor: kpi.color }}>
+                    <CardContent className="p-4 sm:p-6">
                       <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-sm font-medium text-muted-foreground">{kpi.name}</p>
-                          <div className="flex items-center space-x-2">
-                            <p className="text-2xl font-bold">{kpi.value}</p>
-                            <span className={`text-sm ${kpi.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs sm:text-sm font-medium text-muted-foreground truncate">{kpi.name}</p>
+                          <div className="flex items-center gap-2 mt-2">
+                            <p className="text-lg sm:text-2xl lg:text-3xl font-bold tracking-tight">{kpi.value}</p>
+                            <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                              kpi.trend === 'up' 
+                                ? 'bg-success/10 text-success' 
+                                : 'bg-destructive/10 text-destructive'
+                            }`}>
+                              {kpi.trend === 'up' ? (
+                                <TrendingUp className="h-3 w-3" />
+                              ) : (
+                                <TrendingDown className="h-3 w-3" />
+                              )}
                               {kpi.change}
-                            </span>
+                            </div>
                           </div>
                         </div>
-                        <div className="h-8 w-8 rounded-full" style={{ backgroundColor: kpi.color }}></div>
+                        <div 
+                          className="h-8 w-8 sm:h-10 sm:w-10 rounded-full opacity-20 group-hover:opacity-30 transition-opacity flex-shrink-0" 
+                          style={{ backgroundColor: kpi.color }}
+                        ></div>
                       </div>
                     </CardContent>
                   </Card>
                 ))}
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              {/* Graphiques principaux - grille responsive */}
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6 lg:mb-8">
                 {/* Graphique prédictif */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Analyses Prédictives</CardTitle>
-                    <CardDescription>Prévisions basées sur l'IA pour les 3 prochains mois</CardDescription>
+                <Card className="hover:shadow-lg transition-all duration-300 animate-fade-in">
+                  <CardHeader className="pb-3 sm:pb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-base sm:text-lg">Analyses Prédictives</CardTitle>
+                        <CardDescription className="text-xs sm:text-sm">Prévisions basées sur l'IA pour les 3 prochains mois</CardDescription>
+                      </div>
+                    </div>
                   </CardHeader>
-                  <CardContent>
-                    <ResponsiveContainer width="100%" height={300}>
+                  <CardContent className="p-3 sm:p-6 pt-0">
+                    <ResponsiveContainer width="100%" height={250}>
                       <LineChart data={predictiveData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="actual" stroke="#8884d8" strokeWidth={2} />
-                        <Line type="monotone" dataKey="predicted" stroke="#82ca9d" strokeDasharray="5 5" strokeWidth={2} />
+                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                        <XAxis 
+                          dataKey="month" 
+                          tick={{ fontSize: 12 }}
+                          axisLine={false}
+                          tickLine={false}
+                        />
+                        <YAxis 
+                          tick={{ fontSize: 12 }}
+                          axisLine={false}
+                          tickLine={false}
+                        />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'hsl(var(--background))', 
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: '8px',
+                            fontSize: '12px'
+                          }}
+                        />
+                        <Legend wrapperStyle={{ fontSize: '12px' }} />
+                        <Line 
+                          type="monotone" 
+                          dataKey="actual" 
+                          stroke="hsl(var(--primary))" 
+                          strokeWidth={3}
+                          dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="predicted" 
+                          stroke="hsl(var(--muted-foreground))" 
+                          strokeDasharray="8 5" 
+                          strokeWidth={2}
+                          dot={{ fill: 'hsl(var(--muted-foreground))', strokeWidth: 2, r: 3 }}
+                        />
                       </LineChart>
                     </ResponsiveContainer>
                   </CardContent>
                 </Card>
 
                 {/* Activité utilisateurs temps réel */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Activité Temps Réel</CardTitle>
-                    <CardDescription>Utilisateurs actifs par heure</CardDescription>
+                <Card className="hover:shadow-lg transition-all duration-300 animate-fade-in">
+                  <CardHeader className="pb-3 sm:pb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="p-2 bg-success/10 rounded-lg">
+                        <Activity className={`h-4 w-4 sm:h-5 sm:w-5 text-success ${realTimeUpdates ? 'animate-pulse' : ''}`} />
+                      </div>
+                      <div>
+                        <CardTitle className="text-base sm:text-lg">Activité Temps Réel</CardTitle>
+                        <CardDescription className="text-xs sm:text-sm">Utilisateurs actifs par heure</CardDescription>
+                      </div>
+                    </div>
                   </CardHeader>
-                  <CardContent>
-                    <ResponsiveContainer width="100%" height={300}>
+                  <CardContent className="p-3 sm:p-6 pt-0">
+                    <ResponsiveContainer width="100%" height={250}>
                       <AreaChart data={userActivityData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="time" />
-                        <YAxis />
-                        <Tooltip />
-                        <Area type="monotone" dataKey="users" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                        <XAxis 
+                          dataKey="time" 
+                          tick={{ fontSize: 12 }}
+                          axisLine={false}
+                          tickLine={false}
+                        />
+                        <YAxis 
+                          tick={{ fontSize: 12 }}
+                          axisLine={false}
+                          tickLine={false}
+                        />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'hsl(var(--background))', 
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: '8px',
+                            fontSize: '12px'
+                          }}
+                        />
+                        <Area 
+                          type="monotone" 
+                          dataKey="users" 
+                          stroke="hsl(var(--success))" 
+                          fill="hsl(var(--success))" 
+                          fillOpacity={0.2}
+                          strokeWidth={2}
+                        />
                       </AreaChart>
                     </ResponsiveContainer>
                   </CardContent>
                 </Card>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Section inférieure - grille adaptive */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
                 {/* Notifications récentes */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Alertes & Notifications</CardTitle>
+                <Card className="hover:shadow-lg transition-all duration-300 animate-fade-in">
+                  <CardHeader className="pb-3 sm:pb-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="p-2 bg-warning/10 rounded-lg">
+                          <Bell className="h-4 w-4 sm:h-5 sm:w-5 text-warning" />
+                        </div>
+                        <CardTitle className="text-base sm:text-lg">Alertes & Notifications</CardTitle>
+                      </div>
+                      <Badge variant="secondary" className="text-xs">
+                        {notifications.length}
+                      </Badge>
+                    </div>
                   </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
+                  <CardContent className="p-3 sm:p-6 pt-0">
+                    <div className="space-y-3">
                       {notifications.map((notification) => (
-                        <div key={notification.id} className="flex items-start space-x-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
+                        <div key={notification.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors border-l-2 border-transparent hover:border-primary">
                           <div className={`h-2 w-2 rounded-full mt-2 ${
                             notification.type === 'success' ? 'bg-green-500' :
                             notification.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
