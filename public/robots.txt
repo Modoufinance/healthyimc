@@ -62,6 +62,10 @@ Disallow: /*.ts$
 Disallow: /*.tsx$
 
 # Configuration pour les robots spécifiques
+User-agent: Mediapartners-Google
+Allow: /
+Allow: /ads.txt
+
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 1
