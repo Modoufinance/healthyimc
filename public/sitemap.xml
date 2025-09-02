@@ -1,75 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <!-- Page d'accueil -->
    <url>
       <loc>https://healthyimc.com/</loc>
-      <lastmod>2025-09-02</lastmod>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>weekly</changefreq>
       <priority>1.0</priority>
    </url>
+   
+   <!-- Outils de calcul principaux -->
    <url>
       <loc>https://healthyimc.com/calculateur-imc</loc>
-      <lastmod>2025-09-02</lastmod>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
+   
    <url>
       <loc>https://healthyimc.com/calculateur-calories</loc>
-      <lastmod>2025-09-02</lastmod>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
+   
+   <url>
+      <loc>https://healthyimc.com/calculateur-imc-enfants</loc>
+      <lastmod>2025-01-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   
+   <url>
+      <loc>https://healthyimc.com/calculateur-graisse-corporelle</loc>
+      <lastmod>2025-01-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   
+   <!-- Programme fitness IA -->
    <url>
       <loc>https://healthyimc.com/programme-fitness-ia</loc>
-      <lastmod>2025-09-02</lastmod>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
+   
+   <!-- Bien-être -->
    <url>
       <loc>https://healthyimc.com/bien-etre</loc>
-      <lastmod>2025-09-02</lastmod>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
    </url>
+   
+   <!-- Assistant santé IA -->
    <url>
-      <loc>https://healthyimc.com/a-propos</loc>
-      <lastmod>2025-09-02</lastmod>
+      <loc>https://healthyimc.com/assistant-sante-ia</loc>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>weekly</changefreq>
-      <priority>0.5</priority>
+      <priority>0.7</priority>
    </url>
+   
+   <!-- Analyseur de symptômes -->
    <url>
-      <loc>https://healthyimc.com/confidentialite</loc>
-      <lastmod>2025-09-02</lastmod>
+      <loc>https://healthyimc.com/analyseur-symptomes</loc>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>weekly</changefreq>
-      <priority>0.5</priority>
+      <priority>0.7</priority>
    </url>
+   
+   <!-- Pages éducatives spécialisées -->
+   <url>
+      <loc>https://healthyimc.com/imc-homme</loc>
+      <lastmod>2025-01-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   
+   <url>
+      <loc>https://healthyimc.com/imc-femme</loc>
+      <lastmod>2025-01-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   
+   <url>
+      <loc>https://healthyimc.com/imc-normal</loc>
+      <lastmod>2025-01-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   
+   <url>
+      <loc>https://healthyimc.com/imc-surpoids</loc>
+      <lastmod>2025-01-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   
+   <url>
+      <loc>https://healthyimc.com/imc-obesite</loc>
+      <lastmod>2025-01-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   
+   <url>
+      <loc>https://healthyimc.com/poids-ideal</loc>
+      <lastmod>2025-01-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   
+   <url>
+      <loc>https://healthyimc.com/education-imc</loc>
+      <lastmod>2025-01-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   
+   <!-- Blog -->
    <url>
       <loc>https://healthyimc.com/blog</loc>
-      <lastmod>2025-09-02</lastmod>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.5</priority>
    </url>
+   
+   <!-- Articles de blog -->
    <url>
-      <loc>https://healthyimc.com/blog/micronutrients-that-matter-essential-vitamins-and-minerals-most-people-are-missing</loc>
-      <lastmod>2025-09-02</lastmod>
+      <loc>https://healthyimc.com/blog/micronutriments-essentiels-vitamines-mineraux-manquants</loc>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>daily</changefreq>
       <priority>0.6</priority>
    </url>
+   
    <url>
       <loc>https://healthyimc.com/blog/jeune-intermittent-et-perte-de-poids-le-guide-ultime-pour-optimiser-votre-imc-et-atteindre-une-sante-optimale</loc>
-      <lastmod>2025-09-02</lastmod>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>daily</changefreq>
       <priority>0.6</priority>
    </url>
+   
    <url>
       <loc>https://healthyimc.com/blog/7-techniques-scientifiques-pour-gerer-le-stress-au-travail-sans-demissionner-sante-mentale-professionnelle</loc>
-      <lastmod>2025-09-02</lastmod>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>daily</changefreq>
       <priority>0.6</priority>
    </url>
+   
    <url>
       <loc>https://healthyimc.com/blog/telemedecine-quand-consulter-a-distance-vs-presentiel-arbre-de-decision</loc>
-      <lastmod>2025-09-02</lastmod>
+      <lastmod>2025-01-02</lastmod>
       <changefreq>daily</changefreq>
       <priority>0.6</priority>
+   </url>
+   
+   <!-- Pages légales -->
+   <url>
+      <loc>https://healthyimc.com/a-propos</loc>
+      <lastmod>2025-01-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.5</priority>
+   </url>
+   
+   <url>
+      <loc>https://healthyimc.com/confidentialite</loc>
+      <lastmod>2025-01-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.5</priority>
    </url>
 </urlset>
