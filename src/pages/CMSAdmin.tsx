@@ -17,13 +17,15 @@ import {
   Trash2,
   Eye,
   Search,
-  Wand2
+  Wand2,
+  Clock
 } from "lucide-react";
 import CMSArticleEditor from "@/components/cms/CMSArticleEditor";
 import CMSFAQEditor from "@/components/cms/CMSFAQEditor";
 import CMSTestimonialEditor from "@/components/cms/CMSTestimonialEditor";
 import CMSContentEditor from "@/components/cms/CMSContentEditor";
 import AIContentGenerator from "@/components/cms/AIContentGenerator";
+import ScheduledArticlesView from "@/components/cms/ScheduledArticlesView";
 import { CMSService } from "@/services/cmsService";
 import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
 
@@ -217,10 +219,14 @@ const CMSAdmin = () => {
           </div>
         ) : (
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="articles" className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
                 Articles
+              </TabsTrigger>
+              <TabsTrigger value="scheduled" className="flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                Programmés
               </TabsTrigger>
               <TabsTrigger value="faq" className="flex items-center gap-2">
                 <HelpCircle className="h-4 w-4" />
@@ -247,16 +253,18 @@ const CMSAdmin = () => {
                 />
               </div>
               <div className="flex gap-2">
-                {activeTab === "articles" && (
+                {(activeTab === "articles" || activeTab === "scheduled") && (
                   <Button onClick={handleAIGenerate} className="flex items-center gap-2" variant="secondary">
                     <Wand2 className="h-4 w-4" />
                     Générateur IA
                   </Button>
                 )}
-                <Button onClick={handleNewItem} className="flex items-center gap-2">
-                  <Plus className="h-4 w-4" />
-                  Nouveau
-                </Button>
+                {activeTab !== "scheduled" && (
+                  <Button onClick={handleNewItem} className="flex items-center gap-2">
+                    <Plus className="h-4 w-4" />
+                    Nouveau
+                  </Button>
+                )}
               </div>
             </div>
 
@@ -285,6 +293,11 @@ const CMSAdmin = () => {
                               <Badge variant={article.published ? "default" : "outline"}>
                                 {article.published ? "Publié" : "Brouillon"}
                               </Badge>
+                              {article.scheduled_at && !article.published && (
+                                <Badge variant="destructive" className="text-xs">
+                                  Programmé: {new Date(article.scheduled_at).toLocaleDateString('fr-FR')}
+                                </Badge>
+                              )}
                               <span className="text-xs text-gray-500">
                                 {formatDate(article.created_at)}
                               </span>
@@ -312,6 +325,10 @@ const CMSAdmin = () => {
                   )}
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            <TabsContent value="scheduled">
+              <ScheduledArticlesView onEdit={handleEditItem} />
             </TabsContent>
 
             <TabsContent value="faq">

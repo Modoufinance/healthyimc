@@ -137,6 +137,7 @@ export type Database = {
           meta_title: string | null
           published: boolean
           published_at: string | null
+          scheduled_at: string | null
           slug: string
           tags: string[] | null
           title: string
@@ -154,6 +155,7 @@ export type Database = {
           meta_title?: string | null
           published?: boolean
           published_at?: string | null
+          scheduled_at?: string | null
           slug: string
           tags?: string[] | null
           title: string
@@ -171,6 +173,7 @@ export type Database = {
           meta_title?: string | null
           published?: boolean
           published_at?: string | null
+          scheduled_at?: string | null
           slug?: string
           tags?: string[] | null
           title?: string

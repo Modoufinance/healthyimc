@@ -3,6 +3,22 @@ import { supabase } from "@/integrations/supabase/client";
 import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent, CMSCategory } from "@/types/cms";
 
 export class CMSService {
+  static async getScheduledArticles(): Promise<CMSArticle[]> {
+    const { data, error } = await supabase
+      .from('cms_articles')
+      .select('*')
+      .eq('published', false)
+      .not('scheduled_at', 'is', null)
+      .order('scheduled_at', { ascending: true });
+    
+    if (error) {
+      console.error('Error fetching scheduled articles:', error);
+      return [];
+    }
+    
+    return data || [];
+  }
+
   // Articles
   static async getArticles(): Promise<CMSArticle[]> {
     const { data, error } = await supabase
@@ -79,6 +95,7 @@ export class CMSService {
         meta_title: article.meta_title,
         meta_description: article.meta_description,
         published: article.published,
+        scheduled_at: article.scheduled_at,
         published_at: article.published ? new Date().toISOString() : null
       })
       .select()

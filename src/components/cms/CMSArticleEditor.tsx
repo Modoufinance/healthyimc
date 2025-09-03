@@ -32,6 +32,7 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
     meta_description: article?.meta_description || "",
     featured_image: article?.featured_image || "",
     published: article?.published || false,
+    scheduled_at: article?.scheduled_at || "",
   });
   const [htmlContent, setHtmlContent] = useState(article?.content || "");
   const [previewMode, setPreviewMode] = useState<"code" | "preview">("code");
@@ -79,6 +80,7 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
         meta_description: formData.meta_description,
         featured_image: formData.featured_image,
         published: formData.published,
+        scheduled_at: formData.scheduled_at || null,
       };
 
       let result;
@@ -492,6 +494,42 @@ const CMSArticleEditor = ({ article, onClose }: CMSArticleEditorProps) => {
                 checked={formData.published}
                 onCheckedChange={(checked) => handleInputChange("published", checked)}
               />
+            </div>
+
+            <div className="space-y-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="flex items-start gap-3">
+                <div className="p-1 bg-blue-100 rounded">
+                  <svg className="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <Label htmlFor="scheduled_at" className="text-sm font-medium">
+                    Programmer la publication (optionnel)
+                  </Label>
+                  <p className="text-xs text-gray-600 mb-2">
+                    Si une date est définie, l'article sera automatiquement publié à ce moment-là
+                  </p>
+                  <Input
+                    id="scheduled_at"
+                    type="datetime-local"
+                    value={formData.scheduled_at}
+                    onChange={(e) => handleInputChange("scheduled_at", e.target.value)}
+                    className="w-full"
+                    disabled={formData.published}
+                  />
+                  {formData.published && (
+                    <p className="text-xs text-orange-600 mt-1">
+                      La programmation n'est pas disponible pour les articles déjà publiés
+                    </p>
+                  )}
+                  {formData.scheduled_at && !formData.published && (
+                    <p className="text-xs text-green-600 mt-1">
+                      ✓ Publication programmée le {new Date(formData.scheduled_at).toLocaleString('fr-FR')}
+                    </p>
+                  )}
+                </div>
+              </div>
             </div>
           </TabsContent>
 
