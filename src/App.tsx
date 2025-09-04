@@ -6,6 +6,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { CartProvider } from "./contexts/CartContext";
 import AppRoutes from "./AppRoutes";
 import EnhancedNavigation from "./components/enhanced-navigation";
 
@@ -18,14 +19,16 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
           <LanguageProvider>
             <TooltipProvider>
-              <div className="min-h-screen flex flex-col">
-                <Toaster />
-                <Sonner />
-                <EnhancedNavigation />
-                <main className="flex-1">
-                  <AppRoutes />
-                </main>
-              </div>
+      <div className="min-h-screen flex flex-col">
+        <CartProvider>
+          <Toaster />
+          <Sonner />
+          <EnhancedNavigation />
+          <main className="flex-1">
+            <AppRoutes />
+          </main>
+        </CartProvider>
+      </div>
             </TooltipProvider>
           </LanguageProvider>
         </QueryClientProvider>
