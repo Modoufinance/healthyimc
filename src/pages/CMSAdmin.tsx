@@ -26,6 +26,7 @@ import CMSTestimonialEditor from "@/components/cms/CMSTestimonialEditor";
 import CMSContentEditor from "@/components/cms/CMSContentEditor";
 import AIContentGenerator from "@/components/cms/AIContentGenerator";
 import ScheduledArticlesView from "@/components/cms/ScheduledArticlesView";
+import ContactMessages from "@/components/cms/ContactMessages";
 import { CMSService } from "@/services/cmsService";
 import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
 
@@ -219,7 +220,7 @@ const CMSAdmin = () => {
           </div>
         ) : (
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-6">
               <TabsTrigger value="articles" className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
                 Articles
@@ -240,6 +241,10 @@ const CMSAdmin = () => {
                 <Settings className="h-4 w-4" />
                 Contenu
               </TabsTrigger>
+              <TabsTrigger value="messages" className="flex items-center gap-2">
+                <MessageSquare className="h-4 w-4" />
+                Messages
+              </TabsTrigger>
             </TabsList>
 
             <div className="mt-6 mb-4 flex justify-between items-center">
@@ -259,7 +264,7 @@ const CMSAdmin = () => {
                     Générateur IA
                   </Button>
                 )}
-                {activeTab !== "scheduled" && (
+                {activeTab !== "scheduled" && activeTab !== "messages" && (
                   <Button onClick={handleNewItem} className="flex items-center gap-2">
                     <Plus className="h-4 w-4" />
                     Nouveau
@@ -491,6 +496,10 @@ const CMSAdmin = () => {
                   )}
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            <TabsContent value="messages">
+              <ContactMessages />
             </TabsContent>
           </Tabs>
         )}
