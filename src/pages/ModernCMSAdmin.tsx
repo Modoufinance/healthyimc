@@ -35,7 +35,9 @@ import {
   Globe,
   MoreVertical,
   RefreshCw,
-  Activity
+  Activity,
+  ShoppingBag,
+  Package
 } from "lucide-react";
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import CMSArticleEditor from "@/components/cms/CMSArticleEditor";
@@ -45,6 +47,8 @@ import CMSContentEditor from "@/components/cms/CMSContentEditor";
 import AIContentGenerator from "@/components/cms/AIContentGenerator";
 import { CMSService } from "@/services/cmsService";
 import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
+import { ProductsManager } from "@/components/admin/ProductsManager";
+import { OrdersManager } from "@/components/admin/OrdersManager";
 
 // Données mockées pour les analyses
 const analyticsData = [
@@ -382,7 +386,7 @@ const ModernCMSAdmin = () => {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             {/* Navigation responsive avec scroll horizontal sur mobile */}
             <div className="mb-6 overflow-x-auto">
-              <TabsList className="grid w-full min-w-max grid-cols-7 lg:grid-cols-7 gap-1">
+              <TabsList className="grid w-full min-w-max grid-cols-9 lg:grid-cols-9 gap-1">
                 <TabsTrigger value="dashboard" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
                   <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Dashboard</span>
@@ -392,6 +396,16 @@ const ModernCMSAdmin = () => {
                   <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Analytics</span>
                   <span className="sm:hidden">Stats</span>
+                </TabsTrigger>
+                <TabsTrigger value="products" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                  <Package className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Produits</span>
+                  <span className="sm:hidden">Prod</span>
+                </TabsTrigger>
+                <TabsTrigger value="orders" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                  <ShoppingBag className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Commandes</span>
+                  <span className="sm:hidden">Orders</span>
                 </TabsTrigger>
                 <TabsTrigger value="articles" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
                   <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -652,6 +666,16 @@ const ModernCMSAdmin = () => {
                   </CardContent>
                 </Card>
               </div>
+            </TabsContent>
+
+            {/* Gestion des Produits E-commerce */}
+            <TabsContent value="products">
+              <ProductsManager />
+            </TabsContent>
+
+            {/* Gestion des Commandes */}
+            <TabsContent value="orders">
+              <OrdersManager />
             </TabsContent>
 
             {/* Analytics détaillées */}
