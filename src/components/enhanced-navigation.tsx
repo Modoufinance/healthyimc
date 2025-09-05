@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { 
   Home, Scale, Bot, Info, Shield, Heart, Dumbbell, 
   BookOpen, Activity, ChevronDown, Menu, X, Percent, 
-  Flame, Baby, Hospital 
+  Flame, Baby, Hospital, ShoppingBag, Download
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSelector from "./LanguageSelector";
@@ -37,6 +37,8 @@ const EnhancedNavigation = () => {
   ];
   
   const additionalMainLinks = [
+    { to: "/boutique", label: "Boutique", icon: <ShoppingBag className="w-4 h-4" /> },
+    { to: "/mes-achats", label: "Mes achats", icon: <Download className="w-4 h-4" /> },
     { to: "/bien-etre", label: t.navigation.wellness, icon: <Heart className="w-4 h-4" /> },
     { to: "/programme-fitness-ia", label: t.navigation.fitnessCoach, icon: <Dumbbell className="w-4 h-4" /> },
     { to: "/blog", label: t.navigation.blog, icon: <BookOpen className="w-4 h-4" /> },

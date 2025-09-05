@@ -26,6 +26,8 @@ import BMINormal from "./pages/BMINormal";
 import BMIOverweight from "./pages/BMIOverweight";
 import BMIObesity from "./pages/BMIObesity";
 import Sitemap from "./pages/Sitemap";
+import Shop from "./pages/Shop";
+import MyPurchases from "./pages/MyPurchases";
 import { useEffect } from "react";
 import { useLanguage } from "./contexts/LanguageContext";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -94,6 +96,10 @@ const AppRoutes = () => {
         <Route path={`${prefix}/blog`} element={<Blog />} />
         <Route path={`${prefix}/blog/:slug`} element={<BlogArticle />} />
         
+        {/* Routes e-commerce */}
+        <Route path={`${prefix}/boutique`} element={<Shop />} />
+        <Route path={`${prefix}/mes-achats`} element={<MyPurchases />} />
+        
         {/* Pages légales et informatives */}
         <Route path={`${prefix}/a-propos`} element={<About />} />
         <Route path={`${prefix}/confidentialite`} element={<Privacy />} />
@@ -109,6 +115,10 @@ const AppRoutes = () => {
         {/* Routes d'administration */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/cms" element={<ModernCMSAdmin />} />
+        
+        {/* Routes e-commerce sans préfixe */}
+        <Route path="/boutique" element={<Shop />} />
+        <Route path="/mes-achats" element={<MyPurchases />} />
         
         {/* Routes en français (par défaut) */}
         {getOptimizedRoutes()}
