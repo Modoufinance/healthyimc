@@ -25,6 +25,7 @@ import BMIEducation from "./pages/BMIEducation";
 import BMINormal from "./pages/BMINormal";
 import BMIOverweight from "./pages/BMIOverweight";
 import BMIObesity from "./pages/BMIObesity";
+import Sitemap from "./pages/Sitemap";
 import { useEffect } from "react";
 import { useLanguage } from "./contexts/LanguageContext";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -96,6 +97,7 @@ const AppRoutes = () => {
         {/* Pages légales et informatives */}
         <Route path={`${prefix}/a-propos`} element={<About />} />
         <Route path={`${prefix}/confidentialite`} element={<Privacy />} />
+        <Route path={`${prefix}/plan-du-site`} element={<Sitemap />} />
       </>
     );
   };
