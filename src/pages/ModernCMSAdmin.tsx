@@ -159,6 +159,14 @@ const ModernCMSAdmin = () => {
           const contentData = await CMSService.getContent();
           setContent(contentData);
           break;
+        case "products":
+          // Les données des produits sont gérées par ProductsManager
+          console.log("Onglet produits activé");
+          break;
+        case "orders":
+          // Les données des commandes sont gérées par OrdersManager
+          console.log("Onglet commandes activé");
+          break;
       }
     } catch (error) {
       console.error("Error loading data:", error);
@@ -386,47 +394,47 @@ const ModernCMSAdmin = () => {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             {/* Navigation responsive avec scroll horizontal sur mobile */}
             <div className="mb-6 overflow-x-auto">
-              <TabsList className="grid w-full min-w-max grid-cols-9 lg:grid-cols-9 gap-1">
-                <TabsTrigger value="dashboard" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+              <TabsList className="inline-flex w-full min-w-max p-1 gap-1 bg-muted rounded-lg">
+                <TabsTrigger value="dashboard" className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm whitespace-nowrap">
                   <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Dashboard</span>
                   <span className="sm:hidden">Home</span>
                 </TabsTrigger>
-                <TabsTrigger value="analytics" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                <TabsTrigger value="analytics" className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm whitespace-nowrap">
                   <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Analytics</span>
                   <span className="sm:hidden">Stats</span>
                 </TabsTrigger>
-                <TabsTrigger value="products" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                <TabsTrigger value="products" className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm whitespace-nowrap">
                   <Package className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Produits</span>
                   <span className="sm:hidden">Prod</span>
                 </TabsTrigger>
-                <TabsTrigger value="orders" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                <TabsTrigger value="orders" className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm whitespace-nowrap">
                   <ShoppingBag className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Commandes</span>
                   <span className="sm:hidden">Orders</span>
                 </TabsTrigger>
-                <TabsTrigger value="articles" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                <TabsTrigger value="articles" className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm whitespace-nowrap">
                   <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Articles</span>
                   <span className="sm:hidden">Posts</span>
                 </TabsTrigger>
-                <TabsTrigger value="faq" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                <TabsTrigger value="faq" className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm whitespace-nowrap">
                   <Users className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>FAQ</span>
                 </TabsTrigger>
-                <TabsTrigger value="testimonials" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                <TabsTrigger value="testimonials" className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm whitespace-nowrap">
                   <Target className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Témoignages</span>
                   <span className="sm:hidden">Reviews</span>
                 </TabsTrigger>
-                <TabsTrigger value="content" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                <TabsTrigger value="content" className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm whitespace-nowrap">
                   <Settings className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Contenu</span>
                   <span className="sm:hidden">CMS</span>
                 </TabsTrigger>
-                <TabsTrigger value="security" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 text-xs sm:text-sm">
+                <TabsTrigger value="security" className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm whitespace-nowrap">
                   <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Sécurité</span>
                   <span className="sm:hidden">Sec</span>
