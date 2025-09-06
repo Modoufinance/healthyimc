@@ -1,5 +1,6 @@
 
 import SEO from "@/components/SEO";
+import AdSense from "@/components/AdSense";
 
 const Privacy = () => {
   const structuredData = {
@@ -21,6 +22,16 @@ const Privacy = () => {
       />
       <div className="min-h-[calc(100vh-4rem)] bg-gray-50 py-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* AdSense en haut */}
+          <div className="mb-8 flex justify-center">
+            <AdSense 
+              adSlot="7777777777"
+              adFormat="horizontal"
+              className="max-w-4xl"
+              style={{ minHeight: '100px' }}
+            />
+          </div>
+          
           <div className="bg-white rounded-lg shadow-lg p-8 space-y-6">
             <h1 className="text-3xl font-bold text-gray-900">Politique de Confidentialité</h1>
             
@@ -59,6 +70,16 @@ const Privacy = () => {
                 des cookies pour personnaliser le contenu en fonction de vos centres d'intérêt.
               </p>
             </div>
+          </div>
+          
+          {/* AdSense en bas */}
+          <div className="mt-8 flex justify-center">
+            <AdSense 
+              adSlot="8888888888"
+              adFormat="auto"
+              className="max-w-2xl"
+              style={{ minHeight: '200px' }}
+            />
           </div>
         </div>
       </div>

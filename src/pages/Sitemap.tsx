@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SEO from "@/components/SEO";
 import { useLanguage } from "@/contexts/LanguageContext";
+import AdSense from "@/components/AdSense";
 
 const Sitemap = () => {
   const { language } = useLanguage();
@@ -175,6 +176,16 @@ const Sitemap = () => {
       
       <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 py-8">
         <div className="container mx-auto px-4">
+          {/* AdSense en haut */}
+          <div className="mb-8 flex justify-center">
+            <AdSense 
+              adSlot="1313131313"
+              adFormat="horizontal"
+              className="max-w-4xl"
+              style={{ minHeight: '100px' }}
+            />
+          </div>
+          
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4">
               Plan du site HealthyIMC
@@ -242,6 +253,16 @@ const Sitemap = () => {
                 </div>
               </CardContent>
             </Card>
+          </div>
+          
+          {/* AdSense en bas */}
+          <div className="mt-8 flex justify-center">
+            <AdSense 
+              adSlot="1414141414"
+              adFormat="auto"
+              className="max-w-2xl"
+              style={{ minHeight: '200px' }}
+            />
           </div>
         </div>
       </div>

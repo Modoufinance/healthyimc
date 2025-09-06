@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, ShoppingBag } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import SEO from '@/components/SEO';
+import AdSense from '@/components/AdSense';
 
 const Shop: React.FC = () => {
   const navigate = useNavigate();
@@ -59,10 +60,30 @@ const Shop: React.FC = () => {
             </div>
           </div>
 
+          {/* AdSense avant les produits */}
+          <div className="mb-8 flex justify-center">
+            <AdSense 
+              adSlot="5555555555"
+              adFormat="horizontal"
+              className="max-w-4xl"
+              style={{ minHeight: '100px' }}
+            />
+          </div>
+
           {/* Products Grid */}
           <div className="mb-12">
             <h3 className="text-xl font-semibold mb-6">Nos Produits</h3>
             <ProductsList />
+          </div>
+
+          {/* AdSense après les produits */}
+          <div className="mb-8 flex justify-center">
+            <AdSense 
+              adSlot="6666666666"
+              adFormat="auto"
+              className="max-w-2xl"
+              style={{ minHeight: '200px' }}
+            />
           </div>
 
           {/* Footer Info */}

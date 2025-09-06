@@ -11,6 +11,7 @@ import { ecommerceService } from '@/services/ecommerceService';
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SEO from '@/components/SEO';
+import AdSense from '@/components/AdSense';
 
 const MyPurchases: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -169,6 +170,16 @@ const MyPurchases: React.FC = () => {
       />
       
       <div className="container mx-auto px-4 py-8">
+        {/* AdSense en haut */}
+        <div className="mb-8 flex justify-center">
+          <AdSense 
+            adSlot="1515151515"
+            adFormat="horizontal"
+            className="max-w-4xl"
+            style={{ minHeight: '100px' }}
+          />
+        </div>
+        
         {/* Header */}
         <div className="flex items-center space-x-4 mb-8">
           <Button 
@@ -311,6 +322,16 @@ const MyPurchases: React.FC = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+        
+        {/* AdSense en bas */}
+        <div className="mt-8 flex justify-center">
+          <AdSense 
+            adSlot="1616161616"
+            adFormat="auto"
+            className="max-w-2xl"
+            style={{ minHeight: '200px' }}
+          />
         </div>
       </div>
     </div>

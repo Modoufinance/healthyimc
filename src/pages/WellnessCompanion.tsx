@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Badge, Heart, Dumbbell, Leaf } from "lucide-react";
 import SEO from "@/components/SEO";
 import WellnessFeatures from "@/components/WellnessFeatures";
+import AdSense from "@/components/AdSense";
 
 const WellnessCompanion = () => {
   const [age, setAge] = useState("");
@@ -83,6 +84,16 @@ const WellnessCompanion = () => {
         structuredData={structuredData}
       />
       <div className="container mx-auto p-4 max-w-4xl">
+        {/* AdSense en haut */}
+        <div className="mb-8 flex justify-center">
+          <AdSense 
+            adSlot="1111111111"
+            adFormat="horizontal"
+            className="max-w-4xl"
+            style={{ minHeight: '100px' }}
+          />
+        </div>
+        
         <Card className="bg-gradient-to-br from-[#4facfe] to-[#00f2fe] text-white p-6">
           <div className="flex items-center gap-3 mb-4">
             <h1 className="text-3xl font-bold">Wellness Companion AI</h1>
@@ -165,6 +176,16 @@ const WellnessCompanion = () => {
 
           <WellnessFeatures />
         </Card>
+        
+        {/* AdSense en bas */}
+        <div className="mt-8 flex justify-center">
+          <AdSense 
+            adSlot="1212121212"
+            adFormat="auto"
+            className="max-w-2xl"
+            style={{ minHeight: '200px' }}
+          />
+        </div>
       </div>
     </>
   );

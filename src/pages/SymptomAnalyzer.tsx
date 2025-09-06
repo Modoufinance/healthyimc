@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Hospital, AlertTriangle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import SEO from "@/components/SEO";
+import AdSense from "@/components/AdSense";
 
 const SymptomAnalyzer = () => {
   const [symptoms, setSymptoms] = useState("");
@@ -41,6 +42,16 @@ const SymptomAnalyzer = () => {
         keywords="analyseur symptômes, consultation en ligne, analyse médicale IA, santé numérique"
       />
       <div className="container mx-auto p-4 max-w-4xl">
+        {/* AdSense en haut */}
+        <div className="mb-8 flex justify-center">
+          <AdSense 
+            adSlot="9999999999"
+            adFormat="horizontal"
+            className="max-w-4xl"
+            style={{ minHeight: '100px' }}
+          />
+        </div>
+        
         <Card className="p-6 space-y-6">
           <div className="flex items-center gap-3 border-b pb-4">
             <Hospital className="w-6 h-6 text-blue-600" />
@@ -95,6 +106,16 @@ const SymptomAnalyzer = () => {
             </div>
           )}
         </Card>
+        
+        {/* AdSense en bas */}
+        <div className="mt-8 flex justify-center">
+          <AdSense 
+            adSlot="1010101010"
+            adFormat="auto"
+            className="max-w-2xl"
+            style={{ minHeight: '200px' }}
+          />
+        </div>
       </div>
     </>
   );
