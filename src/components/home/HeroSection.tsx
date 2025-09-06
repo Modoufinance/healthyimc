@@ -20,12 +20,12 @@ const HeroSection = () => {
         </div>
       </div>
       
-      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-tight max-w-4xl mx-auto drop-shadow-lg">
-        {t.hero.title}
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight max-w-4xl mx-auto drop-shadow-lg">
+        Calculateur IMC Gratuit en Ligne
       </h1>
       
-      <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto drop-shadow">
-        {t.hero.subtitle}
+      <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow">
+        Calculez votre Indice de Masse Corporelle en quelques secondes
       </p>
       
       <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
