@@ -18,6 +18,7 @@ import {
   Bell,
   Settings,
   Download,
+  MessageSquare,
   Moon,
   Sun,
   Search,
@@ -45,6 +46,7 @@ import CMSFAQEditor from "@/components/cms/CMSFAQEditor";
 import CMSTestimonialEditor from "@/components/cms/CMSTestimonialEditor";
 import CMSContentEditor from "@/components/cms/CMSContentEditor";
 import AIContentGenerator from "@/components/cms/AIContentGenerator";
+import ContactMessages from "@/components/cms/ContactMessages";
 import { CMSService } from "@/services/cmsService";
 import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
 import { ProductsManager } from "@/components/admin/ProductsManager";
@@ -433,6 +435,11 @@ const ModernCMSAdmin = () => {
                   <Settings className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Contenu</span>
                   <span className="sm:hidden">CMS</span>
+                </TabsTrigger>
+                <TabsTrigger value="messages" className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm whitespace-nowrap">
+                  <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Messages</span>
+                  <span className="sm:hidden">Msg</span>
                 </TabsTrigger>
                 <TabsTrigger value="security" className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm whitespace-nowrap">
                   <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -885,6 +892,21 @@ const ModernCMSAdmin = () => {
                   </Button>
                 </div>
                 {/* Contenu statique */}
+              </div>
+            </TabsContent>
+
+            {/* Gestion des Messages */}
+            <TabsContent value="messages">
+              <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-bold">Messages de Contact</h2>
+                  <Button variant="outline">
+                    <MessageSquare className="h-4 w-4 mr-2" />
+                    Actualiser
+                  </Button>
+                </div>
+                
+                <ContactMessages />
               </div>
             </TabsContent>
 
