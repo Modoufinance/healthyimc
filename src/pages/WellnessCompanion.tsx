@@ -20,10 +20,10 @@ const WellnessCompanion = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "Wellness Companion AI - SantéIMC",
+    "name": "Wellness Companion AI - HealthyIMC",
     "applicationCategory": "HealthApplication",
     "description": "Assistant personnel pour votre bien-être utilisant l'intelligence artificielle",
-    "url": "https://santeimc.fr/wellness",
+    "url": "https://healthyimc.com/bien-etre",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -79,7 +79,7 @@ const WellnessCompanion = () => {
         title="Wellness Companion AI"
         description="Votre compagnon bien-être personnel alimenté par l'IA. Obtenez des recommandations personnalisées pour améliorer votre santé."
         keywords="wellness companion, bien-être ia, santé personnalisée, assistant bien-être, coaching santé"
-        canonicalUrl="https://santeimc.fr/wellness"
+        canonicalUrl="https://healthyimc.com/bien-etre"
         structuredData={structuredData}
       />
       <div className="container mx-auto p-4 max-w-4xl">

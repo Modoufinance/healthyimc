@@ -185,7 +185,7 @@ const AIFitnessProgram = () => {
         title="Programme d'Entraînement Fitness IA | HealthyIMC"
         description="Découvrez notre programme d'entraînement personnalisé basé sur l'IA. Adapté à votre IMC et à vos objectifs personnels."
         keywords="programme fitness IA, entraînement personnalisé, coach fitness virtuel, plan d'entraînement personnalisé"
-        canonicalUrl="https://santeimc.fr/programme-fitness-ia"
+        canonicalUrl="https://healthyimc.com/programme-fitness-ia"
         structuredData={structuredData}
       />
 

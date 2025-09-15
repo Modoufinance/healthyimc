@@ -19,7 +19,7 @@ const AIHealthAssistant = () => {
     "name": "Assistant IA en Santé | HealthyIMC",
     "applicationCategory": "HealthApplication",
     "description": "Assistant virtuel intelligent pour des conseils personnalisés en santé et bien-être",
-    "url": "https://santeimc.fr/ai-health"
+    "url": "https://healthyimc.com/assistant-sante-ia"
   };
 
   const [messages, setMessages] = useState<Message[]>([
@@ -51,7 +51,7 @@ const AIHealthAssistant = () => {
         title="Assistant IA en Santé"
         description="Obtenez des conseils personnalisés en santé grâce à notre assistant virtuel intelligent. Une approche innovante pour votre bien-être."
         keywords="assistant ia santé, conseils santé ia, intelligence artificielle santé, santé personnalisée"
-        canonicalUrl="https://santeimc.fr/ai-health"
+        canonicalUrl="https://healthyimc.com/assistant-sante-ia"
         structuredData={structuredData}
       />
       <div className="min-h-screen bg-gradient-to-b from-blue-400 to-cyan-400 py-8 px-4">
