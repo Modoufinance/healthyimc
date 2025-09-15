@@ -2,6 +2,7 @@
 import { Helmet } from "react-helmet";
 
 interface SEOProps {
+  alternateUrls?: { hreflang: string; href: string }[];
   title: string;
   description: string;
   keywords?: string;
@@ -91,7 +92,7 @@ const SEO = ({
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={`https://healthyimc.com${ogImage}`} />
+      <meta property="og:image" content={ogImage.startsWith('http') ? ogImage : `https://healthyimc.com${ogImage}`} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:locale" content={language === "fr" ? "fr_FR" : "en_US"} />
@@ -104,7 +105,7 @@ const SEO = ({
       <meta name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={ogImage.startsWith('http') ? ogImage : `https://healthyimc.com${ogImage}`} />
       
 
 
