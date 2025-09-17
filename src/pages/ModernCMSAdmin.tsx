@@ -34,7 +34,10 @@ import {
   Globe,
   MoreVertical,
   RefreshCw,
-  Activity
+  Activity,
+  Package,
+  ShoppingCart,
+  Image
 } from "lucide-react";
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import CMSArticleEditor from "@/components/cms/CMSArticleEditor";
@@ -42,8 +45,9 @@ import CMSFAQEditor from "@/components/cms/CMSFAQEditor";
 import CMSTestimonialEditor from "@/components/cms/CMSTestimonialEditor";
 import CMSContentEditor from "@/components/cms/CMSContentEditor";
 import AIContentGenerator from "@/components/cms/AIContentGenerator";
+import ProductEditor from "@/components/cms/products/ProductEditor";
 import { CMSService } from "@/services/cmsService";
-import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
+import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent, CMSProduct } from "@/types/cms";
 
 // Données mockées pour les analyses
 const analyticsData = [
@@ -111,6 +115,7 @@ const ModernCMSAdmin = () => {
   const [faqs, setFAQs] = useState<CMSFAQ[]>([]);
   const [testimonials, setTestimonials] = useState<CMSTestimonial[]>([]);
   const [content, setContent] = useState<CMSContent[]>([]);
+  const [products, setProducts] = useState<CMSProduct[]>([]);
   const [scheduledPosts, setScheduledPosts] = useState([
     { id: 1, title: 'Guide complet IMC 2024', date: '2024-01-15', status: 'programmé' },
     { id: 2, title: 'Nouvelles recommandations OMS', date: '2024-01-20', status: 'en attente' }
@@ -153,6 +158,10 @@ const ModernCMSAdmin = () => {
         case "content":
           const contentData = await CMSService.getContent();
           setContent(contentData);
+          break;
+        case "products":
+          const productData = await CMSService.getProducts();
+          setProducts(productData);
           break;
       }
     } catch (error) {
@@ -225,6 +234,9 @@ const ModernCMSAdmin = () => {
           break;
         case "content":
           success = await CMSService.deleteContent(id);
+          break;
+        case "products":
+          success = await CMSService.deleteProduct(id);
           break;
       }
 
@@ -357,6 +369,12 @@ const ModernCMSAdmin = () => {
                 onClose={handleCloseEditor}
               />
             )}
+            {activeTab === "products" && (
+              <ProductEditor 
+                product={editingItem} 
+                onClose={handleCloseEditor}
+              />
+            )}
           </div>
         ) : showAIGenerator ? (
           <div className="mb-6">
@@ -367,7 +385,7 @@ const ModernCMSAdmin = () => {
           </div>
         ) : (
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-7 mb-6">
+            <TabsList className="grid w-full grid-cols-8 mb-6">
               <TabsTrigger value="dashboard" className="flex items-center gap-2">
                 <BarChart3 className="h-4 w-4" />
                 Dashboard
@@ -379,6 +397,10 @@ const ModernCMSAdmin = () => {
               <TabsTrigger value="articles" className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
                 Articles
+              </TabsTrigger>
+              <TabsTrigger value="products" className="flex items-center gap-2">
+                <Package className="h-4 w-4" />
+                Produits
               </TabsTrigger>
               <TabsTrigger value="faq" className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
@@ -695,6 +717,236 @@ const ModernCMSAdmin = () => {
                           <div className="text-center py-12 text-muted-foreground">
                             <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
                             Aucun article trouvé
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* Gestion Produits */}
+            <TabsContent value="products">
+              <div className="space-y-6">
+                {/* Barre de recherche et filtres avancés */}
+                <div className="flex justify-between items-center">
+                  <div className="flex space-x-4">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Input
+                        placeholder="Rechercher des produits..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10 w-80"
+                      />
+                    </div>
+                    <Button variant="outline" size="sm">
+                      <Filter className="h-4 w-4 mr-2" />
+                      Filtres
+                    </Button>
+                  </div>
+                  
+                  <div className="flex space-x-2">
+                    <Button onClick={handleNewItem}>
+                      <Plus className="h-4 w-4 mr-2" />
+                      Nouveau Produit
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Statistiques rapides */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-2">
+                        <Package className="h-5 w-5 text-blue-500" />
+                        <div>
+                          <p className="text-sm font-medium text-muted-foreground">Total Produits</p>
+                          <p className="text-2xl font-bold">{products.length}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-2">
+                        <Eye className="h-5 w-5 text-green-500" />
+                        <div>
+                          <p className="text-sm font-medium text-muted-foreground">Publiés</p>
+                          <p className="text-2xl font-bold">
+                            {products.filter(p => p.published).length}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-2">
+                        <Star className="h-5 w-5 text-yellow-500" />
+                        <div>
+                          <p className="text-sm font-medium text-muted-foreground">Vedettes</p>
+                          <p className="text-2xl font-bold">
+                            {products.filter(p => p.featured).length}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-2">
+                        <AlertTriangle className="h-5 w-5 text-red-500" />
+                        <div>
+                          <p className="text-sm font-medium text-muted-foreground">Stock Faible</p>
+                          <p className="text-2xl font-bold">
+                            {products.filter(p => (p.stock_quantity || 0) < 10).length}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Liste des produits */}
+                <Card>
+                  <CardContent className="p-0">
+                    {localLoading ? (
+                      <div className="text-center py-8">
+                        <RefreshCw className="h-6 w-6 animate-spin mx-auto mb-2" />
+                        Chargement...
+                      </div>
+                    ) : (
+                      <div className="divide-y">
+                        {filterItems(products).map((product) => (
+                          <div key={product.id} className="p-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-start space-x-4 flex-1">
+                                {/* Image du produit */}
+                                <div className="w-16 h-16 bg-muted rounded-lg overflow-hidden flex-shrink-0">
+                                  {product.featured_image ? (
+                                    <img
+                                      src={product.featured_image}
+                                      alt={product.name}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  ) : (
+                                    <div className="w-full h-full flex items-center justify-center">
+                                      <Image className="h-6 w-6 text-muted-foreground" />
+                                    </div>
+                                  )}
+                                </div>
+
+                                {/* Informations produit */}
+                                <div className="flex-1">
+                                  <div className="flex items-center space-x-3 mb-2">
+                                    <h3 className="font-semibold text-lg">{product.name}</h3>
+                                    <Badge variant={product.published ? "default" : "outline"}>
+                                      {product.published ? "Publié" : "Brouillon"}
+                                    </Badge>
+                                    {product.featured && (
+                                      <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
+                                        <Star className="h-3 w-3 mr-1 fill-current" />
+                                        Vedette
+                                      </Badge>
+                                    )}
+                                    <Badge variant="outline">{product.category}</Badge>
+                                  </div>
+                                  
+                                  <p className="text-muted-foreground text-sm mb-2 line-clamp-2">
+                                    {product.short_description || "Pas de description courte"}
+                                  </p>
+                                  
+                                  <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                                    <span className="flex items-center">
+                                      <Package className="h-4 w-4 mr-1" />
+                                      SKU: {product.sku}
+                                    </span>
+                                    <span className="flex items-center">
+                                      <DollarSign className="h-4 w-4 mr-1" />
+                                      {product.sale_price ? (
+                                        <>
+                                          <span className="line-through mr-1">{product.price}€</span>
+                                          <span className="font-semibold text-green-600">{product.sale_price}€</span>
+                                        </>
+                                      ) : (
+                                        <span>{product.price}€</span>
+                                      )}
+                                    </span>
+                                    <span className="flex items-center">
+                                      <BarChart3 className="h-4 w-4 mr-1" />
+                                      Stock: {product.stock_quantity || 0}
+                                    </span>
+                                    <span className="flex items-center">
+                                      <Calendar className="h-4 w-4 mr-1" />
+                                      {formatDate(product.created_at)}
+                                    </span>
+                                  </div>
+
+                                  {/* Tags */}
+                                  {product.tags && product.tags.length > 0 && (
+                                    <div className="flex flex-wrap gap-1 mt-2">
+                                      {product.tags.slice(0, 3).map((tag, index) => (
+                                        <Badge key={index} variant="secondary" className="text-xs">
+                                          {tag}
+                                        </Badge>
+                                      ))}
+                                      {product.tags.length > 3 && (
+                                        <Badge variant="secondary" className="text-xs">
+                                          +{product.tags.length - 3}
+                                        </Badge>
+                                      )}
+                                    </div>
+                                  )}
+
+                                  {/* Indicateur stock faible */}
+                                  {(product.stock_quantity || 0) < 10 && product.stock_status === 'in_stock' && (
+                                    <div className="flex items-center mt-2 text-orange-600">
+                                      <AlertTriangle className="h-4 w-4 mr-1" />
+                                      <span className="text-xs">Stock faible</span>
+                                    </div>
+                                  )}
+                                  
+                                  {product.stock_status === 'out_of_stock' && (
+                                    <div className="flex items-center mt-2 text-red-600">
+                                      <X className="h-4 w-4 mr-1" />
+                                      <span className="text-xs">Rupture de stock</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Actions */}
+                              <div className="flex items-center space-x-2">
+                                <Button variant="ghost" size="sm">
+                                  <Eye className="h-4 w-4" />
+                                </Button>
+                                <Button variant="ghost" size="sm" onClick={() => handleEditItem(product)}>
+                                  <Edit className="h-4 w-4" />
+                                </Button>
+                                <Button variant="ghost" size="sm" onClick={() => handleDeleteItem(product.id)}>
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                                <Button variant="ghost" size="sm">
+                                  <MoreVertical className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        {filterItems(products).length === 0 && (
+                          <div className="text-center py-12 text-muted-foreground">
+                            <Package className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                            <p className="text-lg font-medium mb-2">Aucun produit trouvé</p>
+                            <p>Commencez par créer votre premier produit</p>
+                            <Button onClick={handleNewItem} className="mt-4">
+                              <Plus className="h-4 w-4 mr-2" />
+                              Créer un Produit
+                            </Button>
                           </div>
                         )}
                       </div>
