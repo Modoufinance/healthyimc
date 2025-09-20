@@ -1,34 +1,43 @@
 
 import { Routes, Route, Navigate } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
 import { useLocaleDetection } from "./hooks/useLocaleDetection";
-import Home from "./pages/Home";
-import Index from "./pages/Index";
-import About from "./pages/About";
-import Privacy from "./pages/Privacy";
-import BMICalculator from "./components/BMICalculator";
-import AIHealthAssistant from "./pages/AIHealthAssistant";
-import WellnessCompanion from "./pages/WellnessCompanion";
-import BodyFatCalculator from "./components/BodyFatCalculator";
-import CalorieCalculator from "./components/CalorieCalculator";
-import ChildrenBMICalculator from "./components/ChildrenBMICalculator";
-import SymptomAnalyzer from "./pages/SymptomAnalyzer";
-import AIFitnessProgram from "./pages/AIFitnessProgram";
-import Blog from "./pages/Blog";
-import BlogArticle from "./pages/BlogArticle";
-import ModernCMSAdmin from "./pages/ModernCMSAdmin";
-import AdminLogin from "./pages/AdminLogin";
 import { AdminAuthProvider } from "./contexts/AdminAuthContext";
-import BMIWomen from "./pages/BMIWomen";
-import BMIMen from "./pages/BMIMen";
-import IdealWeight from "./pages/IdealWeight";
-import BMIEducation from "./pages/BMIEducation";
-import BMINormal from "./pages/BMINormal";
-import BMIOverweight from "./pages/BMIOverweight";
-import BMIObesity from "./pages/BMIObesity";
-import { useEffect } from "react";
 import { useLanguage } from "./contexts/LanguageContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Language } from "./i18n/types";
+
+// Composant de loading
+const PageLoader = () => (
+  <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] flex items-center justify-center">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+  </div>
+);
+
+// Lazy loading des composants pour améliorer les performances
+const Home = lazy(() => import("./pages/Home"));
+const Index = lazy(() => import("./pages/Index"));
+const About = lazy(() => import("./pages/About"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const BMICalculator = lazy(() => import("./components/BMICalculator"));
+const AIHealthAssistant = lazy(() => import("./pages/AIHealthAssistant"));
+const WellnessCompanion = lazy(() => import("./pages/WellnessCompanion"));
+const BodyFatCalculator = lazy(() => import("./components/BodyFatCalculator"));
+const CalorieCalculator = lazy(() => import("./components/CalorieCalculator"));
+const ChildrenBMICalculator = lazy(() => import("./components/ChildrenBMICalculator"));
+const SymptomAnalyzer = lazy(() => import("./pages/SymptomAnalyzer"));
+const AIFitnessProgram = lazy(() => import("./pages/AIFitnessProgram"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogArticle = lazy(() => import("./pages/BlogArticle"));
+const ModernCMSAdmin = lazy(() => import("./pages/ModernCMSAdmin"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const BMIWomen = lazy(() => import("./pages/BMIWomen"));
+const BMIMen = lazy(() => import("./pages/BMIMen"));
+const IdealWeight = lazy(() => import("./pages/IdealWeight"));
+const BMIEducation = lazy(() => import("./pages/BMIEducation"));
+const BMINormal = lazy(() => import("./pages/BMINormal"));
+const BMIOverweight = lazy(() => import("./pages/BMIOverweight"));
+const BMIObesity = lazy(() => import("./pages/BMIObesity"));
 
 const AppRoutes = () => {
   useLocaleDetection();
@@ -65,37 +74,37 @@ const AppRoutes = () => {
     
     return (
       <>
-        <Route path={`${prefix}/`} element={<Index />} />
-        <Route path={`${prefix}/accueil`} element={<Home />} />
+        <Route path={`${prefix}/`} element={<Suspense fallback={<PageLoader />}><Index /></Suspense>} />
+        <Route path={`${prefix}/accueil`} element={<Suspense fallback={<PageLoader />}><Home /></Suspense>} />
         
         {/* Routes calculateurs optimisées */}
-        <Route path={`${prefix}/calculateur-imc`} element={<BMICalculator />} />
-        <Route path={`${prefix}/calculateur-imc-enfants`} element={<ChildrenBMICalculator />} />
-        <Route path={`${prefix}/calculateur-graisse-corporelle`} element={<BodyFatCalculator />} />
-        <Route path={`${prefix}/calculateur-calories`} element={<CalorieCalculator />} />
+        <Route path={`${prefix}/calculateur-imc`} element={<Suspense fallback={<PageLoader />}><BMICalculator /></Suspense>} />
+        <Route path={`${prefix}/calculateur-imc-enfants`} element={<Suspense fallback={<PageLoader />}><ChildrenBMICalculator /></Suspense>} />
+        <Route path={`${prefix}/calculateur-graisse-corporelle`} element={<Suspense fallback={<PageLoader />}><BodyFatCalculator /></Suspense>} />
+        <Route path={`${prefix}/calculateur-calories`} element={<Suspense fallback={<PageLoader />}><CalorieCalculator /></Suspense>} />
         
         {/* Routes spécifiques pour le SEO */}
-        <Route path={`${prefix}/calcul-imc-femme`} element={<BMIWomen />} />
-        <Route path={`${prefix}/calcul-imc-homme`} element={<BMIMen />} />
-        <Route path={`${prefix}/poids-ideal-calcul`} element={<IdealWeight />} />
-        <Route path={`${prefix}/indice-masse-corporelle`} element={<BMIEducation />} />
-        <Route path={`${prefix}/imc-normal`} element={<BMINormal />} />
-        <Route path={`${prefix}/imc-surpoids`} element={<BMIOverweight />} />
-        <Route path={`${prefix}/imc-obesite`} element={<BMIObesity />} />
+        <Route path={`${prefix}/calcul-imc-femme`} element={<Suspense fallback={<PageLoader />}><BMIWomen /></Suspense>} />
+        <Route path={`${prefix}/calcul-imc-homme`} element={<Suspense fallback={<PageLoader />}><BMIMen /></Suspense>} />
+        <Route path={`${prefix}/poids-ideal-calcul`} element={<Suspense fallback={<PageLoader />}><IdealWeight /></Suspense>} />
+        <Route path={`${prefix}/indice-masse-corporelle`} element={<Suspense fallback={<PageLoader />}><BMIEducation /></Suspense>} />
+        <Route path={`${prefix}/imc-normal`} element={<Suspense fallback={<PageLoader />}><BMINormal /></Suspense>} />
+        <Route path={`${prefix}/imc-surpoids`} element={<Suspense fallback={<PageLoader />}><BMIOverweight /></Suspense>} />
+        <Route path={`${prefix}/imc-obesite`} element={<Suspense fallback={<PageLoader />}><BMIObesity /></Suspense>} />
         
         {/* Routes assistants et outils */}
-        <Route path={`${prefix}/analyseur-symptomes`} element={<SymptomAnalyzer />} />
-        <Route path={`${prefix}/assistant-sante-ia`} element={<AIHealthAssistant />} />
-        <Route path={`${prefix}/bien-etre`} element={<WellnessCompanion />} />
-        <Route path={`${prefix}/programme-fitness-ia`} element={<AIFitnessProgram />} />
+        <Route path={`${prefix}/analyseur-symptomes`} element={<Suspense fallback={<PageLoader />}><SymptomAnalyzer /></Suspense>} />
+        <Route path={`${prefix}/assistant-sante-ia`} element={<Suspense fallback={<PageLoader />}><AIHealthAssistant /></Suspense>} />
+        <Route path={`${prefix}/bien-etre`} element={<Suspense fallback={<PageLoader />}><WellnessCompanion /></Suspense>} />
+        <Route path={`${prefix}/programme-fitness-ia`} element={<Suspense fallback={<PageLoader />}><AIFitnessProgram /></Suspense>} />
         
         {/* Routes blog */}
-        <Route path={`${prefix}/blog`} element={<Blog />} />
-        <Route path={`${prefix}/blog/:slug`} element={<BlogArticle />} />
+        <Route path={`${prefix}/blog`} element={<Suspense fallback={<PageLoader />}><Blog /></Suspense>} />
+        <Route path={`${prefix}/blog/:slug`} element={<Suspense fallback={<PageLoader />}><BlogArticle /></Suspense>} />
         
         {/* Pages légales et informatives */}
-        <Route path={`${prefix}/a-propos`} element={<About />} />
-        <Route path={`${prefix}/confidentialite`} element={<Privacy />} />
+        <Route path={`${prefix}/a-propos`} element={<Suspense fallback={<PageLoader />}><About /></Suspense>} />
+        <Route path={`${prefix}/confidentialite`} element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
       </>
     );
   };
@@ -105,8 +114,8 @@ const AppRoutes = () => {
       <AdminAuthProvider>
         <Routes>
         {/* Routes d'administration */}
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/cms" element={<ModernCMSAdmin />} />
+        <Route path="/admin/login" element={<Suspense fallback={<PageLoader />}><AdminLogin /></Suspense>} />
+        <Route path="/admin/cms" element={<Suspense fallback={<PageLoader />}><ModernCMSAdmin /></Suspense>} />
         
         {/* Routes en français (par défaut) */}
         {getOptimizedRoutes()}

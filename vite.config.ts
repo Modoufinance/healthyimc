@@ -14,6 +14,26 @@ export default defineConfig(({ mode }) => ({
       protocol: 'wss'
     }
   },
+  build: {
+    // Optimisation de la taille du bundle
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Séparer les librairies volumineuses
+          'react-vendor': ['react', 'react-dom'],
+          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-toast'],
+          'chart-vendor': ['recharts'],
+          'router-vendor': ['react-router-dom'],
+          'query-vendor': ['@tanstack/react-query'],
+          'supabase-vendor': ['@supabase/supabase-js', '@supabase/auth-helpers-react']
+        }
+      }
+    },
+    // Minification plus rapide pour le développement
+    minify: mode === 'production' ? 'esbuild' : false,
+    // Optimiser le chunking
+    chunkSizeWarningLimit: 1000
+  },
   plugins: [
     react(),
     mode === 'development' && componentTagger(),
@@ -23,4 +43,14 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Optimisation du développement
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      '@tanstack/react-query',
+      'recharts'
+    ]
+  }
 }));

@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 interface StructuredDataProps {
   type: "WebApplication" | "WebSite" | "Article" | "BlogPosting" | "FAQPage" | "HowTo" | "Organization";

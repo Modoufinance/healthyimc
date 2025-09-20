@@ -23,12 +23,17 @@ const AdSense = ({
 }: AdSenseProps) => {
   useEffect(() => {
     try {
-      // Initialiser AdSense si pas déjà fait
-      if (typeof window !== 'undefined' && window.adsbygoogle) {
+      // Vérifier si AdSense est disponible avant de l'initialiser
+      if (typeof window !== 'undefined' && 
+          window.adsbygoogle && 
+          Array.isArray(window.adsbygoogle)) {
         window.adsbygoogle.push({});
       }
     } catch (error) {
-      console.warn('AdSense error:', error);
+      // Erreur silencieuse pour éviter les logs d'erreur inutiles
+      if (process.env.NODE_ENV === 'development') {
+        console.debug('AdSense non disponible en développement:', error?.message || 'Erreur inconnue');
+      }
     }
   }, []);
 

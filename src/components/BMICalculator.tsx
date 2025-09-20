@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -14,6 +14,13 @@ import { getPersonalizedAdvice, predictBMITrend } from "@/services/aiService";
 import BMIEducation from "./BMIEducation";
 import EnhancedFAQ from "./EnhancedFAQ";
 import VoiceSearch from "./VoiceSearch";
+import { 
+  calculateBMIOptimized,
+  OptimizedStorage,
+  PerformanceMonitor,
+  debounce,
+  PERFORMANCE_CONFIG
+} from "@/services/performanceService";
 
 export interface BMIData {
   bmi: number;
@@ -27,13 +34,12 @@ const BMICalculator = () => {
   const [predictions, setPredictions] = useState(null);
   const [savedResults, setSavedResults] = useState<BMIData[]>([]);
   const [userData, setUserData] = useState(() => {
-    const savedData = localStorage.getItem('userBmiData');
-    return savedData ? JSON.parse(savedData) : {
+    return OptimizedStorage.getItem('userBmiData', {
       age: null,
       gender: "",
       activityLevel: "",
       targetBMI: null
-    };
+    });
   });
   
   const { toast } = useToast();
@@ -41,20 +47,24 @@ const BMICalculator = () => {
 
   useEffect(() => {
     if (userData.age || userData.gender || userData.activityLevel) {
-      localStorage.setItem('userBmiData', JSON.stringify(userData));
+      OptimizedStorage.setItem('userBmiData', userData);
     }
   }, [userData]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('savedBmiResults');
-    if (saved) {
-      setSavedResults(JSON.parse(saved));
-    }
+    const saved = OptimizedStorage.getItem('savedBmiResults', []);
+    setSavedResults(saved);
   }, []);
 
-  const handleBMICalculation = (weight: number, height: number, age: number) => {
-    const heightInMeters = height / 100;
-    const bmi = Number((weight / (heightInMeters * heightInMeters)).toFixed(2));
+  const handleBMICalculation = useCallback((weight: number, height: number, age: number) => {
+    const endTiming = PerformanceMonitor.startTiming('bmi_calculation');
+    
+    // Utiliser le calcul optimisé avec cache
+    const { bmi, cached } = calculateBMIOptimized(weight, height, age);
+    
+    if (cached && process.env.NODE_ENV === 'development') {
+      console.debug('BMI récupéré depuis le cache');
+    }
     
     let category = "";
     let advice = "";
@@ -92,9 +102,12 @@ const BMICalculator = () => {
       setPredictions(newPredictions);
     }
 
-    const newSavedResults = [...savedResults, { ...bmiDataObj, date: new Date().toISOString() }];
+    const newSavedResults = [...savedResults, { ...bmiDataObj, date: new Date().toISOString() }]
+      .slice(-PERFORMANCE_CONFIG.MAX_HISTORY_ITEMS); // Limiter l'historique
     setSavedResults(newSavedResults);
-    localStorage.setItem('savedBmiResults', JSON.stringify(newSavedResults));
+    OptimizedStorage.setItem('savedBmiResults', newSavedResults);
+    
+    endTiming(); // Mesurer les performances
 
     toast({
       title: t.bmiCalculator.calculationSuccess,
@@ -105,22 +118,22 @@ const BMICalculator = () => {
         </div>
       ),
     });
-  };
+  }, [savedResults, userData, t]);
 
-  const handleUserDataSubmit = (data: any) => {
+  const handleUserDataSubmit = useCallback((data: any) => {
     setUserData(data);
-    localStorage.setItem('userBmiData', JSON.stringify(data));
+    OptimizedStorage.setItem('userBmiData', data);
     toast({
       title: t.bmiCalculator.profileUpdated,
       description: t.bmiCalculator.profileDescription,
     });
-  };
+  }, [t, toast]);
 
-  const handleDeviceData = (weight?: number, height?: number) => {
+  const handleDeviceData = useCallback((weight?: number, height?: number) => {
     if (weight && height) {
       handleBMICalculation(weight, height, userData.age);
     }
-  };
+  }, [handleBMICalculation, userData.age]);
 
   const exportToPDF = async () => {
     if (!bmiData) return;
@@ -161,8 +174,8 @@ const BMICalculator = () => {
     });
   };
   
-  // Liste de questions fréquentes pour l'IMC
-  const bmiRelatedFAQs = [
+  // Liste de questions fréquentes pour l'IMC (mémorisée)
+  const bmiRelatedFAQs = useMemo(() => [
     {
       question: "Comment calculer son IMC?",
       answer: "L'IMC se calcule en divisant votre poids (en kg) par le carré de votre taille (en mètres). La formule exacte est: IMC = Poids(kg) / Taille²(m). Notre calculateur fait ce calcul automatiquement pour vous en quelques secondes.",
@@ -203,17 +216,28 @@ const BMICalculator = () => {
       answer: "Pour réduire votre IMC de manière saine, adoptez une alimentation équilibrée riche en fruits, légumes, protéines maigres et grains entiers, tout en limitant les aliments transformés, sucrés et gras. Pratiquez une activité physique régulière (150 minutes par semaine minimum). Visez une perte de poids progressive de 0,5 à 1 kg par semaine. Consultez un médecin ou un nutritionniste pour un programme personnalisé.",
       keywords: ["réduire", "perte de poids", "régime", "exercice", "nutrition"]
     }
-  ];
+  ], []);
 
-  // Fonction de recherche pour l'IMC
-  const handleBMISearch = (query: string) => {
-    toast({
-      title: t.bmiCalculator.searchPerformed,
-      description: `${t.bmiCalculator.searchDescription.replace('{}', query)}`,
-    });
-    
-    // La recherche sera gérée par le composant EnhancedFAQ
-  };
+  // Fonction de recherche optimisée avec debounce pour l'IMC
+  const handleBMISearchDebounced = useMemo(
+    () => debounce((query: string) => {
+      if (!query.trim()) return;
+      
+      const endTiming = PerformanceMonitor.startTiming('bmi_search');
+      
+      toast({
+        title: t.bmiCalculator.searchPerformed,
+        description: `${t.bmiCalculator.searchDescription.replace('{}', query)}`,
+      });
+      
+      endTiming();
+    }, PERFORMANCE_CONFIG.SEARCH_DEBOUNCE_MS),
+    [t, toast]
+  );
+  
+  const handleBMISearch = useCallback((query: string) => {
+    handleBMISearchDebounced(query);
+  }, [handleBMISearchDebounced]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
@@ -264,7 +288,7 @@ const BMICalculator = () => {
                   
                   <button
                     onClick={() => {
-                      localStorage.setItem('bookmarkedResult', JSON.stringify(bmiData));
+                      OptimizedStorage.setItem('bookmarkedResult', bmiData);
                       toast({
                         title: t.bmiCalculator.resultSaved,
                         description: t.bmiCalculator.saveDescription,
