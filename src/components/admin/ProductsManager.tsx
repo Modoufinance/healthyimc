@@ -21,6 +21,8 @@ import {
 import { Product } from '@/types/ecommerce';
 import { ecommerceService } from '@/services/ecommerceService';
 import { toast } from "sonner";
+import ImageUploader from "@/components/cms/ImageUploader";
+import FileUploader from "@/components/admin/FileUploader";
 
 export const ProductsManager: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -275,78 +277,82 @@ export const ProductsManager: React.FC = () => {
           </DialogHeader>
           
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="md:col-span-2">
-                <Label htmlFor="title">Titre *</Label>
-                <Input
-                  id="title"
-                  value={formData.title}
-                  onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                  required
-                />
-              </div>
-              
-              <div className="md:col-span-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  value={formData.description}
-                  onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                  rows={3}
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="price">Prix (€) *</Label>
-                <Input
-                  id="price"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={formData.price}
-                  onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
-                  required
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="category">Catégorie</Label>
-                <Input
-                  id="category"
-                  value={formData.category}
-                  onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                />
-              </div>
-              
-              <div className="md:col-span-2">
-                <Label htmlFor="image_url">URL de l'image</Label>
-                <Input
-                  id="image_url"
-                  value={formData.image_url}
-                  onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
-                  placeholder="https://example.com/image.jpg"
-                />
-              </div>
-              
-              <div className="md:col-span-2">
-                <Label htmlFor="file_url">Chemin du fichier dans Storage</Label>
-                <Input
-                  id="file_url"
-                  value={formData.file_url}
-                  onChange={(e) => setFormData(prev => ({ ...prev, file_url: e.target.value }))}
-                  placeholder="ebooks/mon-ebook.pdf"
-                />
-              </div>
-              
-              <div className="md:col-span-2">
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    id="active"
-                    checked={formData.active}
-                    onCheckedChange={(checked) => setFormData(prev => ({ ...prev, active: checked }))}
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="md:col-span-2">
+                  <Label htmlFor="title">Titre *</Label>
+                  <Input
+                    id="title"
+                    value={formData.title}
+                    onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                    required
                   />
-                  <Label htmlFor="active">Produit actif</Label>
                 </div>
+                
+                <div className="md:col-span-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea
+                    id="description"
+                    value={formData.description}
+                    onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                    rows={3}
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="price">Prix (€) *</Label>
+                  <Input
+                    id="price"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={formData.price}
+                    onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="category">Catégorie</Label>
+                  <Input
+                    id="category"
+                    value={formData.category}
+                    onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                  />
+                </div>
+                
+                <div className="md:col-span-2">
+                  <div className="flex items-center space-x-2 mb-4">
+                    <Switch
+                      id="active"
+                      checked={formData.active}
+                      onCheckedChange={(checked) => setFormData(prev => ({ ...prev, active: checked }))}
+                    />
+                    <Label htmlFor="active">Produit actif</Label>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+              
+              <div className="space-y-4">
+                <ImageUploader
+                  currentImage={formData.image_url}
+                  onImageChange={(url) => setFormData(prev => ({ ...prev, image_url: url || '' }))}
+                  label="Image du produit"
+                  bucketName="article-images"
+                />
+              </div>
+
+              <Separator />
+              
+              <div className="space-y-4">
+                <FileUploader
+                  currentFile={formData.file_url}
+                  onFileChange={(path) => setFormData(prev => ({ ...prev, file_url: path || '' }))}
+                  label="Fichier digital à vendre"
+                  bucketName="digital-products"
+                />
               </div>
             </div>
             
