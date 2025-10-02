@@ -43,9 +43,13 @@ const FileUploader = ({
       
       const { data, error } = await supabase.storage
         .from(bucketName)
-        .upload(fileName, file);
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
       if (error) {
+        console.error("Upload error:", error);
         throw error;
       }
 
@@ -55,11 +59,11 @@ const FileUploader = ({
         title: "Fichier téléchargé",
         description: "Le fichier a été téléchargé avec succès",
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error uploading file:", error);
       toast({
         title: "Erreur",
-        description: "Impossible de télécharger le fichier",
+        description: error?.message || "Impossible de télécharger le fichier",
         variant: "destructive",
       });
     } finally {
