@@ -133,6 +133,17 @@ export const ProductsManager: React.FC = () => {
     }
   };
 
+  const handleToggleActive = async (product: Product) => {
+    try {
+      await ecommerceService.adminUpdateProduct(product.id, { active: !product.active });
+      toast.success(product.active ? 'Produit désactivé' : 'Produit activé');
+      loadProducts();
+    } catch (error: any) {
+      console.error('Error toggling product:', error);
+      toast.error(error?.message || 'Erreur lors de la modification');
+    }
+  };
+
   const handleDelete = async (id: string) => {
     if (!confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
       return;
@@ -244,6 +255,18 @@ export const ProductsManager: React.FC = () => {
                   </div>
                   
                   <div className="flex items-center space-x-2 ml-4">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleToggleActive(product)}
+                      title={product.active ? 'Désactiver' : 'Activer'}
+                    >
+                      {product.active ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </Button>
                     <Button
                       variant="outline"
                       size="sm"
