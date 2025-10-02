@@ -118,18 +118,18 @@ export const ProductsManager: React.FC = () => {
       };
 
       if (editingProduct) {
-        await ecommerceService.updateProduct(editingProduct.id, productData);
+        await ecommerceService.adminUpdateProduct(editingProduct.id, productData);
         toast.success('Produit mis à jour avec succès');
       } else {
-        await ecommerceService.createProduct(productData);
+        await ecommerceService.adminCreateProduct(productData);
         toast.success('Produit créé avec succès');
       }
 
       closeDialog();
       loadProducts();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving product:', error);
-      toast.error('Erreur lors de la sauvegarde');
+      toast.error(error?.message || 'Erreur lors de la sauvegarde');
     }
   };
 
@@ -139,12 +139,12 @@ export const ProductsManager: React.FC = () => {
     }
 
     try {
-      await ecommerceService.deleteProduct(id);
+      await ecommerceService.adminDeleteProduct(id);
       toast.success('Produit supprimé avec succès');
       loadProducts();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error deleting product:', error);
-      toast.error('Erreur lors de la suppression');
+      toast.error(error?.message || 'Erreur lors de la suppression');
     }
   };
 

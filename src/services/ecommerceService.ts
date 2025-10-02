@@ -110,6 +110,44 @@ export const ecommerceService = {
     return data || [];
   },
 
+  async adminCreateProduct(product: Omit<Product, 'id' | 'created_at' | 'updated_at'>): Promise<Product> {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('admin_session_token') : null;
+    if (!token) throw new Error('Non autorisé');
+
+    const { data, error } = await supabase.functions.invoke('admin-products', {
+      body: { action: 'create', product },
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+
+    if (error || !data?.success) throw new Error(data?.error || error?.message || 'Erreur');
+    return data.product as Product;
+  },
+
+  async adminUpdateProduct(id: string, updates: Partial<Product>): Promise<Product> {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('admin_session_token') : null;
+    if (!token) throw new Error('Non autorisé');
+
+    const { data, error } = await supabase.functions.invoke('admin-products', {
+      body: { action: 'update', id, updates },
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+
+    if (error || !data?.success) throw new Error(data?.error || error?.message || 'Erreur');
+    return data.product as Product;
+  },
+
+  async adminDeleteProduct(id: string): Promise<void> {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('admin_session_token') : null;
+    if (!token) throw new Error('Non autorisé');
+
+    const { data, error } = await supabase.functions.invoke('admin-products', {
+      body: { action: 'delete', id },
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+
+    if (error || !data?.success) throw new Error(data?.error || error?.message || 'Erreur');
+  },
+
   async getAllOrders(): Promise<OrderWithItems[]> {
     const { data, error } = await supabase
       .from('orders')
