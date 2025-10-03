@@ -18,6 +18,12 @@ export default {
 			}
 		},
 		extend: {
+			screens: {
+				'sm-mobile': '375px',
+				'mobile': '768px',
+				'tablet': '1024px',
+				'desktop': '1440px',
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
