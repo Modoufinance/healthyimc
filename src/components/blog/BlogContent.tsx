@@ -1,20 +1,20 @@
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, User, Tag, Clock } from "lucide-react";
+import { ArrowLeft, Search, Send, ArrowRight, Home, Heart, User as UserIcon } from "lucide-react";
 import { CMSService } from "@/services/cmsService";
 import { CMSArticle } from "@/types/cms";
-import { format } from "date-fns";
-import { fr } from "date-fns/locale";
 
 const BlogContent = () => {
+  const navigate = useNavigate();
   const [articles, setArticles] = useState<CMSArticle[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>("Tous");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [commentInputs, setCommentInputs] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -31,16 +31,20 @@ const BlogContent = () => {
     fetchArticles();
   }, []);
 
-  const categories = ["all", ...Array.from(new Set(articles.map(article => article.category)))];
-  const filteredArticles = selectedCategory === "all" 
-    ? articles 
-    : articles.filter(article => article.category === selectedCategory);
+  const categories = ["Tous", ...Array.from(new Set(articles.map(article => article.category)))];
+  
+  const filteredArticles = articles.filter(article => {
+    const matchesCategory = selectedCategory === "Tous" || article.category === selectedCategory;
+    const matchesSearch = !searchQuery || 
+      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (article.excerpt && article.excerpt.toLowerCase().includes(searchQuery.toLowerCase()));
+    return matchesCategory && matchesSearch;
+  });
 
-  const formatDate = (dateString: string) => {
-    try {
-      return format(new Date(dateString), "d MMMM yyyy", { locale: fr });
-    } catch {
-      return "Date non disponible";
+  const handleCommentSubmit = (articleId: string) => {
+    if (commentInputs[articleId]?.trim()) {
+      console.log("Commentaire envoyé:", commentInputs[articleId]);
+      setCommentInputs({ ...commentInputs, [articleId]: "" });
     }
   };
 
@@ -51,150 +55,204 @@ const BlogContent = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <Skeleton className="h-12 w-64 mx-auto mb-4" />
-            <Skeleton className="h-6 w-96 mx-auto" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <Card key={i} className="overflow-hidden">
-                <Skeleton className="h-48 w-full" />
-                <CardHeader>
-                  <Skeleton className="h-6 w-full mb-2" />
-                  <Skeleton className="h-4 w-3/4" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-20 w-full" />
-                </CardContent>
-              </Card>
+      <div className="min-h-screen bg-background">
+        <header className="sticky top-0 z-10 flex items-center justify-between bg-background/80 backdrop-blur-sm border-b p-4">
+          <Skeleton className="h-10 w-10 rounded-full" />
+          <Skeleton className="h-6 w-24" />
+          <div className="w-10" />
+        </header>
+        <main className="p-4">
+          <Skeleton className="h-12 w-full rounded-full mb-4" />
+          <div className="flex gap-2 mb-6">
+            {[...Array(4)].map((_, i) => (
+              <Skeleton key={i} className="h-10 w-24 rounded-full" />
             ))}
           </div>
-        </div>
+          <div className="space-y-6">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="rounded-xl overflow-hidden bg-card">
+                <Skeleton className="h-40 w-full" />
+                <div className="p-4">
+                  <Skeleton className="h-4 w-20 mb-2" />
+                  <Skeleton className="h-6 w-full mb-2" />
+                  <Skeleton className="h-16 w-full" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#4facfe] to-[#00f2fe] p-4 sm:p-6 lg:p-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-4">
-            Blog Santé & Bien-être
-          </h1>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto">
-            Découvrez nos articles et conseils d'experts sur la santé, l'IMC, la nutrition et le bien-être
-          </p>
+    <div className="relative flex min-h-screen w-full flex-col bg-background">
+      {/* Header */}
+      <header className="sticky top-0 z-10 flex items-center justify-between bg-background/80 backdrop-blur-sm border-b p-4 pb-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => navigate("/")}
+          className="rounded-full"
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </Button>
+        <h1 className="flex-1 text-center text-lg font-bold">Blog</h1>
+        <div className="w-10" />
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-1 p-4">
+        {/* Search Bar */}
+        <div className="relative mb-4">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="text"
+            placeholder="Rechercher des articles"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 rounded-full border-input bg-muted/50 focus-visible:ring-primary"
+          />
         </div>
 
-        {/* Filtres par catégorie */}
-        {categories.length > 1 && (
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category)}
-                className={`${
-                  selectedCategory === category
-                    ? "bg-white text-[#4facfe]"
-                    : "bg-white/20 text-white hover:bg-white/30"
-                }`}
-              >
-                {category === "all" ? "Tous les articles" : category}
-              </Button>
-            ))}
-          </div>
-        )}
+        {/* Category Filters */}
+        <div className="mb-6 flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          {categories.map((category) => (
+            <Button
+              key={category}
+              variant={selectedCategory === category ? "default" : "secondary"}
+              size="sm"
+              onClick={() => setSelectedCategory(category)}
+              className={`shrink-0 rounded-full ${
+                selectedCategory === category
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted hover:bg-muted/80"
+              }`}
+            >
+              {category}
+            </Button>
+          ))}
+        </div>
 
-        {/* Articles */}
+        {/* Articles List */}
         {filteredArticles.length === 0 ? (
-          <Card className="bg-white/90 backdrop-blur max-w-md mx-auto">
-            <CardContent className="text-center py-8">
-              <p className="text-gray-600">
-                {articles.length === 0 
-                  ? "Aucun article publié pour le moment." 
-                  : "Aucun article dans cette catégorie."}
-              </p>
-            </CardContent>
-          </Card>
+          <div className="rounded-xl bg-card p-8 text-center shadow-sm">
+            <p className="text-muted-foreground">
+              {articles.length === 0 
+                ? "Aucun article publié pour le moment." 
+                : searchQuery 
+                ? "Aucun article trouvé pour cette recherche."
+                : "Aucun article dans cette catégorie."}
+            </p>
+          </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="space-y-6 pb-20">
             {filteredArticles.map((article) => (
-              <Card key={article.id} className="overflow-hidden bg-white/95 backdrop-blur hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <article
+                key={article.id}
+                className="flex flex-col overflow-hidden rounded-xl bg-card shadow-sm ring-1 ring-border"
+              >
+                {/* Article Image */}
                 {article.featured_image && (
-                  <div className="h-48 overflow-hidden">
+                  <div className="h-40 w-full overflow-hidden">
                     <img
                       src={article.featured_image}
                       alt={article.title}
-                      className="w-full h-full object-cover"
+                      className="h-full w-full object-cover"
                     />
                   </div>
                 )}
-                
-                <CardHeader>
-                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                    <Calendar className="w-4 h-4" />
-                    <span>
-                      {formatDate(article.published_at || article.created_at)}
-                    </span>
-                    <User className="w-4 h-4 ml-2" />
-                    <span>{article.author}</span>
-                  </div>
-                  
-                  <CardTitle className="text-lg font-semibold text-gray-800 leading-tight">
-                    {article.title}
-                  </CardTitle>
-                  
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="text-xs">
-                      {article.category}
-                    </Badge>
-                    {article.tags && article.tags.length > 0 && (
-                      <div className="flex items-center gap-1">
-                        <Tag className="w-3 h-3 text-gray-400" />
-                        <span className="text-xs text-gray-500">
-                          {article.tags.slice(0, 2).join(", ")}
-                          {article.tags.length > 2 && "..."}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </CardHeader>
-                
-                <CardContent>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
+
+                {/* Article Content */}
+                <div className="flex flex-col gap-2 p-4">
+                  <p className="text-xs font-medium uppercase tracking-wider text-primary">
+                    {article.category}
+                  </p>
+                  <h2 className="text-lg font-bold leading-tight">{article.title}</h2>
+                  <p className="text-sm text-muted-foreground">
                     {article.excerpt 
                       ? truncateText(article.excerpt, 120)
                       : article.content 
                         ? truncateText(article.content.replace(/<[^>]*>/g, ""), 120)
-                        : "Aucun extrait disponible"}
+                        : "Découvrez cet article sur la santé et le bien-être."}
                   </p>
+                  <Link
+                    to={`/blog/${article.slug}`}
+                    className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline"
+                  >
+                    Lire la suite
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+
+                {/* Comments Section */}
+                <div className="border-t border-border p-4">
+                  <h3 className="mb-4 text-base font-bold">Commentaires (0)</h3>
                   
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1 text-xs text-gray-400">
-                      <Clock className="w-3 h-3" />
-                      <span>5 min de lecture</span>
-                    </div>
-                    
-                    <Button 
-                      asChild
-                      size="sm" 
-                      className="bg-[#4facfe] hover:bg-[#00f2fe] transition-colors"
+                  {/* Comment Input */}
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="text"
+                      placeholder="Laissez un commentaire..."
+                      value={commentInputs[article.id] || ""}
+                      onChange={(e) =>
+                        setCommentInputs({ ...commentInputs, [article.id]: e.target.value })
+                      }
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleCommentSubmit(article.id);
+                      }}
+                      className="flex-1 rounded-full border-input bg-muted/50 text-sm focus-visible:ring-primary"
+                    />
+                    <Button
+                      size="icon"
+                      onClick={() => handleCommentSubmit(article.id)}
+                      className="shrink-0 rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
                     >
-                      <Link to={`/blog/${article.slug}`}>
-                        Lire l'article
-                      </Link>
+                      <Send className="h-4 w-4" />
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </article>
             ))}
           </div>
         )}
-      </div>
+      </main>
+
+      {/* Bottom Navigation */}
+      <footer className="sticky bottom-0 z-10 border-t border-border bg-background/80 backdrop-blur-sm">
+        <nav className="flex h-16 items-center justify-around px-2">
+          <Link
+            to="/"
+            className="flex flex-1 flex-col items-center justify-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Home className="h-5 w-5" />
+            <p className="text-xs font-medium">Accueil</p>
+          </Link>
+          <Link
+            to="/blog"
+            className="flex flex-1 flex-col items-center justify-center gap-1 text-primary"
+          >
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <p className="text-xs font-medium">Blog</p>
+          </Link>
+          <Link
+            to="/shop"
+            className="flex flex-1 flex-col items-center justify-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Heart className="h-5 w-5" />
+            <p className="text-xs font-medium">Services</p>
+          </Link>
+          <Link
+            to="/about"
+            className="flex flex-1 flex-col items-center justify-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <UserIcon className="h-5 w-5" />
+            <p className="text-xs font-medium">Profil</p>
+          </Link>
+        </nav>
+      </footer>
     </div>
   );
 };
