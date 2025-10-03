@@ -63,19 +63,19 @@ const EnhancedNavigation = () => {
 
   return (
     <nav className={cn(
-      "bg-white shadow-md sticky top-0 z-50 transition-all duration-300",
-      isScrolled && "shadow-lg bg-white/95 backdrop-blur-sm"
+      "bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 transition-all duration-300 border-b border-gray-100",
+      isScrolled && "shadow-xl bg-white/90"
     )}>
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="flex items-center bg-gradient-to-r from-blue-500 to-cyan-400 text-white p-2 rounded-lg transition-transform group-hover:scale-105">
-              <Heart className="w-5 h-5" />
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="flex items-center bg-gradient-to-br from-primary to-primary-glow text-white p-3 rounded-2xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
+              <Heart className="w-7 h-7" />
             </div>
             <div className="flex flex-col items-start">
-              <span className="text-lg font-bold text-blue-600 leading-none">{t.navigation.brandName.split(' ')[0]}</span>
-              <span className="text-lg font-bold text-gray-700 leading-none">{t.navigation.brandName.split(' ')[1]}</span>
+              <span className="text-xl font-bold text-primary leading-none">{t.navigation.brandName.split(' ')[0]}</span>
+              <span className="text-xl font-bold text-gray-700 leading-none">{t.navigation.brandName.split(' ')[1]}</span>
             </div>
           </Link>
 
@@ -86,10 +86,10 @@ const EnhancedNavigation = () => {
                 key={link.to}
                 to={link.to}
                 className={cn(
-                  "px-3 py-2 text-sm font-medium rounded-md transition-all duration-200",
-                  "hover:bg-gray-100 hover:scale-105",
+                  "px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-300",
+                  "hover:bg-primary/10 hover:scale-105 hover:shadow-md",
                   location.pathname === link.to
-                    ? "text-blue-600 bg-blue-50"
+                    ? "text-primary bg-primary/10 shadow-sm"
                     : "text-gray-600"
                 )}
               >

@@ -9,51 +9,54 @@ const HeroSection = () => {
   const { t } = useLanguage();
   
   return (
-    <section className="text-center space-y-8 animate-fade-in">
-      <div className="flex items-center justify-center mb-6">
-        <div className="flex items-center bg-white p-3 rounded-xl shadow-xl">
-          <Heart className="w-10 h-10 text-blue-600 mr-2" />
+    <section className="text-center space-y-10 animate-fade-in py-8">
+      <div className="flex items-center justify-center mb-8">
+        <div className="flex items-center bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-2xl hover:scale-105 transition-transform duration-300">
+          <Heart className="w-12 h-12 text-primary mr-3" />
           <div className="flex flex-col items-start">
-            <span className="text-2xl font-bold text-blue-600 leading-none">Healthy</span>
-            <span className="text-2xl font-bold text-gray-700 leading-none">IMC</span>
+            <span className="text-3xl font-bold text-primary leading-none">Healthy</span>
+            <span className="text-3xl font-bold text-gray-700 leading-none">IMC</span>
           </div>
         </div>
       </div>
       
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight max-w-4xl mx-auto drop-shadow-lg">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight leading-tight max-w-5xl mx-auto drop-shadow-2xl">
         Calculateur IMC Gratuit en Ligne
       </h1>
       
-      <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow">
+      <p className="text-xl md:text-2xl text-white/95 max-w-3xl mx-auto drop-shadow-lg font-medium">
         Calculez votre Indice de Masse Corporelle en quelques secondes
       </p>
       
-      <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+      <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-4">
         <Button
           asChild
+          variant="premium"
           size="lg"
-          className="bg-[#F97316] text-white hover:bg-[#F97316]/90 text-lg w-full sm:w-auto py-8 px-12 text-xl font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+          className="w-full sm:w-auto py-8 px-14 text-xl shadow-2xl"
         >
           <Link to="/calculateur-imc">
             {t.hero.ctaButton}
-            <ArrowRight className="ml-2 h-6 w-6" />
+            <ArrowRight className="ml-3 h-7 w-7" />
           </Link>
         </Button>
-        <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-6 py-2">
-          <Timer className="h-5 w-5 text-white mr-2" />
-          <p className="text-white text-lg font-medium">
-            {t.hero.resultTime}
-          </p>
+        <div className="glassmorphism-card px-8 py-4 rounded-full">
+          <div className="flex items-center">
+            <Timer className="h-6 w-6 text-white mr-3" />
+            <p className="text-white text-lg font-semibold">
+              {t.hero.resultTime}
+            </p>
+          </div>
         </div>
       </div>
       
       {/* Nouveau bouton pour le programme fitness */}
-      <div className="pt-4">
+      <div className="pt-6">
         <Button
           asChild
           variant="outline"
           size="lg"
-          className="bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20 text-lg w-full sm:w-auto py-6 px-8 font-semibold"
+          className="bg-white/15 backdrop-blur-md text-white border-2 border-white/30 hover:bg-white hover:text-primary text-lg w-full sm:w-auto py-7 px-10 font-semibold shadow-lg"
         >
           <Link to="/programme-fitness-ia">
             {t.hero.newFitnessProgram}
