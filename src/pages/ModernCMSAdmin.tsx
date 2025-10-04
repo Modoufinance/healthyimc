@@ -51,47 +51,8 @@ import { CMSService } from "@/services/cmsService";
 import { CMSArticle, CMSFAQ, CMSTestimonial, CMSContent } from "@/types/cms";
 import { ProductsManager } from "@/components/admin/ProductsManager";
 import { OrdersManager } from "@/components/admin/OrdersManager";
-
-// Données mockées pour les analyses
-const analyticsData = [
-  { date: '2024-01', users: 2400, articles: 240, engagement: 4.1 },
-  { date: '2024-02', users: 1398, articles: 139, engagement: 3.8 },
-  { date: '2024-03', users: 9800, articles: 980, engagement: 4.5 },
-  { date: '2024-04', users: 3908, articles: 390, engagement: 4.2 },
-  { date: '2024-05', users: 4800, articles: 480, engagement: 4.8 },
-  { date: '2024-06', users: 3800, articles: 380, engagement: 4.3 }
-];
-
-const predictiveData = [
-  { month: 'Jan', predicted: 5200, actual: 4800 },
-  { month: 'Feb', predicted: 5800, actual: 5400 },
-  { month: 'Mar', predicted: 6200, actual: 6100 },
-  { month: 'Apr', predicted: 6800, actual: null },
-  { month: 'May', predicted: 7200, actual: null },
-  { month: 'Jun', predicted: 7800, actual: null }
-];
-
-const kpiData = [
-  { name: 'Utilisateurs Actifs', value: '15,247', change: '+12%', trend: 'up', color: '#10B981' },
-  { name: 'Articles Publiés', value: '1,524', change: '+8%', trend: 'up', color: '#3B82F6' },
-  { name: 'Taux Engagement', value: '4.2%', change: '+0.3%', trend: 'up', color: '#8B5CF6' },
-  { name: 'Conversions', value: '892', change: '-2%', trend: 'down', color: '#EF4444' }
-];
-
-const userActivityData = [
-  { time: '00:00', users: 120 },
-  { time: '04:00', users: 80 },
-  { time: '08:00', users: 340 },
-  { time: '12:00', users: 520 },
-  { time: '16:00', users: 480 },
-  { time: '20:00', users: 380 }
-];
-
-const deviceData = [
-  { name: 'Desktop', value: 40, color: '#8B5CF6' },
-  { name: 'Mobile', value: 45, color: '#10B981' },
-  { name: 'Tablet', value: 15, color: '#F59E0B' }
-];
+import { supabase } from "@/integrations/supabase/client";
+import { OrderWithItems } from '@/types/ecommerce';
 
 const ModernCMSAdmin = () => {
   const { adminUser, logout, loading } = useAdminAuth();
@@ -107,39 +68,114 @@ const ModernCMSAdmin = () => {
   const [editingItem, setEditingItem] = useState<any>(null);
   const [localLoading, setLocalLoading] = useState(false);
   const [realTimeUpdates, setRealTimeUpdates] = useState(true);
-  const [notifications, setNotifications] = useState([
-    { id: 1, type: 'success', message: 'Nouvel article publié avec succès', time: '2 min ago' },
-    { id: 2, type: 'warning', message: 'Taux de rebond en hausse', time: '15 min ago' },
-    { id: 3, type: 'info', message: 'Mise à jour système disponible', time: '1h ago' }
-  ]);
+  const [notifications, setNotifications] = useState<Array<{id: number, type: string, message: string, time: string}>>([]);
 
   // États des données
   const [articles, setArticles] = useState<CMSArticle[]>([]);
   const [faqs, setFAQs] = useState<CMSFAQ[]>([]);
   const [testimonials, setTestimonials] = useState<CMSTestimonial[]>([]);
   const [content, setContent] = useState<CMSContent[]>([]);
-  const [scheduledPosts, setScheduledPosts] = useState([
-    { id: 1, title: 'Guide complet IMC 2024', date: '2024-01-15', status: 'programmé' },
-    { id: 2, title: 'Nouvelles recommandations OMS', date: '2024-01-20', status: 'en attente' }
-  ]);
+  const [orders, setOrders] = useState<OrderWithItems[]>([]);
+  const [dashboardStats, setDashboardStats] = useState({
+    totalArticles: 0,
+    publishedArticles: 0,
+    totalOrders: 0,
+    totalRevenue: 0,
+    totalTestimonials: 0,
+    totalFAQs: 0,
+    recentArticles: [] as CMSArticle[]
+  });
 
-  // Charger les données
+  // Charger les données du dashboard
   useEffect(() => {
-    if (activeTab !== "dashboard") {
+    if (activeTab === "dashboard") {
+      loadDashboardData();
+    } else {
       loadData();
     }
   }, [activeTab]);
 
-  // Simulation mises à jour temps réel
+  // Mises à jour temps réel
   useEffect(() => {
     if (realTimeUpdates && activeTab === "dashboard") {
       const interval = setInterval(() => {
-        // Simuler mise à jour des métriques en temps réel
-        console.log('Mise à jour temps réel des métriques');
-      }, 5000);
+        loadDashboardData();
+      }, 30000); // Actualiser toutes les 30 secondes
       return () => clearInterval(interval);
     }
   }, [realTimeUpdates, activeTab]);
+
+  const loadDashboardData = async () => {
+    try {
+      setLocalLoading(true);
+      
+      // Charger les articles
+      const articlesData = await CMSService.getArticles();
+      const publishedArticlesData = articlesData.filter(a => a.published);
+      
+      // Charger les commandes
+      const { data: ordersData } = await supabase
+        .from('orders')
+        .select('*, order_items(*, product:products(*))')
+        .order('created_at', { ascending: false });
+      
+      const ordersWithItems: OrderWithItems[] = (ordersData?.map(order => ({
+        ...order,
+        status: order.status as 'failed' | 'paid' | 'pending' | 'refunded',
+        order_items: order.order_items || []
+      })) || []) as OrderWithItems[];
+      
+      // Calculer le revenu total
+      const revenue = ordersWithItems
+        .filter(o => o.status === 'paid')
+        .reduce((sum, o) => sum + o.total_amount, 0);
+      
+      // Charger témoignages et FAQs
+      const testimonialsData = await CMSService.getTestimonials();
+      const faqsData = await CMSService.getFAQs();
+      
+      setOrders(ordersWithItems);
+      setDashboardStats({
+        totalArticles: articlesData.length,
+        publishedArticles: publishedArticlesData.length,
+        totalOrders: ordersWithItems.length,
+        totalRevenue: revenue,
+        totalTestimonials: testimonialsData.length,
+        totalFAQs: faqsData.length,
+        recentArticles: articlesData.slice(0, 5)
+      });
+
+      // Créer des notifications basées sur les données réelles
+      const newNotifications = [];
+      const recentOrders = ordersWithItems.filter(o => {
+        const orderDate = new Date(o.created_at);
+        const now = new Date();
+        const diffMinutes = (now.getTime() - orderDate.getTime()) / (1000 * 60);
+        return diffMinutes < 60;
+      });
+
+      if (recentOrders.length > 0) {
+        newNotifications.push({
+          id: Date.now(),
+          type: 'success',
+          message: `${recentOrders.length} nouvelle(s) commande(s) dans la dernière heure`,
+          time: 'À l\'instant'
+        });
+      }
+
+      setNotifications(newNotifications);
+      
+    } catch (error) {
+      console.error("Error loading dashboard data:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de charger les données du dashboard",
+        variant: "destructive",
+      });
+    } finally {
+      setLocalLoading(false);
+    }
+  };
 
   const loadData = async () => {
     setLocalLoading(true);
@@ -451,236 +487,185 @@ const ModernCMSAdmin = () => {
 
             {/* Dashboard Principal - Grille responsive fluide */}
             <TabsContent value="dashboard">
-              {/* KPIs Cards - grille fluide responsive */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
-                {kpiData.map((kpi, index) => (
-                  <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-l-4 animate-fade-in" style={{ borderLeftColor: kpi.color }}>
-                    <CardContent className="p-4 sm:p-6">
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs sm:text-sm font-medium text-muted-foreground truncate">{kpi.name}</p>
-                          <div className="flex items-center gap-2 mt-2">
-                            <p className="text-lg sm:text-2xl lg:text-3xl font-bold tracking-tight">{kpi.value}</p>
-                            <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                              kpi.trend === 'up' 
-                                ? 'bg-success/10 text-success' 
-                                : 'bg-destructive/10 text-destructive'
-                            }`}>
-                              {kpi.trend === 'up' ? (
-                                <TrendingUp className="h-3 w-3" />
-                              ) : (
-                                <TrendingDown className="h-3 w-3" />
-                              )}
-                              {kpi.change}
-                            </div>
-                          </div>
-                        </div>
-                        <div 
-                          className="h-8 w-8 sm:h-10 sm:w-10 rounded-full opacity-20 group-hover:opacity-30 transition-opacity flex-shrink-0" 
-                          style={{ backgroundColor: kpi.color }}
-                        ></div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              {/* Graphiques principaux - grille responsive */}
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6 lg:mb-8">
-                {/* Graphique prédictif */}
-                <Card className="hover:shadow-lg transition-all duration-300 animate-fade-in">
-                  <CardHeader className="pb-3 sm:pb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="p-2 bg-primary/10 rounded-lg">
-                        <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-                      </div>
-                      <div>
-                        <CardTitle className="text-base sm:text-lg">Analyses Prédictives</CardTitle>
-                        <CardDescription className="text-xs sm:text-sm">Prévisions basées sur l'IA pour les 3 prochains mois</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-3 sm:p-6 pt-0">
-                    <ResponsiveContainer width="100%" height={250}>
-                      <LineChart data={predictiveData}>
-                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                        <XAxis 
-                          dataKey="month" 
-                          tick={{ fontSize: 12 }}
-                          axisLine={false}
-                          tickLine={false}
-                        />
-                        <YAxis 
-                          tick={{ fontSize: 12 }}
-                          axisLine={false}
-                          tickLine={false}
-                        />
-                        <Tooltip 
-                          contentStyle={{ 
-                            backgroundColor: 'hsl(var(--background))', 
-                            border: '1px solid hsl(var(--border))',
-                            borderRadius: '8px',
-                            fontSize: '12px'
-                          }}
-                        />
-                        <Legend wrapperStyle={{ fontSize: '12px' }} />
-                        <Line 
-                          type="monotone" 
-                          dataKey="actual" 
-                          stroke="hsl(var(--primary))" 
-                          strokeWidth={3}
-                          dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
-                        />
-                        <Line 
-                          type="monotone" 
-                          dataKey="predicted" 
-                          stroke="hsl(var(--muted-foreground))" 
-                          strokeDasharray="8 5" 
-                          strokeWidth={2}
-                          dot={{ fill: 'hsl(var(--muted-foreground))', strokeWidth: 2, r: 3 }}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-
-                {/* Activité utilisateurs temps réel */}
-                <Card className="hover:shadow-lg transition-all duration-300 animate-fade-in">
-                  <CardHeader className="pb-3 sm:pb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="p-2 bg-success/10 rounded-lg">
-                        <Activity className={`h-4 w-4 sm:h-5 sm:w-5 text-success ${realTimeUpdates ? 'animate-pulse' : ''}`} />
-                      </div>
-                      <div>
-                        <CardTitle className="text-base sm:text-lg">Activité Temps Réel</CardTitle>
-                        <CardDescription className="text-xs sm:text-sm">Utilisateurs actifs par heure</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-3 sm:p-6 pt-0">
-                    <ResponsiveContainer width="100%" height={250}>
-                      <AreaChart data={userActivityData}>
-                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                        <XAxis 
-                          dataKey="time" 
-                          tick={{ fontSize: 12 }}
-                          axisLine={false}
-                          tickLine={false}
-                        />
-                        <YAxis 
-                          tick={{ fontSize: 12 }}
-                          axisLine={false}
-                          tickLine={false}
-                        />
-                        <Tooltip 
-                          contentStyle={{ 
-                            backgroundColor: 'hsl(var(--background))', 
-                            border: '1px solid hsl(var(--border))',
-                            borderRadius: '8px',
-                            fontSize: '12px'
-                          }}
-                        />
-                        <Area 
-                          type="monotone" 
-                          dataKey="users" 
-                          stroke="hsl(var(--success))" 
-                          fill="hsl(var(--success))" 
-                          fillOpacity={0.2}
-                          strokeWidth={2}
-                        />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Section inférieure - grille adaptive */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
-                {/* Notifications récentes */}
-                <Card className="hover:shadow-lg transition-all duration-300 animate-fade-in">
-                  <CardHeader className="pb-3 sm:pb-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className="p-2 bg-warning/10 rounded-lg">
-                          <Bell className="h-4 w-4 sm:h-5 sm:w-5 text-warning" />
-                        </div>
-                        <CardTitle className="text-base sm:text-lg">Alertes & Notifications</CardTitle>
-                      </div>
-                      <Badge variant="secondary" className="text-xs">
-                        {notifications.length}
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-3 sm:p-6 pt-0">
-                    <div className="space-y-3">
-                      {notifications.map((notification) => (
-                        <div key={notification.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors border-l-2 border-transparent hover:border-primary">
-                          <div className={`h-2 w-2 rounded-full mt-2 ${
-                            notification.type === 'success' ? 'bg-green-500' :
-                            notification.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
-                          }`}></div>
+              {localLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <RefreshCw className="h-8 w-8 animate-spin text-primary" />
+                </div>
+              ) : (
+                <>
+                  {/* KPIs Cards - données réelles */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+                    <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-blue-500">
+                      <CardContent className="p-4 sm:p-6">
+                        <div className="flex items-center justify-between">
                           <div className="flex-1">
-                            <p className="text-sm">{notification.message}</p>
-                            <p className="text-xs text-muted-foreground">{notification.time}</p>
+                            <p className="text-xs sm:text-sm font-medium text-muted-foreground">Total Articles</p>
+                            <p className="text-2xl sm:text-3xl font-bold mt-2">{dashboardStats.totalArticles}</p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {dashboardStats.publishedArticles} publiés
+                            </p>
                           </div>
+                          <FileText className="h-8 w-8 text-blue-500/20" />
                         </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+                      </CardContent>
+                    </Card>
 
-                {/* Posts programmés */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Articles Programmés</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {scheduledPosts.map((post) => (
-                        <div key={post.id} className="flex items-center justify-between p-3 border rounded">
-                          <div>
-                            <p className="font-medium text-sm">{post.title}</p>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <Calendar className="h-3 w-3" />
-                              <span className="text-xs text-muted-foreground">{post.date}</span>
+                    <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-green-500">
+                      <CardContent className="p-4 sm:p-6">
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <p className="text-xs sm:text-sm font-medium text-muted-foreground">Commandes</p>
+                            <p className="text-2xl sm:text-3xl font-bold mt-2">{dashboardStats.totalOrders}</p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {orders.filter(o => o.status === 'paid').length} payées
+                            </p>
+                          </div>
+                          <ShoppingBag className="h-8 w-8 text-green-500/20" />
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-purple-500">
+                      <CardContent className="p-4 sm:p-6">
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <p className="text-xs sm:text-sm font-medium text-muted-foreground">Revenus</p>
+                            <p className="text-2xl sm:text-3xl font-bold mt-2">
+                              {new Intl.NumberFormat('fr-FR', {
+                                style: 'currency',
+                                currency: 'EUR',
+                              }).format(dashboardStats.totalRevenue / 100)}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">Ventes totales</p>
+                          </div>
+                          <TrendingUp className="h-8 w-8 text-purple-500/20" />
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-orange-500">
+                      <CardContent className="p-4 sm:p-6">
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <p className="text-xs sm:text-sm font-medium text-muted-foreground">Témoignages</p>
+                            <p className="text-2xl sm:text-3xl font-bold mt-2">{dashboardStats.totalTestimonials}</p>
+                            <p className="text-xs text-muted-foreground mt-1">{dashboardStats.totalFAQs} FAQs</p>
+                          </div>
+                          <MessageSquare className="h-8 w-8 text-orange-500/20" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Articles récents */}
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6 lg:mb-8">
+                    <Card className="hover:shadow-lg transition-all duration-300">
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-lg">Articles Récents</CardTitle>
+                          <Badge variant="secondary">{dashboardStats.recentArticles.length}</Badge>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="p-6 pt-0">
+                        <div className="space-y-3">
+                          {dashboardStats.recentArticles.slice(0, 5).map((article) => (
+                            <div key={article.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+                              <div className="flex-1">
+                                <p className="font-medium text-sm line-clamp-1">{article.title}</p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <Badge variant={article.published ? "default" : "secondary"} className="text-xs">
+                                    {article.published ? "Publié" : "Brouillon"}
+                                  </Badge>
+                                  <span className="text-xs text-muted-foreground">
+                                    {new Date(article.created_at).toLocaleDateString('fr-FR')}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          <Badge variant={post.status === 'programmé' ? 'default' : 'secondary'}>
-                            {post.status}
-                          </Badge>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Répartition appareils */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Répartition des Appareils</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ResponsiveContainer width="100%" height={200}>
-                      <PieChart>
-                        <Pie
-                          data={deviceData}
-                          cx="50%"
-                          cy="50%"
-                          outerRadius={80}
-                          fill="#8884d8"
-                          dataKey="value"
-                        >
-                          {deviceData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
                           ))}
-                        </Pie>
-                        <Tooltip />
-                        <Legend />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-              </div>
+                          {dashboardStats.recentArticles.length === 0 && (
+                            <p className="text-sm text-muted-foreground text-center py-4">
+                              Aucun article pour le moment
+                            </p>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="hover:shadow-lg transition-all duration-300">
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-lg">Commandes Récentes</CardTitle>
+                          <Badge variant="secondary">{orders.slice(0, 5).length}</Badge>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="p-6 pt-0">
+                        <div className="space-y-3">
+                          {orders.slice(0, 5).map((order) => (
+                            <div key={order.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+                              <div className="flex-1">
+                                <p className="font-medium text-sm">
+                                  Commande #{order.id.slice(0, 8)}
+                                </p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <Badge 
+                                    variant={order.status === 'paid' ? "default" : "secondary"}
+                                    className="text-xs"
+                                  >
+                                    {order.status === 'paid' ? 'Payée' : order.status}
+                                  </Badge>
+                                  <span className="text-xs font-medium text-primary">
+                                    {new Intl.NumberFormat('fr-FR', {
+                                      style: 'currency',
+                                      currency: order.currency.toUpperCase(),
+                                    }).format(order.total_amount / 100)}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                          {orders.length === 0 && (
+                            <p className="text-sm text-muted-foreground text-center py-4">
+                              Aucune commande pour le moment
+                            </p>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Notifications */}
+                  {notifications.length > 0 && (
+                    <Card className="hover:shadow-lg transition-all duration-300 mb-6">
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Bell className="h-5 w-5 text-warning" />
+                            <CardTitle className="text-lg">Alertes & Notifications</CardTitle>
+                          </div>
+                          <Badge variant="secondary">{notifications.length}</Badge>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="p-6 pt-0">
+                        <div className="space-y-3">
+                          {notifications.map((notification) => (
+                            <div key={notification.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors border-l-2 border-transparent hover:border-primary">
+                              <div className={`h-2 w-2 rounded-full mt-2 ${
+                                notification.type === 'success' ? 'bg-green-500' :
+                                notification.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
+                              }`}></div>
+                              <div className="flex-1">
+                                <p className="text-sm">{notification.message}</p>
+                                <p className="text-xs text-muted-foreground">{notification.time}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+                </>
+              )}
             </TabsContent>
 
             {/* Gestion des Produits E-commerce */}
@@ -696,58 +681,79 @@ const ModernCMSAdmin = () => {
             {/* Analytics détaillées */}
             <TabsContent value="analytics">
               <div className="space-y-6">
-                {/* Contrôles de période */}
                 <div className="flex justify-between items-center">
-                  <h2 className="text-2xl font-bold">Analytics Avancées</h2>
-                  <div className="flex space-x-2">
-                    <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
-                      <SelectTrigger className="w-32">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="7d">7 jours</SelectItem>
-                        <SelectItem value="30d">30 jours</SelectItem>
-                        <SelectItem value="90d">90 jours</SelectItem>
-                        <SelectItem value="1y">1 an</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <h2 className="text-2xl font-bold">Analytics en Temps Réel</h2>
+                  <div className="flex items-center gap-2">
+                    <Activity className={`h-5 w-5 ${realTimeUpdates ? 'text-success animate-pulse' : 'text-muted-foreground'}`} />
+                    <span className="text-sm text-muted-foreground">Données actualisées</span>
                   </div>
                 </div>
 
-                {/* Graphiques analytics */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Évolution du Trafic</CardTitle>
+                      <CardTitle>Contenu Publié</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <ResponsiveContainer width="100%" height={300}>
-                        <AreaChart data={analyticsData}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="date" />
-                          <YAxis />
-                          <Tooltip />
-                          <Area type="monotone" dataKey="users" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-                        </AreaChart>
-                      </ResponsiveContainer>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Articles</span>
+                          <span className="text-2xl font-bold">{dashboardStats.publishedArticles}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">FAQs</span>
+                          <span className="text-2xl font-bold">{dashboardStats.totalFAQs}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Témoignages</span>
+                          <span className="text-2xl font-bold">{dashboardStats.totalTestimonials}</span>
+                        </div>
+                      </div>
                     </CardContent>
                   </Card>
 
                   <Card>
                     <CardHeader>
-                      <CardTitle>Publications & Engagement</CardTitle>
+                      <CardTitle>Performance Ventes</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <ResponsiveContainer width="100%" height={300}>
-                        <BarChart data={analyticsData}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="date" />
-                          <YAxis />
-                          <Tooltip />
-                          <Bar dataKey="articles" fill="#82ca9d" />
-                          <Bar dataKey="engagement" fill="#ffc658" />
-                        </BarChart>
-                      </ResponsiveContainer>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Commandes</span>
+                          <span className="text-2xl font-bold">{dashboardStats.totalOrders}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Payées</span>
+                          <span className="text-2xl font-bold text-green-600">
+                            {orders.filter(o => o.status === 'paid').length}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">En attente</span>
+                          <span className="text-2xl font-bold text-yellow-600">
+                            {orders.filter(o => o.status === 'pending').length}
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Revenus Totaux</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-center py-4">
+                        <p className="text-4xl font-bold text-primary">
+                          {new Intl.NumberFormat('fr-FR', {
+                            style: 'currency',
+                            currency: 'EUR',
+                          }).format(dashboardStats.totalRevenue / 100)}
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-2">
+                          Depuis le début
+                        </p>
+                      </div>
                     </CardContent>
                   </Card>
                 </div>
