@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeft, Search, Send, ArrowRight, Home, Heart, User as UserIcon } from "lucide-react";
+import { ArrowLeft, Search, Send, ArrowRight } from "lucide-react";
 import { CMSService } from "@/services/cmsService";
 import { CMSArticle } from "@/types/cms";
 
@@ -146,7 +146,7 @@ const BlogContent = () => {
             </p>
           </div>
         ) : (
-          <div className="space-y-6 pb-20">
+          <div className="space-y-6 pb-6">
             {filteredArticles.map((article) => (
               <article
                 key={article.id}
@@ -218,41 +218,6 @@ const BlogContent = () => {
         )}
       </main>
 
-      {/* Bottom Navigation */}
-      <footer className="sticky bottom-0 z-10 border-t border-border bg-background/80 backdrop-blur-sm">
-        <nav className="flex h-16 items-center justify-around px-2">
-          <Link
-            to="/"
-            className="flex flex-1 flex-col items-center justify-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <Home className="h-5 w-5" />
-            <p className="text-xs font-medium">Accueil</p>
-          </Link>
-          <Link
-            to="/blog"
-            className="flex flex-1 flex-col items-center justify-center gap-1 text-primary"
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            <p className="text-xs font-medium">Blog</p>
-          </Link>
-          <Link
-            to="/shop"
-            className="flex flex-1 flex-col items-center justify-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <Heart className="h-5 w-5" />
-            <p className="text-xs font-medium">Services</p>
-          </Link>
-          <Link
-            to="/about"
-            className="flex flex-1 flex-col items-center justify-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <UserIcon className="h-5 w-5" />
-            <p className="text-xs font-medium">Profil</p>
-          </Link>
-        </nav>
-      </footer>
     </div>
   );
 };
