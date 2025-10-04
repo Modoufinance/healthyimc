@@ -59,6 +59,22 @@
 
   body {
     @apply antialiased text-foreground bg-background;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 16px;
+  }
+  
+  @media (max-width: 768px) {
+    html {
+      font-size: 14px;
+    }
   }
 }
 
@@ -461,6 +477,33 @@ html {
   .container-custom {
     @apply px-4;
   }
+  
+  /* Touch-friendly interactions */
+  button, a, input, select, textarea {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+  }
+  
+  /* Improve text readability */
+  p, li, span {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  h1 {
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
 }
 
 /* Touch device optimizations */
@@ -471,5 +514,15 @@ html {
   
   .card-hover:hover {
     transform: none;
+  }
+  
+  /* Better touch targets */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  button:active, a:active {
+    opacity: 0.8;
   }
 }

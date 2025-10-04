@@ -66,28 +66,28 @@ const EnhancedNavigation = () => {
       "bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 transition-all duration-300 border-b border-gray-100",
       isScrolled && "shadow-xl bg-white/90"
     )}>
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="flex items-center bg-gradient-to-br from-primary to-primary-glow text-white p-3 rounded-2xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
-              <Heart className="w-7 h-7" />
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
+            <div className="flex items-center bg-gradient-to-br from-primary to-primary-glow text-white p-2 sm:p-3 rounded-xl sm:rounded-2xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
+              <Heart className="w-5 h-5 sm:w-7 sm:h-7" />
             </div>
             <div className="flex flex-col items-start">
-              <span className="text-xl font-bold text-primary leading-none">{t.navigation.brandName.split(' ')[0]}</span>
-              <span className="text-xl font-bold text-gray-700 leading-none">{t.navigation.brandName.split(' ')[1]}</span>
+              <span className="text-base sm:text-xl font-bold text-primary leading-none">{t.navigation.brandName.split(' ')[0]}</span>
+              <span className="text-base sm:text-xl font-bold text-gray-700 leading-none">{t.navigation.brandName.split(' ')[1]}</span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {mainLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 className={cn(
-                  "px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-300",
-                  "hover:bg-primary/10 hover:scale-105 hover:shadow-md",
+                  "px-3 xl:px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-300",
+                  "hover:bg-primary/10 hover:scale-105 hover:shadow-md whitespace-nowrap",
                   location.pathname === link.to
                     ? "text-primary bg-primary/10 shadow-sm"
                     : "text-gray-600"
@@ -193,33 +193,35 @@ const EnhancedNavigation = () => {
           </div>
 
           {/* Mobile menu button and utilities */}
-          <div className="flex items-center gap-2">
-            <PWAInstallButton />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="hidden sm:block">
+              <PWAInstallButton />
+            </div>
             <LanguageSelector />
             <Button
               variant="ghost"
-              size="sm"
-              className="md:hidden"
+              size="icon"
+              className="lg:hidden h-9 w-9 sm:h-10 sm:w-10 rounded-xl hover:bg-primary/10"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t bg-white absolute left-0 right-0 shadow-lg animate-fade-in">
-            <div className="px-4 py-2 space-y-1 max-h-96 overflow-y-auto">
+          <div className="lg:hidden border-t bg-white absolute left-0 right-0 shadow-lg animate-fade-in">
+            <div className="px-4 py-3 space-y-1 max-h-[70vh] overflow-y-auto">
               {[...mainLinks, ...calculatorLinks, ...additionalMainLinks, ...healthLinks].map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                    "hover:bg-gray-100",
+                    "flex items-center gap-3 px-4 py-3.5 text-base font-semibold rounded-xl transition-all duration-200",
+                    "hover:bg-primary/10 active:scale-[0.98] touch-manipulation",
                     location.pathname === link.to
-                      ? "text-blue-600 bg-blue-50"
+                      ? "text-primary bg-primary/10 shadow-sm"
                       : "text-gray-600"
                   )}
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -228,6 +230,9 @@ const EnhancedNavigation = () => {
                   {link.label}
                 </Link>
               ))}
+              <div className="pt-4 pb-2 sm:hidden">
+                <PWAInstallButton />
+              </div>
             </div>
           </div>
         )}
